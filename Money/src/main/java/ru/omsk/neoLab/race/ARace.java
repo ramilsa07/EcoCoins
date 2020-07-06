@@ -4,9 +4,7 @@ public abstract class ARace {
     private String nameRace;
     private int quantity; // Число юнитов определенной рассы
 
-    public ARace(String nameRace, int quantity) {
-        this.nameRace = nameRace;
-        this.quantity = quantity;
+    public ARace() {
     }
 
     public int getQuantity() {
@@ -15,6 +13,14 @@ public abstract class ARace {
 
     public String getNameRace() {
         return nameRace;
+    }
+
+    public void setNameRace(String nameRace) {
+        this.nameRace = nameRace;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public abstract void receiveAdvantage();

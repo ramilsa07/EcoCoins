@@ -2,11 +2,14 @@ package ru.omsk.neoLab.race;
 
 public class Undead extends ARace {
 
-    public Undead(String nameRace, int quantity) {
-        super(nameRace, quantity);
+    public Undead() {
+        setNameRace("Undead");
+        setQuantity(11);
     }
 
+    @Override
     public void receiveAdvantage() {
-
+        // особенность - число юнитов. Тут просто заглушка
     }
+
 }
