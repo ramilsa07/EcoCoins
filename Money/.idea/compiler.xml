@@ -9,6 +9,8 @@
         <module name="Money" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="14" />
+    <bytecodeTargetLevel target="14">
+      <module name="Money" target="7" />
+    </bytecodeTargetLevel>
   </component>
 </project>
