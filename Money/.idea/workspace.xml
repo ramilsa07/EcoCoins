@@ -20,7 +20,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="048dcac8-1b67-47e6-ab8e-c7f02b934cae" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/race/Amphibia.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/race/Amphibia.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/Player.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/race/Neutrals.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/board/Generators/Calls/listCall.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/board/Generators/Calls/ListCall.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -152,6 +156,10 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="320" y="98" key="#Plugins" timestamp="1594098745125">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="320" y="98" key="#Plugins/0.0.1440.900@0.0.1440.900" timestamp="1594098745125" />
     <state x="208" y="31" key="#Project_Structure" timestamp="1594030743565">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
@@ -160,30 +168,42 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="184" y="112" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1440.900@0.0.1440.900" timestamp="1594016761109" />
-    <state x="533" y="173" key="#com.intellij.ide.util.MemberChooser" timestamp="1594028289118">
+    <state x="533" y="173" key="#com.intellij.ide.util.MemberChooser" timestamp="1594100976640">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="533" y="173" key="#com.intellij.ide.util.MemberChooser/0.0.1440.900@0.0.1440.900" timestamp="1594028289118" />
-    <state width="1419" height="245" key="GridCell.Tab.0.bottom" timestamp="1594033002378">
+    <state x="533" y="173" key="#com.intellij.ide.util.MemberChooser/0.0.1440.900@0.0.1440.900" timestamp="1594100976640" />
+    <state x="408" y="193" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1594098612112">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1419" height="245" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1594033002378" />
-    <state width="1419" height="245" key="GridCell.Tab.0.center" timestamp="1594033002377">
+    <state x="408" y="193" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1440.900@0.0.1440.900" timestamp="1594098612112" />
+    <state x="144" y="79" key="DiffContextDialog" timestamp="1594100102883">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1419" height="245" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1594033002377" />
-    <state width="1419" height="245" key="GridCell.Tab.0.left" timestamp="1594033002376">
+    <state x="144" y="79" key="DiffContextDialog/0.0.1440.900@0.0.1440.900" timestamp="1594100102883" />
+    <state width="1398" height="245" key="GridCell.Tab.0.bottom" timestamp="1594097310343">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1419" height="245" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1594033002376" />
-    <state width="1419" height="245" key="GridCell.Tab.0.right" timestamp="1594033002377">
+    <state width="1398" height="245" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1594097310343" />
+    <state width="1398" height="245" key="GridCell.Tab.0.center" timestamp="1594097310342">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1419" height="245" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1594033002377" />
-    <state x="308" y="192" key="IDE.errors.dialog" timestamp="1594013498855">
+    <state width="1398" height="245" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1594097310342" />
+    <state width="1398" height="245" key="GridCell.Tab.0.left" timestamp="1594097310341">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="308" y="192" key="IDE.errors.dialog/0.0.1440.900@0.0.1440.900" timestamp="1594013498855" />
+    <state width="1398" height="245" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1594097310341" />
+    <state width="1398" height="245" key="GridCell.Tab.0.right" timestamp="1594097310342">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1398" height="245" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1594097310342" />
+    <state x="308" y="192" key="IDE.errors.dialog" timestamp="1594098858842">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="308" y="192" key="IDE.errors.dialog/0.0.1440.900@0.0.1440.900" timestamp="1594098858842" />
+    <state x="503" y="160" key="RollbackChangesDialog" timestamp="1594100112912">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="503" y="160" key="RollbackChangesDialog/0.0.1440.900@0.0.1440.900" timestamp="1594100112912" />
     <state x="372" y="23" width="1024" height="804" key="SettingsEditor" timestamp="1594030974013">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
@@ -192,5 +212,9 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="473" y="245" key="git4idea.merge.GitMergeDialog/0.0.1440.900@0.0.1440.900" timestamp="1594030065233" />
+    <state x="414" y="245" key="git4idea.merge.GitPullDialog" timestamp="1594100133936">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="414" y="245" key="git4idea.merge.GitPullDialog/0.0.1440.900@0.0.1440.900" timestamp="1594100133936" />
   </component>
 </project>
