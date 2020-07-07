@@ -26,9 +26,20 @@ public abstract class ACall {
     public int getRequirementsForCapture() {
         return 2;
     }
-    
-    //Установить
-    public void getBelongs(){}
 
-    public void getCountUnits(){}
+    public String getBelongs() {
+        return belongs;
+    }
+
+    public int getCountUnits() {
+        return countUnits;
+    }
+
+    public void setBelongs(String belongs) {
+        this.belongs = belongs;
+    }
+
+    public void setCountUnits(int countUnits) {
+        this.countUnits = countUnits;
+    }
 }
