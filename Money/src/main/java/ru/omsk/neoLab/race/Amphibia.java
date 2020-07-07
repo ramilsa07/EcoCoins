@@ -9,8 +9,4 @@ public class Amphibia extends ARace {
         countUnit = 6;
     }
 
-    @Override
-    public int getMoney(int money, ACall call) {
-          return money;
-    }
 }

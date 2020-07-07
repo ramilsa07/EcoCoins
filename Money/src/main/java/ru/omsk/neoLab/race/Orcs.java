@@ -9,9 +9,8 @@ public class Orcs extends ARace {
         countUnit = 5;
     }
 
-
     @Override
-    public int getMoney(int money, ACall call) {
-        return money;
+    public int getRequirementsForCapture(ACall call){
+        return call.getRequirementsForCapture() - 1;
     }
 }

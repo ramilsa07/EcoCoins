@@ -1,5 +1,7 @@
 package ru.omsk.neoLab.board.Generators.Calls.Call;
 
+import ru.omsk.neoLab.race.ARace;
+
 public abstract class ACall {
 
     protected String type;
@@ -13,8 +15,12 @@ public abstract class ACall {
     }
 
     //Можно ли забрать территорию
-    abstract public boolean getAbilityCapture();
+    public boolean getAbilityCapture(ARace race){
+        return true;
+    }
 
     //Сколько надо для захвата территории
-    abstract public int getRequirementsForCapture();
+    public int getRequirementsForCapture() {
+        return 2;
+    }
 }

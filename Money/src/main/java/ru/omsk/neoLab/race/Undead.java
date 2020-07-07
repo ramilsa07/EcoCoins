@@ -9,8 +9,4 @@ public class Undead extends ARace {
         countUnit = 11;
     }
 
-    @Override
-    public int getMoney(int money, ACall call) {
-        return money;
-    }
 }

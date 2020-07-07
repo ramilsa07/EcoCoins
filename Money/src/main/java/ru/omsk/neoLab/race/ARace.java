@@ -14,5 +14,13 @@ public abstract class ARace {
         return countUnit;
     }
 
-    public abstract int getMoney(int money, ACall call);
+    public int getMoney(int money, ACall call){
+        return money;
+    }
+    public int toDefend(int countUnit){
+        return countUnit;
+    }
+    public int getRequirementsForCapture(ACall call){
+        return call.getRequirementsForCapture();
+    }
 }

@@ -10,7 +10,7 @@ public class Dwarfs extends ARace {
     }
 
     @Override
-    public int getMoney(int money, ACall call) {
-        return  money;
+    public int toDefend(int countUnit) {
+        return countUnit + 1;
     }
 }

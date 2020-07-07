@@ -1,14 +1,16 @@
 package ru.omsk.neoLab.board.Generators.Calls.Call;
 
+import ru.omsk.neoLab.race.ARace;
+
 public class Water extends ACall {
 
     public Water() {
-        type = "Вода";
+        type = "Water";
     }
 
     @Override
-    public boolean getAbilityCapture() {
-        return false;
+    public boolean getAbilityCapture(ARace race) {
+        return race.getNameRace().equals("Amphibia");
     }
 
     @Override
