@@ -1,6 +1,6 @@
 package ru.omsk.neoLab.board.Generators;
 
-import ru.omsk.neoLab.board.Generators.Calls.ACall;
+import ru.omsk.neoLab.board.Generators.Calls.Call.ACall;
 
 public interface IGenerator {
     ACall[] generate(int length);

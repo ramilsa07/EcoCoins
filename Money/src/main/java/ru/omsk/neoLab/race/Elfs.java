@@ -1,14 +1,16 @@
 package ru.omsk.neoLab.race;
 
+import ru.omsk.neoLab.board.Generators.Calls.Call.ACall;
+
 public class Elfs extends ARace {
 
     public Elfs() {
-        setNameRace("Elfs");
-        setQuantity(6);
+        nameRace = "Elfs";
+        countUnit = 6;
     }
 
     @Override
-    public void receiveAdvantage() {
-
+    public int getMoney(int money, ACall call) {
+        return money;
     }
 }

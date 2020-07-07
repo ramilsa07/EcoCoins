@@ -1,27 +1,18 @@
 package ru.omsk.neoLab.race;
 
+import ru.omsk.neoLab.board.Generators.Calls.Call.ACall;
+
 public abstract class ARace {
-    private String nameRace;
-    private int quantity; // Число юнитов определенной рассы
-
-    public ARace() {
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
+    protected String nameRace;
+    protected int countUnit; // Число юнитов определенной рассы
 
     public String getNameRace() {
         return nameRace;
     }
 
-    public void setNameRace(String nameRace) {
-        this.nameRace = nameRace;
+    public int getCountUnit() {
+        return countUnit;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public abstract void receiveAdvantage();
+    public abstract int getMoney(int money, ACall call);
 }

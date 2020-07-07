@@ -1,6 +1,6 @@
 package ru.omsk.neoLab.board;
 
-import ru.omsk.neoLab.board.Generators.Calls.ACall;
+import ru.omsk.neoLab.board.Generators.Calls.Call.ACall;
 import ru.omsk.neoLab.board.Generators.Generator;
 import ru.omsk.neoLab.board.Generators.IGenerator;
 

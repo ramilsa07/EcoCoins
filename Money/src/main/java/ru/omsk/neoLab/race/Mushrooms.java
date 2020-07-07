@@ -1,15 +1,18 @@
 package ru.omsk.neoLab.race;
 
+import ru.omsk.neoLab.board.Generators.Calls.Call.ACall;
+
 public class Mushrooms extends ARace {
 
     public Mushrooms() {
-        setNameRace("Mushrooms");
-        setQuantity(6);
+        nameRace = "Mushrooms";
+        countUnit = 6;
     }
 
-    // каждый захваченный регион с грибами приносит в конце хода призовую монетку
     @Override
-    public void receiveAdvantage() {
-
+    public int getMoney(int money, ACall call) {
+        if(call.getType().equals("Грибы"))
+            return money + 1;
+        return money;
     }
 }

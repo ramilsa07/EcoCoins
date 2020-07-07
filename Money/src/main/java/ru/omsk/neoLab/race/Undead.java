@@ -1,15 +1,16 @@
 package ru.omsk.neoLab.race;
 
+import ru.omsk.neoLab.board.Generators.Calls.Call.ACall;
+
 public class Undead extends ARace {
 
     public Undead() {
-        setNameRace("Undead");
-        setQuantity(11);
+        nameRace = "Undead";
+        countUnit = 11;
     }
 
     @Override
-    public void receiveAdvantage() {
-        // особенность - число юнитов. Тут просто заглушка
+    public int getMoney(int money, ACall call) {
+        return money;
     }
-
 }
