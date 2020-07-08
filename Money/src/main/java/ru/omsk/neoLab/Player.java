@@ -20,13 +20,13 @@ public class Player {
     }
 
     public void countMoney(){
-//        boolean countEarth = true;
-//        boolean countMushrooms = true;
-//        boolean countMounted = true;
+        boolean countEarth = true;
+        boolean countMushrooms = true;
+        boolean countMounted = true;
         for(ACall call: location.getCalls()) {
-            // if(call.getRace().equals("Elfs") && call.getType())
-            // TODO: Придумать условия получения монеток для эльфов
-            money += call.getMoney();
+//             if(call.getRace().equals("Elfs"))
+//            // TODO: Придумать условия получения монеток для эльфов
+            money += call.getMoney() ;
         }
     }
 

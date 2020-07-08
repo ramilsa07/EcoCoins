@@ -15,10 +15,6 @@ public abstract class ARace {
         return countUnit;
     }
 
-    public int getMoney(int money, ACall call) {
-        return money;
-    }
-
     public int toDefend(int countUnit) {
         return countUnit;
     } // Сколько нужно для защиты
