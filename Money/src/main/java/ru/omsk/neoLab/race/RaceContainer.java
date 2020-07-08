@@ -16,4 +16,9 @@ public class RaceContainer {
     public void removeElement(ARace race){
         setRace.remove(race);
     }
+
+    public boolean contains(String race){
+       // setRace.contains(race);
+        return true;
+    }
 }

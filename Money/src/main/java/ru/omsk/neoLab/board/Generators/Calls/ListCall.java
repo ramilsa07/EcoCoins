@@ -2,10 +2,29 @@ package ru.omsk.neoLab.board.Generators.Calls;
 
 import ru.omsk.neoLab.board.Generators.Calls.Call.ACall;
 
-public class ListCall {
-    private ACall[] calls;
+import java.util.ArrayList;
 
-    public ListCall(ACall[] calls) {
-        this.calls = calls;
+public class ListCall {
+    private ArrayList<ACall> calls;
+
+
+    public ListCall() {
+        calls = new ArrayList<>();
+    }
+
+    public void addCall(ACall call){
+        calls.add(call);
+    }
+
+    public void removeCall(ACall call){
+        calls.remove(call);
+    }
+
+    public int getSize(){
+        return calls.size();
+    }
+
+    public ArrayList<ACall> getCalls() {
+        return calls;
     }
 }

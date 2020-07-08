@@ -20,17 +20,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="048dcac8-1b67-47e6-ab8e-c7f02b934cae" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/Phases.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_logging_log4j_log4j_api_2_13_3.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_logging_log4j_log4j_core_2_13_3.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Money.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Money.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/race/ARace.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/race/ARace.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/race/Amphibia.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/race/Amphibia.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/race/Dwarfs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/race/Dwarfs.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/race/Elfs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/race/Elfs.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/race/Mushrooms.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/race/Mushrooms.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/race/Neutrals.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/race/Orcs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/race/Orcs.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/race/Undead.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/race/Undead.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/board/Generators/Calls/Call/ACall.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/board/Generators/Calls/Call/ACall.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/board/Generators/Calls/ListCall.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/board/Generators/Calls/ListCall.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/race/RaceContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/race/RaceContainer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -148,6 +145,14 @@
       <option name="presentableId" value="Default" />
       <updated>1594012341387</updated>
     </task>
+    <task id="LOCAL-00001" summary="[+/*] Добавлены фазы игры и добавлено поле alive для рас">
+      <created>1594184788362</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1594184788362</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -162,6 +167,10 @@
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="[+/*] Добавлены фазы игры и добавлено поле alive для рас" />
+    <option name="LAST_COMMIT_MESSAGE" value="[+/*] Добавлены фазы игры и добавлено поле alive для рас" />
+  </component>
   <component name="WindowStateProjectService">
     <state x="320" y="98" key="#Plugins" timestamp="1594098745125">
       <screen x="0" y="0" width="1440" height="900" />
@@ -175,14 +184,20 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="184" y="112" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1440.900@0.0.1440.900" timestamp="1594016761109" />
-    <state x="533" y="173" key="#com.intellij.ide.util.MemberChooser" timestamp="1594100976640">
+    <state x="933" y="167" key="#com.intellij.ide.util.MemberChooser" timestamp="1594190891068">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
+    <state x="533" y="173" key="#com.intellij.ide.util.MemberChooser/0.0.1440.900/1440.89.1366.768@0.0.1440.900" timestamp="1594185487892" />
+    <state x="933" y="167" key="#com.intellij.ide.util.MemberChooser/0.0.1440.900/1440.92.1366.768@0.0.1440.900" timestamp="1594190891068" />
     <state x="533" y="173" key="#com.intellij.ide.util.MemberChooser/0.0.1440.900@0.0.1440.900" timestamp="1594100976640" />
     <state x="408" y="193" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1594098612112">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="408" y="193" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1440.900@0.0.1440.900" timestamp="1594098612112" />
+    <state x="297" y="25" key="CommitChangelistDialog2" timestamp="1594184788106">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="297" y="25" key="CommitChangelistDialog2/0.0.1440.900/1440.89.1366.768@0.0.1440.900" timestamp="1594184788106" />
     <state x="144" y="79" key="DiffContextDialog" timestamp="1594100102883">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
@@ -215,18 +230,20 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="372" y="23" width="1024" height="804" key="SettingsEditor/0.0.1440.900@0.0.1440.900" timestamp="1594030974013" />
-    <state x="320" y="190" key="Vcs.Push.Dialog.v2" timestamp="1594180620281">
+    <state x="320" y="190" key="Vcs.Push.Dialog.v2" timestamp="1594184861540">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="320" y="190" key="Vcs.Push.Dialog.v2/0.0.1440.900/1440.89.1366.768@0.0.1440.900" timestamp="1594180620281" />
+    <state x="320" y="190" key="Vcs.Push.Dialog.v2/0.0.1440.900/1440.89.1366.768@0.0.1440.900" timestamp="1594184861540" />
     <state x="473" y="245" key="git4idea.merge.GitMergeDialog" timestamp="1594030065233">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="473" y="245" key="git4idea.merge.GitMergeDialog/0.0.1440.900@0.0.1440.900" timestamp="1594030065233" />
-    <state x="414" y="245" key="git4idea.merge.GitPullDialog" timestamp="1594180674156">
+    <state x="414" y="245" key="git4idea.merge.GitPullDialog" timestamp="1594191368793">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="414" y="245" key="git4idea.merge.GitPullDialog/0.0.1440.900/1440.89.1366.768@0.0.1440.900" timestamp="1594180674156" />
+    <state x="414" y="245" key="git4idea.merge.GitPullDialog/0.0.1440.900/1440.115.1366.745@0.0.1440.900" timestamp="1594191368793" />
+    <state x="414" y="245" key="git4idea.merge.GitPullDialog/0.0.1440.900/1440.89.1366.768@0.0.1440.900" timestamp="1594184839847" />
+    <state x="414" y="245" key="git4idea.merge.GitPullDialog/0.0.1440.900/1440.92.1366.768@0.0.1440.900" timestamp="1594188182308" />
     <state x="414" y="245" key="git4idea.merge.GitPullDialog/0.0.1440.900@0.0.1440.900" timestamp="1594100133936" />
   </component>
 </project>
