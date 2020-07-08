@@ -20,11 +20,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="048dcac8-1b67-47e6-ab8e-c7f02b934cae" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/Player.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/race/Neutrals.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/GameProcessor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/board/Generators/Calls/listCall.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/board/Generators/Calls/ListCall.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/board/Generators/Calls/Call/Earth.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/board/Generators/Calls/Call/Earth.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/race/ARace.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/race/ARace.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
