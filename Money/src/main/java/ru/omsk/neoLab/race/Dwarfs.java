@@ -7,6 +7,7 @@ public class Dwarfs extends ARace {
     public Dwarfs() {
         nameRace = "Dwarfs";
         countUnit = 5;
+        alive = true;
     }
 
     @Override

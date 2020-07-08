@@ -1,15 +1,13 @@
 package ru.omsk.neoLab.board.Generators.Calls.Call;
 
+import ru.omsk.neoLab.Player;
 import ru.omsk.neoLab.race.ARace;
 
 public abstract class ACall {
 
-    public int x;
-    public int y;
-
     protected String type;
-    protected String belongs;
-    protected int countUnits;
+    protected Player belongs;
+    protected int countUnits; // число юнитов стоящих на этой территории
     protected ARace race;
 
     public String getType() {
@@ -17,6 +15,9 @@ public abstract class ACall {
     }
 
     public int getMoney(){
+        if(type.equals("Mushrooms") && race.getNameRace().equals("Mushrooms")){
+            return 2;
+        }
         return 1;
     }
 
@@ -30,21 +31,27 @@ public abstract class ACall {
         return 2;
     }
 
-    //Принадлежность
-    public String getBelongs() {
+    public Player getBelongs() {
         return belongs;
     }
 
-    //Количество юнитов на клетке
     public int getCountUnits() {
         return countUnits;
     }
 
-    public void setBelongs(String belongs) {
+    public void setBelongs(Player belongs) {
         this.belongs = belongs;
     }
 
     public void setCountUnits(int countUnits) {
         this.countUnits = countUnits;
+    }
+
+    public ARace getRace() {
+        return race;
+    }
+
+    public void setRace(ARace race) {
+        this.race = race;
     }
 }

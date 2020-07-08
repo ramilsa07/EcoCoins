@@ -7,6 +7,7 @@ public class Amphibia extends ARace {
     public Amphibia() {
         nameRace = "Amphibia";
         countUnit = 6;
+        alive = true;
     }
 
 }
