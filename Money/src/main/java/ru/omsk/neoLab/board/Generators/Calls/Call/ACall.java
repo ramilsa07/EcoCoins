@@ -5,6 +5,9 @@ import ru.omsk.neoLab.race.ARace;
 public abstract class ACall {
 
     protected String type;
+    protected String belongs;
+    protected int countUnits;
+    protected ARace race;
 
     public String getType() {
         return type;
@@ -22,5 +25,21 @@ public abstract class ACall {
     //Сколько надо для захвата территории
     public int getRequirementsForCapture() {
         return 2;
+    }
+
+    public String getBelongs() {
+        return belongs;
+    }
+
+    public int getCountUnits() {
+        return countUnits;
+    }
+
+    public void setBelongs(String belongs) {
+        this.belongs = belongs;
+    }
+
+    public void setCountUnits(int countUnits) {
+        this.countUnits = countUnits;
     }
 }
