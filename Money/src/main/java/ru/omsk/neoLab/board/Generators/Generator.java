@@ -39,7 +39,6 @@ public class Generator implements IGenerator {
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 board[i][j] = toRandom(maxWater);
-                countWater++;
             }
         }
 
@@ -52,10 +51,10 @@ public class Generator implements IGenerator {
 
     public static void main(String[] args) {
         Generator generator = new Generator();
-        board = generator.generate(5,4);
-        for(int i = 0; i < 5; i++){
+        board = generator.generate(4, 3);
+        for (int i = 0; i < 4; i++) {
             System.out.println();
-            for(int j = 0; j < 4; j++){
+            for (int j = 0; j < 3; j++) {
                 System.out.print(board[i][j].getType() + " ");
             }
         }
@@ -64,23 +63,18 @@ public class Generator implements IGenerator {
     private ACall toRandom(int maxWater){
 
         ACall call = listCall.get(random.nextInt(4));
-        if((call.getType().equals("Water")) && (countWater <= maxWater)){
+        if ((call.getType().equals("Water")) && (countWater < maxWater)) {
             countWater++;
+            log.info("Кол - во воды - " + countWater);
             return call;
-        }
-        else if(false){
-
-        }
-        else if(false){
-
-        }
-        else {
-            //log.info("Попалась снова вода");
+        } else if (call.getType().equals("Water")) {
+            log.info("Попалась снова вода");
         }
         return listCall.get(random.nextInt(3));
     }
 
     private static void toFind(ACall call){
+
 
     }
 }
