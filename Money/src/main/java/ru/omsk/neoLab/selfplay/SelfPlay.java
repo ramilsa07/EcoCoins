@@ -9,7 +9,7 @@ import java.net.*;
 public class SelfPlay {
 
     static final int PORT = 8081;
-    private final int MAX_NUMBER = 4;
+    private final int MAX_PLAYER = 4;
     private IBoard board;
     private Player[] players;
 

@@ -15,9 +15,6 @@ public abstract class ACall {
     }
 
     public int getMoney(){
-        if(type.equals("Mushrooms") && race.getNameRace().equals("Mushrooms")){
-            return 2;
-        }
         return 1;
     }
 

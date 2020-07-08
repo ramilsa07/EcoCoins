@@ -6,4 +6,8 @@ public class Mushrooms extends ACall {
         type = "Mushrooms";
     }
 
+    @Override
+    public int getMoney() {
+        return 2;
+    }
 }

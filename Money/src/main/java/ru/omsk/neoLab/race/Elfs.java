@@ -1,7 +1,5 @@
 package ru.omsk.neoLab.race;
 
-import ru.omsk.neoLab.board.Generators.Calls.Call.ACall;
-
 public class Elfs extends ARace {
 
     public Elfs() {
@@ -10,8 +8,4 @@ public class Elfs extends ARace {
         alive = true;
     }
 
-    @Override
-    public int getMoney(int money, ACall call) {
-        return money;
-    }
 }
