@@ -14,13 +14,15 @@ public abstract class ARace {
         return countUnit;
     }
 
-    public int getMoney(int money, ACall call){
+    public int getMoney(int money, ACall call) {
         return money;
     }
-    public int toDefend(int countUnit){
+
+    public int toDefend(int countUnit) {
         return countUnit;
     }
-    public int getRequirementsForCapture(ACall call){
+
+    public int getRequirementsForCapture(ACall call) {
         return call.getRequirementsForCapture();
     }
 }
