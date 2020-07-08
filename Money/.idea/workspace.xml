@@ -20,11 +20,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="048dcac8-1b67-47e6-ab8e-c7f02b934cae" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/GameProcessor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/Phases.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/board/Generators/Calls/Call/Earth.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/board/Generators/Calls/Call/Earth.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/race/ARace.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/race/ARace.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/race/Amphibia.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/race/Amphibia.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/race/Dwarfs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/race/Dwarfs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/race/Elfs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/race/Elfs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/race/Mushrooms.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/race/Mushrooms.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/race/Neutrals.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/race/Orcs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/race/Orcs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/race/Undead.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/race/Undead.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,6 +42,7 @@
       <list>
         <option value="Interface" />
         <option value="Class" />
+        <option value="Enum" />
       </list>
     </option>
   </component>
@@ -208,13 +215,18 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="372" y="23" width="1024" height="804" key="SettingsEditor/0.0.1440.900@0.0.1440.900" timestamp="1594030974013" />
+    <state x="320" y="190" key="Vcs.Push.Dialog.v2" timestamp="1594180620281">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="320" y="190" key="Vcs.Push.Dialog.v2/0.0.1440.900/1440.89.1366.768@0.0.1440.900" timestamp="1594180620281" />
     <state x="473" y="245" key="git4idea.merge.GitMergeDialog" timestamp="1594030065233">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="473" y="245" key="git4idea.merge.GitMergeDialog/0.0.1440.900@0.0.1440.900" timestamp="1594030065233" />
-    <state x="414" y="245" key="git4idea.merge.GitPullDialog" timestamp="1594100133936">
+    <state x="414" y="245" key="git4idea.merge.GitPullDialog" timestamp="1594180674156">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
+    <state x="414" y="245" key="git4idea.merge.GitPullDialog/0.0.1440.900/1440.89.1366.768@0.0.1440.900" timestamp="1594180674156" />
     <state x="414" y="245" key="git4idea.merge.GitPullDialog/0.0.1440.900@0.0.1440.900" timestamp="1594100133936" />
   </component>
 </project>

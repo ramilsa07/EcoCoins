@@ -10,6 +10,7 @@ public class Player {
     private RaceContainer race; // Набор рас, которые в игре у данного игрока
     private ARace raceThisTurn; // Раса в данный ход
     private ListCall location;
+    private int countUnits;
 
     public Player(String name) {
         this.name = name;
