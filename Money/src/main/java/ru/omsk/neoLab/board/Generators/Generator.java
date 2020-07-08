@@ -1,19 +1,82 @@
 package ru.omsk.neoLab.board.Generators;
 
 
+
+import org.slf4j.Logger;
+
+import org.slf4j.LoggerFactory;
 import ru.omsk.neoLab.board.Generators.Calls.Call.*;
+import ru.omsk.neoLab.board.Generators.Calls.ListCall;
+
+import javax.xml.validation.Validator;
+import java.util.Arrays;
+import java.util.Random;
 
 public class Generator implements IGenerator {
 
+    private static final Logger log = LoggerFactory.getLogger(Generator.class);
+
+    private static ACall[][] board;
+    private static int countWater;
+
+    private final static ListCall listCall = new ListCall(new ACall[]{new Earth(),new Mushrooms(),new Mounted(),new Water()});
+    private final Random random = new Random();
+
     @Override
-    public ACall[] generate(int length) {
-        ACall[] board = new ACall[length];
-        for (int i = 0; i < length; i += 4) {
-            board[i] = new Earth();
-            board[i + 1] = new Mushrooms();
-            board[i + 2] = new Mounted();
-            board[i + 3] = new Water();
+    public ACall[][] generate(int height,int width) {
+        long start = System.currentTimeMillis();
+        log.info("Генерация началась");
+        board = new ACall[height][width];
+        //private ACall[][] board;
+
+        countWater = 0;
+        int maxWater = Math.round((float) (height * width) /3);
+
+        for(int i = 0; i < height; i++){
+            for(int j = 0; j < width; j++){
+                board[i][j] = toRandom(maxWater);
+                countWater++;
+            }
         }
+
+        long finish = System.currentTimeMillis();
+        log.info("Генерация закончилась");
+        long timeConsumedMillis = finish - start;
+        System.out.println("Время выполнения: "  + timeConsumedMillis);
         return board;
+    }
+
+    public static void main(String[] args) {
+        Generator generator = new Generator();
+        board = generator.generate(5,4);
+        for(int i = 0; i < 5; i++){
+            System.out.println();
+            for(int j = 0; j < 4; j++){
+                System.out.print(board[i][j].getType() + " ");
+            }
+        }
+    }
+
+    private ACall toRandom(int maxWater){
+
+        ACall call= listCall.getCall(random.nextInt(4));
+        if((call.getType().equals("Water")) && (countWater <= maxWater)){
+            countWater++;
+            return call;
+        }
+        else if(false){
+
+        }
+        else if(false){
+
+        }
+        else {
+            //log.info("Попалась снова вода");
+        }
+        return listCall.getCall(random.nextInt(3));
+    }
+
+    private static void toFind(ACall call){
+
     }
 }

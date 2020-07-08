@@ -8,10 +8,8 @@ public class Board implements IBoard {
 
     private int length;
 
-    private ACall[] board;
+    private ACall[][] board;
     private int[] locationUnit;
-    private int[] accessoryTerritory;
-    private int[] countsUnit;
 
     public Board(int height, int width) {
         this.length = height * width;
@@ -20,20 +18,16 @@ public class Board implements IBoard {
     @Override
     public void generateBoard() {
         IGenerator generator = new Generator();
-        board = generator.generate(length);
+        board = generator.generate(4,3);
 
         locationUnit = new int[length];
-        accessoryTerritory = new int[length];
-        countsUnit = new int[length];
 
         for (int i = 0; i < length; i++) {
             locationUnit[i] = 0;
-            accessoryTerritory[i] = 0;
-            countsUnit[i] = 0;
         }
     }
 
-    public ACall[] getBoard() {
+    public ACall[][] getBoard() {
         return board;
     }
 
@@ -41,11 +35,4 @@ public class Board implements IBoard {
         return locationUnit;
     }
 
-    public int[] getAccessoryTerritory() {
-        return accessoryTerritory;
-    }
-
-    public int[] getCountsUnit() {
-        return countsUnit;
-    }
 }

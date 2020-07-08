@@ -6,5 +6,4 @@ public class Earth extends ACall {
         type = "Earth";
     }
 
-
 }

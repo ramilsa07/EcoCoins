@@ -4,6 +4,9 @@ import ru.omsk.neoLab.race.ARace;
 
 public abstract class ACall {
 
+    public int x;
+    public int y;
+
     protected String type;
     protected String belongs;
     protected int countUnits;
@@ -27,10 +30,12 @@ public abstract class ACall {
         return 2;
     }
 
+    //Принадлежность
     public String getBelongs() {
         return belongs;
     }
 
+    //Количество юнитов на клетке
     public int getCountUnits() {
         return countUnits;
     }

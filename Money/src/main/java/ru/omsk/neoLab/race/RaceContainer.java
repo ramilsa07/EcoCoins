@@ -2,7 +2,8 @@ package ru.omsk.neoLab.race;
 
 import java.util.HashSet;
 
-public class RaceContainer {
+public class RaceContainer{
+
     private HashSet<ARace> setRace = new HashSet<>();
 
     public void addRace(ARace race){
