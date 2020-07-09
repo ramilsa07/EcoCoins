@@ -20,10 +20,6 @@ public class ListCall {
         calls.remove(call);
     }
 
-    public int getSize(){
-        return calls.size();
-    }
-
     public ArrayList<ACall> getCalls() {
         return calls;
     }

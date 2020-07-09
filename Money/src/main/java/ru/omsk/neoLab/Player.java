@@ -3,61 +3,65 @@ package ru.omsk.neoLab;
 import ru.omsk.neoLab.board.Generators.Calls.Call.ACall;
 import ru.omsk.neoLab.board.Generators.Calls.ListCall;
 import ru.omsk.neoLab.race.ARace;
-import ru.omsk.neoLab.race.RaceContainer;
 
 public class Player {
-    private final String name;
-    private int money;
-    private RaceContainer race; // Набор рас, которые в игре у данного игрока
-    private ARace raceThisTurn; // Раса в данный ход
+    private final String nickName;
+    private int countCoin;
+    private ARace race;
+    private ARace raceDecline;
     private ListCall location;
+    private ListCall locationDecline;
     private int countUnits;
 
-    public Player(String name) {
-        this.name = name;
-        money = 0;
-        countUnits = 0;
+    public Player(String nickName) {
+        this.nickName = nickName;
+        this.countCoin = 0;
     }
 
-    public void countMoney(){
-        boolean countEarth = true;
-        boolean countMushrooms = true;
-        boolean countMounted = true;
-        for(ACall call: location.getCalls()) {
-//             if(call.getRace().equals("Elfs"))
-//            // TODO: Придумать условия получения монеток для эльфов
-            money += call.getMoney() ;
+    public void takeRaceFromPool(ARace race) {
+        this.race = race;
+        countUnits = race.getCountUnit();
+    }
+
+    public void addTerritory(ACall call) {
+        if (call.isAbilityCapture(this.race) && call.getBelongs() != this) {
+            countUnits -= call.getRequirementsForCapture() + getCountUnits();
+            location.addCall(call);
         }
-    }
-
-    public void setRace(ARace thisRace){
-        raceThisTurn = thisRace;
-        countUnits += thisRace.getCountUnit();
-        race.addRace(thisRace);
-    }
-
-    public void addTerritory(ACall call){
-        location.addCall(call);
-        countUnits -= call.getRequirementsForCapture();
-        if(call.getBelongs() != this){
+        if (call.getBelongs() != this) {
             countUnits -= call.getCountUnits() + 1;
         }
     }
 
-    public String getName() {
-        return name;
+    public void PickUpUnits(int countUnits) {
+        for (ACall call : location.getCalls()) {
+            this.countUnits += call.getCountUnits() - 1;
+        }
     }
 
-    public int getMoney() {
-        return money;
+    public void makeCoinCount() {
+        for (ACall call : location.getCalls()) {
+            //if(call.getRace().equals("Elfs"))
+            // TODO: Придумать условия получения монеток для эльфов
+            countCoin += call.getMoney();
+        }
     }
 
-    public RaceContainer getRace() {
+    public void walkUnit(ACall call, int countUnits) {
+
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public int getCountCoin() {
+        return countCoin;
+    }
+
+
+    public ARace getRace() {
         return race;
-    }
-
-    public ARace getRaceThisTurn() {
-        return raceThisTurn;
     }
 
     public ListCall getLocation() {
@@ -66,9 +70,5 @@ public class Player {
 
     public int getCountUnits() {
         return countUnits;
-    }
-
-    public void PickUpUnits(int countUnits) {
-        this.countUnits += countUnits;
     }
 }

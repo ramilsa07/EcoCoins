@@ -9,7 +9,7 @@ public class Water extends ACall {
     }
 
     @Override
-    public boolean getAbilityCapture(ARace race) {
+    public boolean isAbilityCapture(ARace race) {
         return race.getNameRace().equals("Amphibia");
     }
 

@@ -8,6 +8,8 @@ public class Mushrooms extends ACall {
 
     @Override
     public int getMoney() {
-        return 2;
+        if (race.getNameRace().equals("Mushrooms"))
+            return 2;
+        return 1;
     }
 }

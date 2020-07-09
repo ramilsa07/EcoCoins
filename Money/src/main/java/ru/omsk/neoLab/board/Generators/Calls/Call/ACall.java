@@ -19,7 +19,7 @@ public abstract class ACall {
     }
 
     //Можно ли забрать территорию
-    public boolean getAbilityCapture(ARace race){
+    public boolean isAbilityCapture(ARace race) {
         return true;
     }
 

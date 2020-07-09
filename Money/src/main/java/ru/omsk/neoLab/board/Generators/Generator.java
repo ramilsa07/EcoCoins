@@ -49,7 +49,7 @@ public class Generator implements IGenerator {
         return board;
     }
 
-    public static void main(String[] args) {
+  /*  public static void main(String[] args) {
         Generator generator = new Generator();
         board = generator.generate(4, 3);
         for (int i = 0; i < 4; i++) {
@@ -58,7 +58,7 @@ public class Generator implements IGenerator {
                 System.out.print(board[i][j].getType() + " ");
             }
         }
-    }
+    }*/
 
     private ACall toRandom(int maxWater){
 

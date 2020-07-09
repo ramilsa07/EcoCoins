@@ -1,109 +1,102 @@
 package ru.omsk.neoLab.selfplay;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.omsk.neoLab.Player;
 import ru.omsk.neoLab.board.IBoard;
 
-import java.io.*;
-import java.net.*;
+import java.util.Queue;
 
 public class SelfPlay {
 
-    static final int PORT = 8081;
-    private final int MAX_PLAYER = 4;
-    private IBoard board;
-    private Player[] players;
+    private static final Logger logger = LoggerFactory.getLogger(SelfPlay.class);
 
-    enum Command {
-        WARNING("warning"),
-        STOP_CLIENT_FROM_SERVER("stop client from server"),
-        STOP_CLIENT("stop client"),
-        STOP_ALL_CLIENTS("stop all clients"),
-        STOP_SERVER("stop server"),
+    private IBoard board;
+    private Queue<Player> players;
+
+    private String nickName = null;
+    private String phase;
+    private int round;
+
+    enum Phases {
+        RACE_CHOICE("race choice"), // Выбор расы
+        CAPTURE_OF_REGIONS("capture of regions"), // захват регионов
+        GETTING_COINS("getting coins"), // Получение монет
         ;
 
-        private final String commandName;
+        private final String phasesName;
 
-        Command(final String commandName) {
-            this.commandName = commandName;
+        Phases(final String phasesName) {
+            this.phasesName = phasesName;
         }
 
-        boolean equalCommand(final String message) {
-            return commandName.equals(message);
+        boolean equalPhase(final String phase) {
+            return phasesName.equals(phase);
         }
+    }
 
-        static boolean isCommandMessage(final String message) {
-            for (final Command command : values()) {
-                if (command.equalCommand(message)) {
-                    return true;
+    public void Game(IBoard board) {
+        board.generateBoard();
+        while (true) {
+            if (round == 1) {
+                phase = "race choice";
+                while (Phases.RACE_CHOICE.equalPhase(phase)) {
+                    if (Phases.RACE_CHOICE.equalPhase("race choice")) {
+                        logger.info("Началась фаза выбора расы");
+                        if (players.element().getRace() != null) {
+                            phase = "capture of regions";
+                        }
+                    }
                 }
             }
-            return false;
+            while (Phases.CAPTURE_OF_REGIONS.equalPhase(phase)) {
+                logger.info("Началась фаза захвата территории");
+                if (true) {
+                    phase = "getting coins";
+                }
+            }
+            while (Phases.GETTING_COINS.equalPhase(phase)) {
+                logger.info("Началась фаза c Сбор Монет");
+                changeCourse(players.element());
+                phase = "";
+            }
+            if (round == 10) {
+                toEndGame();
+            }
         }
     }
-    private class ServerSomething extends Thread {
-
-        private final SelfPlay server;
-        private final Socket socket;
-        private final BufferedReader in; // поток чтения из сокета
-        private final BufferedWriter out; // поток записи в сокет
-        private String nickName = null;
-
-        /**
-         * Для общения с клиентом необходим сокет (адресные данные)
-         *
-         * @param server сервер
-         * @param socket сокет
-         */
-        private ServerSomething(final SelfPlay server, final Socket socket) throws IOException {
-            this.server = server;
-            this.socket = socket;
-            // если потоку ввода/вывода приведут к генерированию искдючения, оно проброситься дальше
-            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-        }
 
 
-        @Override
-        public void run() {
-            /*try {
-                // первое сообщение отправленное сюда - это nickName
-                nickName = in.readLine();
-                for (final ServerSomething ss : server.serverList) {
-                    if (!ss.nickName.equals(nickName)) {
-                        continue;
-                    }
-                    //processDuplicatedNickName();
-                    return;
-                }
-                //processUniqueNickName();
-                while (true) {
-                    if (!processMessage()) {
-                        break;
-                    }
-                }
-            } catch (final IOException e) {
-                this.downService();
-            }*/
-        }
-
-        public void toAppointBoard() {
-
-        }
-
-        public void StartGame() {
-
-        }
-
-        public void toGame() {
-
-        }
-
-        public void Validation() {
-
-        }
-
-        public void toEndGame() {
-
-        }
+    private void changeCourse(Player player) {
+        players.poll();
+        players.add(player);
     }
+
+    public void toAppointBoard() {
+
+    }
+
+    public void toEndGame() {
+
+    }
+
+   /* public void StartGame() throws IOException{
+       System.out.println(String.format("Server started, port: %d", PORT));
+        try (final ServerSocket serverSocket = new ServerSocket(PORT)) {
+            // serverSocket.setSoTimeout(1000);
+            while (true) { // приложение с помощью System.exit() закрывается по команде от клиента
+                // Блокируется до возникновения нового соединения
+                final Socket socket = serverSocket.accept();
+                try {
+                    new Game(this, socket, null,null).start();
+                } catch (final IOException e) {
+                    // Если завершится неудачей, закрывается сокет,
+                    // в противном случае, нить закроет его:
+                    socket.close();
+                }
+            }
+        } catch (final BindException e) {
+            e.printStackTrace();
+        }
+    }*/
 }
