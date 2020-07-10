@@ -64,9 +64,9 @@ public class ARaceTest {
 
         ARace race = new Amphibia();
 
-        String nameRace = race.getNameRace();
+        int countUnit = race.getCountUnit();
 
-        Assert.assertEquals(nameRace, "Amphibia");
+        Assert.assertEquals(countUnit, 6);
     }
 
     @Test
@@ -74,9 +74,9 @@ public class ARaceTest {
 
         ARace race = new Amphibia();
 
-        String nameRace = race.getNameRace();
+        int countUnit = race.getCountUnit();
 
-        Assert.assertEquals(nameRace, "Amphibia");
+        Assert.assertEquals(countUnit, 5);
     }
 
     @Test
@@ -84,9 +84,9 @@ public class ARaceTest {
 
         ARace race = new Amphibia();
 
-        String nameRace = race.getNameRace();
+        int countUnit = race.getCountUnit();
 
-        Assert.assertEquals(nameRace, "Amphibia");
+        Assert.assertEquals(countUnit, 6);
 
     }
 
@@ -95,9 +95,9 @@ public class ARaceTest {
 
         ARace race = new Amphibia();
 
-        String nameRace = race.getNameRace();
+        int countUnit = race.getCountUnit();
 
-        Assert.assertEquals(nameRace, "Amphibia");
+        Assert.assertEquals(countUnit, 6);
 
     }
 
@@ -106,9 +106,9 @@ public class ARaceTest {
 
         ARace race = new Amphibia();
 
-        String nameRace = race.getNameRace();
+        int countUnit = race.getCountUnit();
 
-        Assert.assertEquals(nameRace, "Amphibia");
+        Assert.assertEquals(countUnit, 5);
 
     }
 
@@ -117,9 +117,9 @@ public class ARaceTest {
 
         ARace race = new Amphibia();
 
-        String nameRace = race.getNameRace();
+        int countUnit = race.getCountUnit();
 
-        Assert.assertEquals(nameRace, "Amphibia");
+        Assert.assertEquals(countUnit, 11);
 
     }
 
@@ -129,6 +129,7 @@ public class ARaceTest {
 
     @Test
     public void getRequirementsForCapture() {
+
     }
 
     @Test

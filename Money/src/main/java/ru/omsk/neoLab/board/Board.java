@@ -1,13 +1,18 @@
 package ru.omsk.neoLab.board;
 
-public class Board extends ABoard {
+import ru.omsk.neoLab.board.Generators.Calls.Call.ACall;
+import ru.omsk.neoLab.board.Generators.Generator;
+import ru.omsk.neoLab.board.Generators.IGenerator;
 
-    private static volatile ABoard instance;
+public class Board {
+
+    private static volatile Board instance;
+    protected ACall[][] board;
 
     private Board() {
     }
 
-    public static synchronized ABoard GetInstance() {
+    public static synchronized Board GetInstance() {
         if (instance == null) {
             instance = new Board();
             instance.generateBoard(4, 3);
@@ -15,4 +20,12 @@ public class Board extends ABoard {
         return instance;
     }
 
+    private void generateBoard(int height, int width) {
+        IGenerator generator = new Generator();
+        board = generator.generate(height, width);
+    }
+
+    public ACall[][] getBoard() {
+        return board;
+    }
 }
