@@ -27,10 +27,8 @@ public class Generator implements IGenerator {
 
     @Override
     public ACall[][] generate(int height, int width) {
-        long start = System.currentTimeMillis();
         log.info("Генерация началась");
         ACall[][] board = new ACall[height][width];
-        //private ACall[][] board;
 
         countWater = 0;
         int maxWater = Math.round((float) (height * width) / 3);
@@ -38,13 +36,13 @@ public class Generator implements IGenerator {
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 board[i][j] = toRandom(maxWater);
+                board[i][j].x = i;
+                board[i][j].y = j;
             }
         }
 
         long finish = System.currentTimeMillis();
         log.info("Генерация закончилась");
-        long timeConsumedMillis = finish - start;
-        System.out.println("Время выполнения: "  + timeConsumedMillis);
         return board;
     }
 

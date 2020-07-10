@@ -5,6 +5,9 @@ import ru.omsk.neoLab.race.ARace;
 
 public abstract class ACall {
 
+    public int x;
+    public int y;
+
     protected String type;
     protected Player belongs;
     protected int countUnits; // число юнитов стоящих на этой территории
