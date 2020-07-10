@@ -27,9 +27,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="048dcac8-1b67-47e6-ab8e-c7f02b934cae" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/PlayerService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dbnavigator.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -264,11 +263,19 @@
     </state>
     <state width="1398" height="245" key="GridCell.Tab.0.right/0.0.1440.900/1440.83.1366.768@0.0.1440.900" timestamp="1594294354937" />
     <state width="1398" height="245" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1594097310342" />
-    <state x="308" y="192" key="IDE.errors.dialog" timestamp="1594351028600">
+    <state x="308" y="192" key="IDE.errors.dialog" timestamp="1594369174532">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="308" y="192" key="IDE.errors.dialog/0.0.1440.900/1440.83.1366.768@0.0.1440.900" timestamp="1594351028600" />
+    <state x="308" y="192" key="IDE.errors.dialog/0.0.1440.900/1440.83.1366.768@0.0.1440.900" timestamp="1594369174532" />
     <state x="308" y="192" key="IDE.errors.dialog/0.0.1440.900@0.0.1440.900" timestamp="1594321422587" />
+    <state x="144" y="79" key="MergeDialog" timestamp="1594369163068">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="144" y="79" key="MergeDialog/0.0.1440.900/1440.83.1366.768@0.0.1440.900" timestamp="1594369163068" />
+    <state x="358" y="218" key="MultipleFileMergeDialog" timestamp="1594369163108">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="358" y="218" key="MultipleFileMergeDialog/0.0.1440.900/1440.83.1366.768@0.0.1440.900" timestamp="1594369163108" />
     <state x="503" y="160" key="RollbackChangesDialog" timestamp="1594100112912">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
