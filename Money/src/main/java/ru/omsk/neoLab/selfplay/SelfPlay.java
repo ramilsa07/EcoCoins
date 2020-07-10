@@ -3,7 +3,8 @@ package ru.omsk.neoLab.selfplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.omsk.neoLab.Player;
-import ru.omsk.neoLab.board.IBoard;
+import ru.omsk.neoLab.board.ABoard;
+import ru.omsk.neoLab.race.RaceContainer;
 
 import java.util.Queue;
 
@@ -11,12 +12,14 @@ public class SelfPlay {
 
     private static final Logger logger = LoggerFactory.getLogger(SelfPlay.class);
 
-    private IBoard board;
+    private ABoard board;
     private Queue<Player> players;
 
     private String nickName = null;
     private String phase;
     private int round;
+
+    private RaceContainer race = new RaceContainer();
 
     enum Phases {
         RACE_CHOICE("race choice"), // Выбор расы
@@ -35,8 +38,8 @@ public class SelfPlay {
         }
     }
 
-    public void Game(IBoard board) {
-        board.generateBoard();
+    public void Game(ABoard board) {
+        this.board = board;
         while (true) {
             if (round == 1) {
                 phase = "race choice";

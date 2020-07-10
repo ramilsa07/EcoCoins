@@ -1,38 +1,18 @@
 package ru.omsk.neoLab.board;
 
-import ru.omsk.neoLab.board.Generators.Calls.Call.ACall;
-import ru.omsk.neoLab.board.Generators.Generator;
-import ru.omsk.neoLab.board.Generators.IGenerator;
+public class Board extends ABoard {
 
-public class Board implements IBoard {
+    private static volatile ABoard instance;
 
-    private int length;
-
-    private ACall[][] board;
-    private int[] locationUnit;
-
-    public Board(int height, int width) {
-        this.length = height * width;
+    private Board() {
     }
 
-    @Override
-    public void generateBoard() {
-        IGenerator generator = new Generator();
-        board = generator.generate(4,3);
-
-        locationUnit = new int[length];
-
-        for (int i = 0; i < length; i++) {
-            locationUnit[i] = 0;
+    public static synchronized ABoard GetInstance() {
+        if (instance == null) {
+            instance = new Board();
+            instance.generateBoard(4, 3);
         }
-    }
-
-    public ACall[][] getBoard() {
-        return board;
-    }
-
-    public int[] getLocationUnit() {
-        return locationUnit;
+        return instance;
     }
 
 }

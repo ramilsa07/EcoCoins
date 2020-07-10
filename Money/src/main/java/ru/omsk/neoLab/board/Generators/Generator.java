@@ -13,7 +13,6 @@ public class Generator implements IGenerator {
 
     private static final Logger log = LoggerFactory.getLogger(Generator.class);
 
-    private static ACall[][] board;
     private static int countWater;
 
     private final static List<ACall> listCall = new ArrayList<ACall>();
@@ -30,7 +29,7 @@ public class Generator implements IGenerator {
     public ACall[][] generate(int height, int width) {
         long start = System.currentTimeMillis();
         log.info("Генерация началась");
-        board = new ACall[height][width];
+        ACall[][] board = new ACall[height][width];
         //private ACall[][] board;
 
         countWater = 0;
