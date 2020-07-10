@@ -28,10 +28,8 @@
   <component name="ChangeListManager">
     <list default="true" id="048dcac8-1b67-47e6-ab8e-c7f02b934cae" name="Default Changelist" comment="">
       <change afterPath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/PlayerService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Money.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Money.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/race/RaceContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/race/RaceContainer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -172,7 +170,14 @@
       <option name="project" value="LOCAL" />
       <updated>1594191582932</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="[*] Мелкие ошибки">
+      <created>1594356416604</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1594356416604</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -202,7 +207,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="[+/*] Добавлены фазы игры и добавлено поле alive для рас" />
     <MESSAGE value="[*] Добавлен класс Player, исправлены недоработки с территориями и расами" />
-    <option name="LAST_COMMIT_MESSAGE" value="[*] Добавлен класс Player, исправлены недоработки с территориями и расами" />
+    <MESSAGE value="[*] Мелкие ошибки" />
+    <option name="LAST_COMMIT_MESSAGE" value="[*] Мелкие ошибки" />
   </component>
   <component name="WindowStateProjectService">
     <state x="320" y="98" key="#Plugins" timestamp="1594098745125">
@@ -217,10 +223,10 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="184" y="112" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1440.900@0.0.1440.900" timestamp="1594016761109" />
-    <state x="933" y="167" key="#com.intellij.ide.util.MemberChooser" timestamp="1594351366131">
+    <state x="933" y="167" key="#com.intellij.ide.util.MemberChooser" timestamp="1594356823705">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="933" y="167" key="#com.intellij.ide.util.MemberChooser/0.0.1440.900/1440.83.1366.768@0.0.1440.900" timestamp="1594351366131" />
+    <state x="933" y="167" key="#com.intellij.ide.util.MemberChooser/0.0.1440.900/1440.83.1366.768@0.0.1440.900" timestamp="1594356823705" />
     <state x="533" y="173" key="#com.intellij.ide.util.MemberChooser/0.0.1440.900/1440.89.1366.768@0.0.1440.900" timestamp="1594185487892" />
     <state x="933" y="167" key="#com.intellij.ide.util.MemberChooser/0.0.1440.900/1440.92.1366.768@0.0.1440.900" timestamp="1594190891068" />
     <state x="533" y="173" key="#com.intellij.ide.util.MemberChooser/0.0.1440.900@0.0.1440.900" timestamp="1594100976640" />
@@ -228,10 +234,11 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="408" y="193" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1440.900@0.0.1440.900" timestamp="1594098612112" />
-    <state x="297" y="25" key="CommitChangelistDialog2" timestamp="1594191582809">
+    <state x="297" y="25" key="CommitChangelistDialog2" timestamp="1594356416375">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="297" y="25" key="CommitChangelistDialog2/0.0.1440.900/1440.115.1366.745@0.0.1440.900" timestamp="1594191582809" />
+    <state x="297" y="25" key="CommitChangelistDialog2/0.0.1440.900/1440.83.1366.768@0.0.1440.900" timestamp="1594356416375" />
     <state x="297" y="25" key="CommitChangelistDialog2/0.0.1440.900/1440.89.1366.768@0.0.1440.900" timestamp="1594184788106" />
     <state x="144" y="79" key="DiffContextDialog" timestamp="1594100102883">
       <screen x="0" y="0" width="1440" height="900" />
@@ -270,20 +277,21 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="372" y="23" width="1024" height="804" key="SettingsEditor/0.0.1440.900@0.0.1440.900" timestamp="1594030974013" />
-    <state x="320" y="190" key="Vcs.Push.Dialog.v2" timestamp="1594191591557">
+    <state x="320" y="190" key="Vcs.Push.Dialog.v2" timestamp="1594356426357">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="320" y="190" key="Vcs.Push.Dialog.v2/0.0.1440.900/1440.115.1366.745@0.0.1440.900" timestamp="1594191591557" />
+    <state x="320" y="190" key="Vcs.Push.Dialog.v2/0.0.1440.900/1440.83.1366.768@0.0.1440.900" timestamp="1594356426357" />
     <state x="320" y="190" key="Vcs.Push.Dialog.v2/0.0.1440.900/1440.89.1366.768@0.0.1440.900" timestamp="1594184861540" />
     <state x="473" y="245" key="git4idea.merge.GitMergeDialog" timestamp="1594030065233">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="473" y="245" key="git4idea.merge.GitMergeDialog/0.0.1440.900@0.0.1440.900" timestamp="1594030065233" />
-    <state x="414" y="245" key="git4idea.merge.GitPullDialog" timestamp="1594351951742">
+    <state x="414" y="245" key="git4idea.merge.GitPullDialog" timestamp="1594356438736">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="414" y="245" key="git4idea.merge.GitPullDialog/0.0.1440.900/1440.115.1366.745@0.0.1440.900" timestamp="1594195126458" />
-    <state x="414" y="245" key="git4idea.merge.GitPullDialog/0.0.1440.900/1440.83.1366.768@0.0.1440.900" timestamp="1594351951742" />
+    <state x="414" y="245" key="git4idea.merge.GitPullDialog/0.0.1440.900/1440.83.1366.768@0.0.1440.900" timestamp="1594356438736" />
     <state x="414" y="245" key="git4idea.merge.GitPullDialog/0.0.1440.900/1440.89.1366.768@0.0.1440.900" timestamp="1594184839847" />
     <state x="414" y="245" key="git4idea.merge.GitPullDialog/0.0.1440.900/1440.92.1366.768@0.0.1440.900" timestamp="1594196650036" />
     <state x="414" y="245" key="git4idea.merge.GitPullDialog/0.0.1440.900@0.0.1440.900" timestamp="1594321037840" />

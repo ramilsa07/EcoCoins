@@ -42,7 +42,7 @@ public class Player {
     public void makeCoinCount() {
         for (ACall call : location.getCalls()) {
             //if(call.getRace().equals("Elfs"))
-            // TODO: Придумать условия получения монеток для эльфов
+            // TODO: Придумать условие получения монеток для эльфов
             countCoin += call.getMoney();
         }
     }
@@ -65,5 +65,9 @@ public class Player {
 
     public int getCountUnits() {
         return countUnits;
+    }
+
+    public void setRaceDecline(ARace raceDecline) {
+        this.raceDecline = raceDecline;
     }
 }
