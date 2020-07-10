@@ -18,6 +18,10 @@ public class RaceContainer{
         setRace.remove(race);
     }
 
+    public HashSet<ARace> getSetRace() {
+        return setRace;
+    }
+
     public boolean contains(String race){
        // setRace.contains(race);
         return true;

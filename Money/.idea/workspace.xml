@@ -16,21 +16,22 @@
         <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
       </path>
     </expand>
-    <select />
+    <select>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="BRANCH:origin/Develop" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </select>
   </component>
   <component name="ChangeListManager">
     <list default="true" id="048dcac8-1b67-47e6-ab8e-c7f02b934cae" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/PlayerService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/Money.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Money.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_logging_log4j_log4j_api_2_13_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_logging_log4j_log4j_core_2_13_3.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/board/Generators/Calls/Call/ACall.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/board/Generators/Calls/Call/ACall.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/board/Generators/Calls/Call/Mushrooms.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/board/Generators/Calls/Call/Mushrooms.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/race/ARace.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/race/ARace.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/race/Elfs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/race/Elfs.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/race/Mushrooms.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/race/Mushrooms.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/selfplay/SelfPlay.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/selfplay/SelfPlay.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/race/RaceContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/race/RaceContainer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,8 +42,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
-        <option value="Class" />
         <option value="Enum" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -53,6 +54,13 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="hiddenUrls">
+      <set>
+        <option value="https://github.com/ramilsa07/EcoCoins.git" />
+      </set>
+    </option>
   </component>
   <component name="MavenImportPreferences">
     <option name="importingSettings">
@@ -65,7 +73,9 @@
     <option name="jreName" value="openjdk-14" />
   </component>
   <component name="ProjectId" id="1eIc2i1XF47erwwvXm7qDb3be82" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
@@ -170,7 +180,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/Develop" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -195,9 +217,10 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="184" y="112" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1440.900@0.0.1440.900" timestamp="1594016761109" />
-    <state x="933" y="167" key="#com.intellij.ide.util.MemberChooser" timestamp="1594190891068">
+    <state x="933" y="167" key="#com.intellij.ide.util.MemberChooser" timestamp="1594351366131">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
+    <state x="933" y="167" key="#com.intellij.ide.util.MemberChooser/0.0.1440.900/1440.83.1366.768@0.0.1440.900" timestamp="1594351366131" />
     <state x="533" y="173" key="#com.intellij.ide.util.MemberChooser/0.0.1440.900/1440.89.1366.768@0.0.1440.900" timestamp="1594185487892" />
     <state x="933" y="167" key="#com.intellij.ide.util.MemberChooser/0.0.1440.900/1440.92.1366.768@0.0.1440.900" timestamp="1594190891068" />
     <state x="533" y="173" key="#com.intellij.ide.util.MemberChooser/0.0.1440.900@0.0.1440.900" timestamp="1594100976640" />
@@ -214,26 +237,31 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="144" y="79" key="DiffContextDialog/0.0.1440.900@0.0.1440.900" timestamp="1594100102883" />
-    <state width="1398" height="245" key="GridCell.Tab.0.bottom" timestamp="1594097310343">
+    <state width="1398" height="245" key="GridCell.Tab.0.bottom" timestamp="1594294354938">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
+    <state width="1398" height="245" key="GridCell.Tab.0.bottom/0.0.1440.900/1440.83.1366.768@0.0.1440.900" timestamp="1594294354938" />
     <state width="1398" height="245" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1594097310343" />
-    <state width="1398" height="245" key="GridCell.Tab.0.center" timestamp="1594097310342">
+    <state width="1398" height="245" key="GridCell.Tab.0.center" timestamp="1594294354936">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
+    <state width="1398" height="245" key="GridCell.Tab.0.center/0.0.1440.900/1440.83.1366.768@0.0.1440.900" timestamp="1594294354936" />
     <state width="1398" height="245" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1594097310342" />
-    <state width="1398" height="245" key="GridCell.Tab.0.left" timestamp="1594097310341">
+    <state width="1398" height="245" key="GridCell.Tab.0.left" timestamp="1594294354935">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
+    <state width="1398" height="245" key="GridCell.Tab.0.left/0.0.1440.900/1440.83.1366.768@0.0.1440.900" timestamp="1594294354935" />
     <state width="1398" height="245" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1594097310341" />
-    <state width="1398" height="245" key="GridCell.Tab.0.right" timestamp="1594097310342">
+    <state width="1398" height="245" key="GridCell.Tab.0.right" timestamp="1594294354937">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
+    <state width="1398" height="245" key="GridCell.Tab.0.right/0.0.1440.900/1440.83.1366.768@0.0.1440.900" timestamp="1594294354937" />
     <state width="1398" height="245" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1594097310342" />
-    <state x="308" y="192" key="IDE.errors.dialog" timestamp="1594098858842">
+    <state x="308" y="192" key="IDE.errors.dialog" timestamp="1594351028600">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="308" y="192" key="IDE.errors.dialog/0.0.1440.900@0.0.1440.900" timestamp="1594098858842" />
+    <state x="308" y="192" key="IDE.errors.dialog/0.0.1440.900/1440.83.1366.768@0.0.1440.900" timestamp="1594351028600" />
+    <state x="308" y="192" key="IDE.errors.dialog/0.0.1440.900@0.0.1440.900" timestamp="1594321422587" />
     <state x="503" y="160" key="RollbackChangesDialog" timestamp="1594100112912">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
@@ -251,12 +279,13 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="473" y="245" key="git4idea.merge.GitMergeDialog/0.0.1440.900@0.0.1440.900" timestamp="1594030065233" />
-    <state x="414" y="245" key="git4idea.merge.GitPullDialog" timestamp="1594196650036">
+    <state x="414" y="245" key="git4idea.merge.GitPullDialog" timestamp="1594351951742">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="414" y="245" key="git4idea.merge.GitPullDialog/0.0.1440.900/1440.115.1366.745@0.0.1440.900" timestamp="1594195126458" />
+    <state x="414" y="245" key="git4idea.merge.GitPullDialog/0.0.1440.900/1440.83.1366.768@0.0.1440.900" timestamp="1594351951742" />
     <state x="414" y="245" key="git4idea.merge.GitPullDialog/0.0.1440.900/1440.89.1366.768@0.0.1440.900" timestamp="1594184839847" />
     <state x="414" y="245" key="git4idea.merge.GitPullDialog/0.0.1440.900/1440.92.1366.768@0.0.1440.900" timestamp="1594196650036" />
-    <state x="414" y="245" key="git4idea.merge.GitPullDialog/0.0.1440.900@0.0.1440.900" timestamp="1594100133936" />
+    <state x="414" y="245" key="git4idea.merge.GitPullDialog/0.0.1440.900@0.0.1440.900" timestamp="1594321037840" />
   </component>
 </project>

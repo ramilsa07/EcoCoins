@@ -47,10 +47,6 @@ public class Player {
         }
     }
 
-    public void walkUnit(ACall call, int countUnits) {
-
-    }
-
     public String getNickName() {
         return nickName;
     }
@@ -58,7 +54,6 @@ public class Player {
     public int getCountCoin() {
         return countCoin;
     }
-
 
     public ARace getRace() {
         return race;
