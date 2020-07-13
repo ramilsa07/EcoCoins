@@ -10,7 +10,7 @@ public abstract class ACell {
 
     protected String type;
     protected int coin = 1;
-    protected int unitCapture = 2;
+    protected int tokensCapture = 2;
     protected boolean abilityCapture = true;
 
     //Информация по принадлежности к игроку
@@ -26,8 +26,8 @@ public abstract class ACell {
         return coin;
     }
 
-    public int getUnitCapture() {
-        return unitCapture;
+    public int getTokensCapture() {
+        return tokensCapture;
     }
 
     public boolean getAbilityCapture() {

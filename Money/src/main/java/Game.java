@@ -25,9 +25,9 @@ public class Game {
         cell = aBoard[1][1];
         cell.setBelongs(player);
         player.getLocation().add(cell);
-        GameService gameService = GameService.GetInstance();
-        for (ACell cells : gameService.findOutWherePlayerCanGo(board, player)) {
-            System.out.print(cells.getType() + " --> " + cells.getX() + "-" + cells.getY() + " ");
-        }
+//        GameService gameService = GameService.GetInstance();
+//        for (ACell cells : gameService.findOutWherePlayerCanGo(board, player)) {
+//            System.out.print(cells.getType() + " --> " + cells.getX() + "-" + cells.getY() + " ");
+//        }
     }
 }

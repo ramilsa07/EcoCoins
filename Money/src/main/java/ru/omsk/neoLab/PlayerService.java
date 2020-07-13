@@ -1,42 +1,54 @@
 package ru.omsk.neoLab;
 
 import ru.omsk.neoLab.board.Board;
-import ru.omsk.neoLab.board.Generators.Calls.Call.ACall;
+import ru.omsk.neoLab.board.Generators.Cells.Сell.ACell;
 import ru.omsk.neoLab.race.ARace;
-import ru.omsk.neoLab.race.RaceContainer;
+
+import java.util.HashSet;
 
 public class PlayerService {
 
-    public boolean raceChoice(RaceContainer container, String raceName, Player player) {
-        for (ARace race : container.getSetRace()) {
-            if (race.getNameRace().equals(raceName)) {
-                player.takeRaceFromPool(race);
-                container.removeElement(race);
-                return true;
-            }
+    // Массивы, для вычисления допустимых ходов
+    private final int[] calci = new int[]{-1, -1, -1, 0, 0, 1, 1, 1};
+    private final int[] calcj = new int[]{-1, 0, 1, -1, 1, -1, 0, 1};
+
+    private final HashSet<ACell> possibleCellsCapture = new HashSet<ACell>();
+
+
+    public void raceChoice(HashSet<ARace> racesPool, ARace race, Player player) {
+        if (Validator.isCheckRaceInGame(race, racesPool)) {
+            player.takeRaceFromPool(race);
+            racesPool.remove(race);
+            LoggerGame.logChooseRaceTrue(player);
         }
-        return false;
+        LoggerGame.logChooseRaceFalse();
     }
 
-    public boolean regionCapture(Board board, Player player, int x, int y) {
-        if (player.getLocation() == null && (x == 0 || x == 3 || y == 0 || y == 2)) {
-            // Выбираем по краям карты и не воду
-            if (board.getCall(x, y).equals("Water") && !player.getRace().equals("Amphibia")) {
-                return false; // тут можно в логе выдать ошибку выбора
-            }
-            player.addTerritory(board.getCall(x, y));
-            return true;
+    public void findOutWherePlayerCanGo(ACell[][] board) {
+        possibleCellsCapture.clear();
+        for (int i = 0; i < board[0].length; i++) {
+            possibleCellsCapture.add(board[0][i]);
+            possibleCellsCapture.add(board[board.length - 1][i]);
         }
-        if (player.getLocation() != null) {
-            for (ACall call : player.getLocation().getCalls()) {
-                if (((call.getX() == x - 1) || (call.getX() == x) || (call.getX() == x + 1)) &&
-                        ((call.getY() == y - 1) || (call.getY() == y) || (call.getY() == y + 1))) {
-                    player.addTerritory(board.getCall(x, y));
-                    return true;
+        for (int i = 1; i < board.length - 1; i++) {
+            possibleCellsCapture.add(board[i][0]);
+            possibleCellsCapture.add(board[i][board.length - 1]);
+        }
+    }
+
+    public HashSet<ACell> findOutWherePlayerCanGo(Board board, Player player) {
+        for (ACell cell : player.getLocation().getCells()) {
+            for (int i = 0; i < 8; i++) {
+                int x = cell.getX() + calci[i];
+                int y = cell.getY() + calcj[i];
+                if (Validator.isCheckingOutputOverBoard(x, y, board.getHeight(), board.getWidth())) {
+                    if (!Validator.isCheckingBelongsCell(player, board.getBoard()[x][y])) {
+                        possibleCellsCapture.add(board.getBoard()[x][y]);
+                    }
                 }
             }
         }
-        return false;
+        return possibleCellsCapture;
     }
 
     public void unitDistribution(Player player) {
