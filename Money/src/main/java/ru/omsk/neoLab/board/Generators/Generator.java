@@ -3,10 +3,8 @@ package ru.omsk.neoLab.board.Generators;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.omsk.neoLab.board.Generators.Calls.Call.*;
+import ru.omsk.neoLab.board.Generators.Cells.Сell.*;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class Generator implements IGenerator {
@@ -15,20 +13,13 @@ public class Generator implements IGenerator {
 
     private static int countWater;
 
-    private final static List<ACall> listCall = new ArrayList<ACall>();
     private final Random random = new Random();
 
-    static {
-        listCall.add(new Earth());
-        listCall.add(new Mushrooms());
-        listCall.add(new Mounted());
-        listCall.add(new Water());
-    }
 
     @Override
-    public ACall[][] generate(int height, int width) {
+    public ACell[][] generate(int height, int width) {
         log.info("Генерация началась");
-        ACall[][] board = new ACall[height][width];
+        ACell[][] board = new ACell[height][width];
 
         countWater = 0;
         int maxWater = Math.round((float) (height * width) / 3);
@@ -36,8 +27,9 @@ public class Generator implements IGenerator {
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 board[i][j] = toRandom(maxWater);
-                board[i][j].x = i;
-                board[i][j].y = j;
+                board[i][j].setX(i);
+                board[i][j].setY(j);
+                log.info(board[i][j].getType() + "-- Ячейка " + board[i][j].getX() + " - " + board[i][j].getY());
             }
         }
 
@@ -57,20 +49,45 @@ public class Generator implements IGenerator {
         }
     }*/
 
-    private ACall toRandom(int maxWater){
+    private ACell toRandom(int maxWater) {
 
-        ACall call = listCall.get(random.nextInt(4));
-        if ((call.getType().equals("Water")) && (countWater < maxWater)) {
+        ACell cell = null;
+        switch (random.nextInt(4)) {
+            case 0:
+                cell = new Earth();
+                break;
+            case 1:
+                cell = new Mushrooms();
+                break;
+            case 2:
+                cell = new Mounted();
+                break;
+            case 3:
+                cell = new Water();
+                break;
+        }
+        if ((cell.getType().equals("Water")) && (countWater < maxWater)) {
             countWater++;
             log.info("Кол - во воды - " + countWater);
-            return call;
-        } else if (call.getType().equals("Water")) {
+            return cell;
+        } else if (cell.getType().equals("Water")) {
             log.info("Попалась снова вода");
         }
-        return listCall.get(random.nextInt(3));
+        switch (random.nextInt(3)) {
+            case 0:
+                cell = new Earth();
+                break;
+            case 1:
+                cell = new Mushrooms();
+                break;
+            case 2:
+                cell = new Mounted();
+                break;
+        }
+        return cell;
     }
 
-    private static void toFind(ACall call){
+    private static void toFind(ACell call) {
 
 
     }

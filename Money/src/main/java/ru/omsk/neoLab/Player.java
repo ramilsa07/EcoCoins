@@ -1,17 +1,20 @@
 package ru.omsk.neoLab;
 
-import ru.omsk.neoLab.board.Generators.Calls.Call.ACall;
-import ru.omsk.neoLab.board.Generators.Calls.ListCall;
+import ru.omsk.neoLab.board.Generators.Cells.ListCell;
+import ru.omsk.neoLab.board.Generators.Cells.Сell.ACell;
 import ru.omsk.neoLab.race.ARace;
 
 public class Player {
+
     private final String nickName;
     private int countCoin;
+    private int countTokens;
+
     private ARace race;
+    private ListCell location = new ListCell();
+
     private ARace raceDecline;
-    private ListCall location;
-    private ListCall locationDecline;
-    private int countUnits;
+    private ListCell locationDecline;
 
     public Player(String nickName) {
         this.nickName = nickName;
@@ -20,30 +23,30 @@ public class Player {
 
     public void takeRaceFromPool(ARace race) {
         this.race = race;
-        countUnits = race.getCountUnit();
+        countTokens = race.getCountTokens();
     }
 
-    public void addTerritory(ACall call) {
-        if (call.isAbilityCapture(this.race) && call.getBelongs() != this) {
-            countUnits -= call.getRequirementsForCapture() + getCountUnits();
-            location.addCall(call);
+    public void addTerritory(ACell cell) {
+        if (cell.getAbilityCapture()) {
+            countTokens -= cell.getCountUnits() + getCountTokens();
+            location.add(cell);
         }
-        if (call.getBelongs() != this) {
-            countUnits -= call.getCountUnits() + 1;
+        if (cell.getBelongs() != this) {
+            countTokens -= cell.getCountUnits() + 1;
         }
     }
 
     public void PickUpUnits(int countUnits) {
-        for (ACall call : location.getCalls()) {
-            this.countUnits += call.getCountUnits() - 1;
+        for (ACell call : location.getCells()) {
+            this.countTokens += call.getCountUnits() - 1;
         }
     }
 
     public void makeCoinCount() {
-        for (ACall call : location.getCalls()) {
+        for (ACell call : location.getCells()) {
             //if(call.getRace().equals("Elfs"))
             // TODO: Придумать условие получения монеток для эльфов
-            countCoin += call.getMoney();
+            countCoin += call.getCoin();
         }
     }
 
@@ -59,15 +62,23 @@ public class Player {
         return race;
     }
 
-    public ListCall getLocation() {
+    public ListCell getLocation() {
         return location;
     }
 
-    public int getCountUnits() {
-        return countUnits;
+    public int getCountTokens() {
+        return countTokens;
     }
 
     public void setRaceDecline(ARace raceDecline) {
         this.raceDecline = raceDecline;
+    }
+
+    public void setRace(ARace race) {
+        this.race = race;
+    }
+
+    public void setLocation(ListCell location) {
+        this.location = location;
     }
 }

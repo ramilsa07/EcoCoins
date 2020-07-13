@@ -1,7 +1,5 @@
 package ru.omsk.neoLab.race;
 
-import ru.omsk.neoLab.board.Generators.Calls.Call.ACall;
-
 public class Orcs extends ARace {
 
     public Orcs() {
@@ -10,8 +8,8 @@ public class Orcs extends ARace {
         alive = true;
     }
 
-    @Override
-    public int getRequirementsForCapture(ACall call){
+    /*@Override
+    public int getRequirementsForCapture(ACell call){
         return call.getRequirementsForCapture() - 1;
-    }
+    }*/
 }
