@@ -5,8 +5,8 @@ import ru.omsk.neoLab.race.ARace;
 
 public abstract class ACall {
 
-    public int x;
-    public int y;
+    private int x;
+    private int y;
 
     protected String type;
     protected Player belongs;
@@ -53,5 +53,13 @@ public abstract class ACall {
 
     public void setRace(ARace race) {
         this.race = race;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 }

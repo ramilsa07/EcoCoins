@@ -24,18 +24,25 @@ public class Player {
     }
 
     public void addTerritory(ACall call) {
-        if (call.isAbilityCapture(this.race) && call.getBelongs() != this) {
+        if (call.isAbilityCapture(this.race) && call.getBelongs() != this && call.getBelongs() != null) {
             countUnits -= call.getRequirementsForCapture() + getCountUnits();
             location.addCall(call);
+            call.setRace(race);
+            call.setCountUnits(call.getRequirementsForCapture() + getCountUnits());
+            call.setBelongs(this);
         }
-        if (call.getBelongs() != this) {
+        if (call.getBelongs() == null) {
             countUnits -= call.getCountUnits() + 1;
+            location.addCall(call);
+            call.setRace(race);
+            call.setCountUnits(call.getRequirementsForCapture() + getCountUnits());
+            call.setBelongs(this);
         }
     }
 
-    public void PickUpUnits(int countUnits) {
+    public void pickUpUnits() {
         for (ACall call : location.getCalls()) {
-            this.countUnits += call.getCountUnits() - 1;
+            countUnits += call.getCountUnits() - 1;
         }
     }
 
@@ -67,7 +74,8 @@ public class Player {
         return countUnits;
     }
 
-    public void setRaceDecline(ARace raceDecline) {
-        this.raceDecline = raceDecline;
+    public void setRaceDecline() {
+        raceDecline = race;
+        race = null;
     }
 }

@@ -28,4 +28,8 @@ public class Board {
     public ACall[][] getBoard() {
         return board;
     }
+
+    public ACall getCall(int x, int y){
+        return board[x][y];
+    }
 }
