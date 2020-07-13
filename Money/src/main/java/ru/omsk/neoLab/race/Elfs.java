@@ -4,7 +4,7 @@ public class Elfs extends ARace {
 
     public Elfs() {
         nameRace = "Elfs";
-        countUnit = 6;
+        countTokens = 6;
     }
 
 }

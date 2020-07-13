@@ -4,7 +4,7 @@ public class Mushrooms extends ARace {
 
     public Mushrooms() {
         nameRace = "Mushrooms";
-        countUnit = 6;
+        countTokens = 6;
     }
 
 }

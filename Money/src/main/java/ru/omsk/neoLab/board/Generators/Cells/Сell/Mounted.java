@@ -4,7 +4,7 @@ public class Mounted extends ACell {
 
     public Mounted() {
         type = "Mounted";
-        unitCapture = 3;
+        tokensCapture = 3;
     }
 
 }

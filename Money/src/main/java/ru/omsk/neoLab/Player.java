@@ -2,6 +2,9 @@ package ru.omsk.neoLab;
 
 import ru.omsk.neoLab.board.Generators.Cells.ListCell;
 import ru.omsk.neoLab.board.Generators.Cells.Сell.ACell;
+import ru.omsk.neoLab.board.Generators.Cells.Сell.Earth;
+import ru.omsk.neoLab.board.Generators.Cells.Сell.Mounted;
+import ru.omsk.neoLab.board.Generators.Cells.Сell.Mushrooms;
 import ru.omsk.neoLab.race.ARace;
 
 public class Player {
@@ -36,17 +39,45 @@ public class Player {
         }
     }
 
-    public void PickUpUnits(int countUnits) {
-        for (ACell call : location.getCells()) {
-            this.countTokens += call.getCountUnits() - 1;
+    public void pickUpUnits() {
+        for (ACell cell : location.getCells()) {
+            this.countTokens += cell.getCountUnits() - 1;
         }
     }
 
     public void makeCoinCount() {
-        for (ACell call : location.getCells()) {
-            //if(call.getRace().equals("Elfs"))
-            // TODO: Придумать условие получения монеток для эльфов
-            countCoin += call.getCoin();
+        // Сбор монет с действующих рас
+        if (race.getNameRace().equals("Elfs")) {
+            if (location.getCells().contains(new Earth())) {
+                countCoin += 1;
+            }
+            if (location.getCells().contains(new Mounted())) {
+                countCoin += 1;
+            }
+            if (location.getCells().contains(new Mushrooms())) {
+                countCoin += 1;
+            }
+        }
+        for (ACell cell : location.getCells()) {
+            countCoin += cell.getCoin();
+        }
+
+        // Сбор монет с упадших рас
+        if (locationDecline != null && raceDecline != null) {
+            if (raceDecline.getNameRace().equals("Elfs")) {
+                if (locationDecline.getCells().contains(new Earth())) {
+                    countCoin += 1;
+                }
+                if (locationDecline.getCells().contains(new Mounted())) {
+                    countCoin += 1;
+                }
+                if (locationDecline.getCells().contains(new Mushrooms())) {
+                    countCoin += 1;
+                }
+            }
+            for (ACell cell : locationDecline.getCells()) {
+                countCoin += cell.getCoin();
+            }
         }
     }
 
@@ -70,12 +101,10 @@ public class Player {
         return countTokens;
     }
 
-    public void setRaceDecline(ARace raceDecline) {
-        this.raceDecline = raceDecline;
-    }
-
-    public void setRace(ARace race) {
-        this.race = race;
+    public void setRaceDecline() {
+        raceDecline = race;
+        race = null;
+        countTokens = 0;
     }
 
     public void setLocation(ListCell location) {

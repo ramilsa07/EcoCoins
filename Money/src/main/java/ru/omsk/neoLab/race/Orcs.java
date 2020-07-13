@@ -4,7 +4,7 @@ public class Orcs extends ARace {
 
     public Orcs() {
         nameRace = "Orcs";
-        countUnit = 5;
+        countTokens = 5;
     }
 
     /*@Override

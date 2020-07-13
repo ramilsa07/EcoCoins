@@ -2,7 +2,7 @@ package ru.omsk.neoLab.race;
 
 public abstract class ARace {
     protected String nameRace;
-    protected int countUnit = 6;
+    protected int countTokens = 6;
     protected boolean alive;
 
     public String getNameRace() {
@@ -10,7 +10,7 @@ public abstract class ARace {
     }
 
     public int getCountTokens() {
-        return countUnit;
+        return countTokens;
     }
 
     //TODO:Подумуть над(Оставить только getter'ы)

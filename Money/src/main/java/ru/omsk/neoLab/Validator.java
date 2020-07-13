@@ -15,8 +15,8 @@ public class Validator {
         return x >= 0 && y >= 0 && x < width && y < height;
     }
 
-    public static boolean isCheckRaceInGame(ARace race, HashSet<ARace> raceSet) {
-        return raceSet.contains(race);
+    public static boolean isCheckRaceInGame(ARace race, HashSet<ARace> raceList) {
+        return raceList.contains(race);
     }
 
 }
