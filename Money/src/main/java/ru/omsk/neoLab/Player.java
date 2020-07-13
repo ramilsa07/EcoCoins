@@ -30,18 +30,39 @@ public class Player {
     }
 
     public void addTerritory(ACell cell) {
-        if (cell.getAbilityCapture()) {
-            countTokens -= cell.getCountUnits() + getCountTokens();
-            location.add(cell);
+        if (cell.getAbilityCapture(race)) {
+            if (cell.getBelongs() == null && countTokens > cell.getTokensCapture()) {
+                countTokens -= cell.getTokensCapture();
+                cell.setCountTokens(cell.getTokensCapture());
+                location.add(cell);
+            } else if (cell.getBelongs() != null && countTokens > cell.getCountTokens() + cell.getTokensCapture()) {
+                if (cell.getBelongs().getLocation().getCells().contains(cell)) {
+                    cell.getBelongs().getLocation().getCells().remove(cell);
+                } else if (cell.getBelongs().getLocationDecline().getCells().contains(cell)) {
+                    cell.getBelongs().getLocationDecline().getCells().remove(cell);
+                }
+                countTokens -= cell.getCountTokens() + cell.getTokensCapture();
+                cell.setCountTokens(cell.getCountTokens() + cell.getTokensCapture());
+                location.add(cell);
+            } else {
+                // LOG нехватка юнитов
+            }
+        } else {
+            // Нельзя захватить эту территорию
         }
-        if (cell.getBelongs() != this) {
-            countTokens -= cell.getCountUnits() + 1;
-        }
+    }
+
+    public ARace getRaceDecline() {
+        return raceDecline;
+    }
+
+    public ListCell getLocationDecline() {
+        return locationDecline;
     }
 
     public void pickUpUnits() {
         for (ACell cell : location.getCells()) {
-            this.countTokens += cell.getCountUnits() - 1;
+            this.countTokens += cell.getCountTokens() - 1;
         }
     }
 

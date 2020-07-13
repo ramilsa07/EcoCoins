@@ -14,8 +14,8 @@ public abstract class ACell {
     protected boolean abilityCapture = true;
 
     //Информация по принадлежности к игроку
-    protected Player belongs = new Player("Gore");
-    protected int countUnits;
+    protected Player belongs;
+    protected int countTokens;
     protected ARace race;
 
     public String getType() {
@@ -30,7 +30,7 @@ public abstract class ACell {
         return tokensCapture;
     }
 
-    public boolean getAbilityCapture() {
+    public boolean getAbilityCapture(ARace race) {
         return abilityCapture;
     }
 
@@ -40,8 +40,8 @@ public abstract class ACell {
         return belongs;
     }
 
-    public int getCountUnits() {
-        return countUnits;
+    public int getCountTokens() {
+        return countTokens;
     }
 
     public ARace getRace() {
@@ -52,8 +52,8 @@ public abstract class ACell {
         this.belongs = belongs;
     }
 
-    public void setCountUnits(int countUnits) {
-        this.countUnits = countUnits;
+    public void setCountTokens(int countTokens) {
+        this.countTokens = countTokens;
     }
 
     public void setRace(ARace race) {

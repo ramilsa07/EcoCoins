@@ -1,13 +1,9 @@
 package ru.omsk.neoLab;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import ru.omsk.neoLab.board.Board;
 import ru.omsk.neoLab.board.Generators.Cells.ListCell;
 import ru.omsk.neoLab.board.Generators.Cells.Сell.ACell;
 import ru.omsk.neoLab.race.ARace;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 
 public class GameService {
@@ -40,7 +36,7 @@ public class GameService {
     }
 
     public void regionCapture(ACell cell, Player player) {
-        if (cell.getAbilityCapture()) {
+        if (cell.getAbilityCapture(player.getRace())) {
             if (!cell.getBelongs().equals(player)) {
                 player.getLocation().add(cell);
                 LoggerGame.logRegionCaptureTrue(player);
