@@ -7,7 +7,6 @@ import ru.omsk.neoLab.board.Generators.Cells.ListCell;
 import ru.omsk.neoLab.board.Generators.Cells.Сell.ACell;
 import ru.omsk.neoLab.race.ARace;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 
 public class GameService {
@@ -16,8 +15,8 @@ public class GameService {
 
     private static volatile GameService instance;
 
-    private volatile ArrayList<ARace> racesUsed = new ArrayList<ARace>();
-    private volatile ArrayList<ARace> racesPool = new ArrayList<ARace>();
+    private volatile HashSet<ARace> racesUsed = new HashSet<ARace>();
+    private volatile HashSet<ARace> racesPool = new HashSet<ARace>();
 
     private volatile HashSet<ACell> possibleCellsCapture = new HashSet<ACell>();
 
