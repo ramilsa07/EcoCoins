@@ -8,7 +8,7 @@ import ru.omsk.neoLab.race.RaceContainer;
 
 import java.util.Queue;
 
-public class SelfPlay {
+public final class SelfPlay {
 
     private static final Logger logger = LoggerFactory.getLogger(SelfPlay.class);
 

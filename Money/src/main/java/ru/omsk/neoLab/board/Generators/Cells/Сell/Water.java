@@ -2,7 +2,7 @@ package ru.omsk.neoLab.board.Generators.Cells.Сell;
 
 import ru.omsk.neoLab.race.ARace;
 
-public class Water extends ACell {
+public final class Water extends ACell {
 
     public Water() {
         type = "Water";

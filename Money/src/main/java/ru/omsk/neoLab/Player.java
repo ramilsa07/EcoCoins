@@ -7,7 +7,7 @@ import ru.omsk.neoLab.board.Generators.Cells.Сell.Mounted;
 import ru.omsk.neoLab.board.Generators.Cells.Сell.Mushrooms;
 import ru.omsk.neoLab.race.ARace;
 
-public class Player {
+public final class Player {
 
     private final String nickName;
     private int countCoin;
@@ -35,6 +35,7 @@ public class Player {
                 countTokens -= cell.getTokensCapture();
                 cell.setCountTokens(cell.getTokensCapture());
                 location.add(cell);
+                LoggerGame.logRegionCaptureTrue(this, cell);
             } else if (cell.getBelongs() != null && countTokens > cell.getCountTokens() + cell.getTokensCapture()) {
                 if (cell.getBelongs().getLocation().getCells().contains(cell)) {
                     cell.getBelongs().getLocation().getCells().remove(cell);
@@ -44,11 +45,12 @@ public class Player {
                 countTokens -= cell.getCountTokens() + cell.getTokensCapture();
                 cell.setCountTokens(cell.getCountTokens() + cell.getTokensCapture());
                 location.add(cell);
+                LoggerGame.logRegionCaptureTrue(this, cell);
             } else {
-                // LOG нехватка юнитов
+                LoggerGame.logFewTokens();
             }
         } else {
-            // Нельзя захватить эту территорию
+            LoggerGame.logRegionCaptureFalse();
         }
     }
 
@@ -60,10 +62,12 @@ public class Player {
         return locationDecline;
     }
 
-    public void pickUpUnits() {
+    public void pickUpTokens() {
         for (ACell cell : location.getCells()) {
             this.countTokens += cell.getCountTokens() - 1;
         }
+        LoggerGame.logPickUpTokens(this);
+        LoggerGame.logNumberOfFreeTokens(this);
     }
 
     public void makeCoinCount() {

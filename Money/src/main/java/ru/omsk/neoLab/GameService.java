@@ -6,11 +6,11 @@ import ru.omsk.neoLab.race.ARace;
 
 import java.util.HashSet;
 
-public class GameService {
+public final class GameService {
 
     private static volatile GameService instance;
 
-    private volatile HashSet<ARace> racesPool = new HashSet<ARace>();
+    private volatile HashSet<ARace> racesPool = new HashSet<>();
 
     private GameService() {
     }
@@ -39,10 +39,10 @@ public class GameService {
         if (cell.getAbilityCapture(player.getRace())) {
             if (!cell.getBelongs().equals(player)) {
                 player.getLocation().add(cell);
-                LoggerGame.logRegionCaptureTrue(player);
+                LoggerGame.logRegionCaptureTrue(player, cell);
             }
         }
-        LoggerGame.logRegionCaptureFalse(player);
+        LoggerGame.logRegionCaptureFalse();
     }
 
     public void unitDistribution(Player player) {

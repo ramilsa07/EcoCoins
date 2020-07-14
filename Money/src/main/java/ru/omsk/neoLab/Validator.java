@@ -5,7 +5,7 @@ import ru.omsk.neoLab.race.ARace;
 
 import java.util.HashSet;
 
-public class Validator {
+public final class Validator {
 
     public static boolean isCheckingBelongsCell(Player player, ACell cell) {
         return cell.getBelongs().equals(player);

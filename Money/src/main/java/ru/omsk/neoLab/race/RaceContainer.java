@@ -2,9 +2,9 @@ package ru.omsk.neoLab.race;
 
 import java.util.HashSet;
 
-public class RaceContainer{
+public final class RaceContainer{
 
-    private HashSet<ARace> setRace = new HashSet<ARace>();
+    private HashSet<ARace> setRace = new HashSet<>();
 
     public void addRace(ARace race){
         setRace.add(race);
@@ -26,4 +26,5 @@ public class RaceContainer{
        // setRace.contains(race);
         return true;
     }
+
 }

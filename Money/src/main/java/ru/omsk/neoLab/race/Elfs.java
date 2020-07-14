@@ -1,6 +1,6 @@
 package ru.omsk.neoLab.race;
 
-public class Elfs extends ARace {
+public final class Elfs extends ARace {
 
     public Elfs() {
         nameRace = "Elfs";

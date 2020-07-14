@@ -1,6 +1,6 @@
 package ru.omsk.neoLab.race;
 
-public class Orcs extends ARace {
+public final class Orcs extends ARace {
 
     public Orcs() {
         nameRace = "Orcs";

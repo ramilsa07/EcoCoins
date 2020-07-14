@@ -75,4 +75,6 @@ public abstract class ACell {
     public void setY(int y) {
         this.y = y;
     }
+
+
 }

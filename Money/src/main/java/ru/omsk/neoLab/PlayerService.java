@@ -7,13 +7,13 @@ import ru.omsk.neoLab.race.ARace;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-public class PlayerService {
+public final class PlayerService {
 
     // Массивы, для вычисления допустимых ходов
     private final int[] calci = new int[]{-1, -1, -1, 0, 0, 1, 1, 1};
     private final int[] calcj = new int[]{-1, 0, 1, -1, 1, -1, 0, 1};
 
-    private final ArrayList<ACell> possibleCellsCapture = new ArrayList<ACell>();
+    private final ArrayList<ACell> possibleCellsCapture = new ArrayList<>();
 
 
     public void raceChoice(HashSet<ARace> racesPool, ARace race, Player player) {
@@ -49,24 +49,33 @@ public class PlayerService {
                 }
             }
         }
+        LoggerGame.logWhereToGo(possibleCellsCapture);
         return possibleCellsCapture;
     }
 
     public void regionCapture(Player player, ACell cell) {
         if (possibleCellsCapture.contains(cell)) {
             player.addTerritory(cell);
+            LoggerGame.logNumberOfFreeTokens(player);
         }
     }
 
-    public void unitDistribution(Player player) {
-        player.pickUpUnits();
+    public void tokensDistribution(Player player) {
+        player.pickUpTokens();
+        LoggerGame.logRedistributionOfTokens(player);
     }
 
     public void countMoney(Player player) {
         player.makeCoinCount();
+        LoggerGame.logGetCoins(player);
     }
 
     public void raceInDecline(Player player) {
         player.setRaceDecline();
+        LoggerGame.logRaceInDecline(player);
+    }
+
+    public void pickUpTokens(Player player){
+        player.pickUpTokens();
     }
 }
