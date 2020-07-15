@@ -8,6 +8,10 @@ import ru.omsk.neoLab.race.RaceContainer;
 
 import java.util.Queue;
 
+/*
+ * Класс для реализации и тестирования игры
+ * */
+
 public final class SelfPlay {
 
     private static final Logger logger = LoggerFactory.getLogger(SelfPlay.class);

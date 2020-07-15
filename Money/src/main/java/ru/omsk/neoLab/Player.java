@@ -7,6 +7,13 @@ import ru.omsk.neoLab.board.Generators.Cells.Сell.Mounted;
 import ru.omsk.neoLab.board.Generators.Cells.Сell.Mushrooms;
 import ru.omsk.neoLab.race.ARace;
 
+/*
+ * Класс хранит информацию об игроке. Поля: Ник, число монет на данный момент, число свободных жетонов на данный момент,
+ * расу, за которую игрок играет и все ячейки, которые заняла эта раса. А также хранит информацию о своей расе в упадке,
+ * и о территориях, на которых жетоны этой расы стоят.
+ * Хранит методы для добавления новой ячейки, взятия жетонов в руку, подсчет монет и т.д.
+ * */
+
 public final class Player {
 
     private final String nickName;
@@ -17,7 +24,7 @@ public final class Player {
     private ListCell location = new ListCell();
 
     private ARace raceDecline;
-    private ListCell locationDecline;
+    private ListCell locationDecline = new ListCell();
 
     public Player(String nickName) {
         this.nickName = nickName;
@@ -65,6 +72,7 @@ public final class Player {
     public void pickUpTokens() {
         for (ACell cell : location.getCells()) {
             this.countTokens += cell.getCountTokens() - 1;
+            cell.setCountTokens(1);
         }
         LoggerGame.logPickUpTokens(this);
         LoggerGame.logNumberOfFreeTokens(this);

@@ -4,6 +4,10 @@ import ru.omsk.neoLab.board.Generators.Cells.Сell.ACell;
 import ru.omsk.neoLab.board.Generators.Generator;
 import ru.omsk.neoLab.board.Generators.IGenerator;
 
+/*
+ * Класс, хранящий доску, на которой будет проходить игра.
+ * */
+
 public class Board {
 
     private static volatile Board instance;

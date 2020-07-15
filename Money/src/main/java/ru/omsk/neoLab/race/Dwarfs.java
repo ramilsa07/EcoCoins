@@ -5,6 +5,7 @@ public final class Dwarfs extends ARace {
     public Dwarfs() {
         nameRace = "Dwarfs";
         countTokens = 5;
+        alive = true;
     }
 
     @Override

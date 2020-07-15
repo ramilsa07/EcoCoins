@@ -3,7 +3,9 @@ package ru.omsk.neoLab.board.Generators.Cells;
 import ru.omsk.neoLab.board.Generators.Cells.Сell.ACell;
 
 import java.util.ArrayList;
-
+/*
+* Класс создан для хранения определенных ячеек
+* */
 public final class ListCell {
     private ArrayList<ACell> cells;
 
