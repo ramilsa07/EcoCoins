@@ -7,7 +7,11 @@ import ru.omsk.neoLab.board.Generators.Cells.Сell.*;
 
 import java.util.Random;
 
-public class Generator implements IGenerator {
+/*
+ * Класс для генерации игровой доски по правилам из тз
+ * */
+
+public final class Generator implements IGenerator {
 
     private static final Logger log = LoggerFactory.getLogger(Generator.class);
 

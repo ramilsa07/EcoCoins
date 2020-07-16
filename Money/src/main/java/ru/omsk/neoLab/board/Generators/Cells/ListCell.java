@@ -3,13 +3,15 @@ package ru.omsk.neoLab.board.Generators.Cells;
 import ru.omsk.neoLab.board.Generators.Cells.Сell.ACell;
 
 import java.util.ArrayList;
-
-public class ListCell {
+/*
+* Класс создан для хранения определенных ячеек
+* */
+public final class ListCell {
     private ArrayList<ACell> cells;
 
 
     public ListCell() {
-        cells = new ArrayList<ACell>();
+        cells = new ArrayList<>();
     }
 
     public void add(ACell cell) {

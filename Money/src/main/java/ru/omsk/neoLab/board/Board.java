@@ -2,6 +2,10 @@ package ru.omsk.neoLab.board;
 
 import ru.omsk.neoLab.board.Generators.Cells.Сell.ACell;
 
+/*
+ * Класс, хранящий доску, на которой будет проходить игра.
+ * */
+
 public class Board {
 
     private static Board instance;
