@@ -3,7 +3,8 @@ package ru.omsk.neoLab.board.Generators;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.omsk.neoLab.board.Generators.Cells.Сell.*;
+import ru.omsk.neoLab.board.Generators.Cells.Сell.Cell;
+import ru.omsk.neoLab.board.Generators.Cells.Сell.TypeCell;
 
 import java.util.Random;
 
@@ -19,16 +20,16 @@ public final class Generator implements IGenerator {
     private static int countWater;
 
     @Override
-    public ACell[][] generate(int height, int width) {
+    public Cell[][] generate(int height, int width) {
         log.info("Генерация началась");
-        ACell[][] board = new ACell[height][width];
+        Cell[][] board = new Cell[height][width];
 
         countWater = 0;
         int maxWater = Math.round((float) (height * width) / 3);
 
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                board[i][j] = toRandom(maxWater);
+                board[i][j] = toRandom(board[i][j], maxWater);
                 board[i][j].setX(i);
                 board[i][j].setY(j);
             }
@@ -37,37 +38,36 @@ public final class Generator implements IGenerator {
         return board;
     }
 
-    private ACell toRandom(int maxWater) {
+    private Cell toRandom(Cell cell, int maxWater) {
 
-        ACell cell = null;
+        cell = new Cell();
         switch (random.nextInt(4)) {
             case 0:
-                cell = new Earth();
+                cell.setType(TypeCell.Earth);
                 break;
             case 1:
-                cell = new Mushrooms();
+                cell.setType(TypeCell.Mushrooms);
                 break;
             case 2:
-                cell = new Mounted();
+                cell.setType(TypeCell.Mounted);
                 break;
             case 3:
-                cell = new Water();
+                cell.setType(TypeCell.Water);
                 break;
         }
-        if ((cell.getType().equals("Water")) && (countWater < maxWater)) {
+        if (cell.getType().equals(TypeCell.Water) && (countWater < maxWater)) {
             countWater++;
             return cell;
-        } else if (cell.getType().equals("Water")) {
         }
         switch (random.nextInt(3)) {
             case 0:
-                cell = new Earth();
+                cell.setType(TypeCell.Earth);
                 break;
             case 1:
-                cell = new Mushrooms();
+                cell.setType(TypeCell.Mushrooms);
                 break;
             case 2:
-                cell = new Mounted();
+                cell.setType(TypeCell.Mounted);
                 break;
         }
         return cell;

@@ -1,7 +1,7 @@
 package ru.omsk.neoLab.race;
 
 import lombok.Data;
-import ru.omsk.neoLab.board.Generators.Cells.Сell.ACell;
+import ru.omsk.neoLab.board.Generators.Cells.Сell.Cell;
 
 @Data
 public abstract class ARace {
@@ -9,21 +9,19 @@ public abstract class ARace {
     protected String nameRace;
     protected int countTokens = 6;
 
-    protected boolean alive;
-
-    public int getAdvantageCoin(final ACell cell) {
+    public int getAdvantageCoin(final Cell cell) {
         return cell.getCoin();
     }
 
-    public int getAdvantageCaptureCell(final ACell cell) {
-        return cell.getTokensCapture();
+    public int getAdvantageCaptureCell(final Cell cell) {
+        return cell.getTokensForCapture();
     }
 
-    public int getAdvantageDefendCell(final ACell cell) {
+    public int getAdvantageDefendCell(final Cell cell) {
         return cell.getCountTokens();
     }
 
-    public boolean getAdvantageOpportunityCaptureCell(final ACell cell) {
+    public boolean isAdvantageOpportunityCaptureCell(final Cell cell) {
         return cell.isAbilityCapture();
     }
 

@@ -2,7 +2,7 @@ package ru.omsk.neoLab;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import ru.omsk.neoLab.board.Generators.Cells.Сell.ACell;
+import ru.omsk.neoLab.board.Generators.Cells.Сell.Cell;
 import ru.omsk.neoLab.race.ARace;
 
 import java.util.ArrayList;
@@ -17,10 +17,10 @@ public class Player {
     private int countTokens = 0;
 
     private ARace race;
-    private ArrayList<ACell> locationCell = new ArrayList<ACell>();
+    private ArrayList<Cell> locationCell = new ArrayList<Cell>();
 
     private ARace raceDecline = null;
-    private ArrayList<ACell> locationDeclineCell = new ArrayList<ACell>();
+    private ArrayList<Cell> locationDeclineCell = new ArrayList<Cell>();
 
     private PlayerService service = PlayerService.GetInstance();
 
@@ -36,11 +36,12 @@ public class Player {
                 PlayerService.getRacesPool().add(raceDecline);
             }
             this.raceDecline = this.race;
-            this.locationDeclineCell = locationCell;
+            this.locationDeclineCell = this.locationCell;
             this.decline = false;
             locationCell.clear();
         }
         this.race = race;
+        this.countTokens = race.getCountTokens();
         PlayerService.getRacesPool().remove(race);
     }
 
@@ -48,28 +49,39 @@ public class Player {
         this.decline = true;
     }
 
-    public void regionCapture(ACell cell) {
+    public void regionCapture(Cell cell) {
+        if (cell.getCountTokens() == 0)
+            this.countTokens -= this.race.getAdvantageCaptureCell(cell);
+        else
+            this.countTokens -= this.race.getAdvantageCaptureCell(cell) + cell.getBelongs().getRace().getAdvantageDefendCell(cell) + 1;
+        this.locationCell.add(cell);
         cell.regionCapture(this);
-        log.info("Осталось жетонов у игрока {} - {} от территории {}  и потратили жетонов {}", this.nickName, this.countTokens, cell.getType(), this.race.);
+        log.info("Осталось жетонов у игрока {} - {} от территории {}  и потратили жетонов {}", this.nickName, this.countTokens, cell.getType(), 1);
     }
 
     public void shufflingTokens() {
-        for (ACell cell : locationCell) {
+        for (Cell cell : locationCell) {
             service.getToken(cell, this.countTokens);
         }
         log.info("После перетасовки жетонов, у игрока {} - жетонов {}", this.nickName, this.countCoin);
     }
 
-    public void collectCountTokens(final int countTokens) {
-        this.countTokens += countTokens;
+    public void collectTokens() {
+        for (Cell cell : locationCell) {
+            this.countTokens += cell.getToken(cell.getCountTokens() - 1);
+        }
     }
 
     public void collectAllCoins() {
-        for (ACell cell : locationCell) {
-            this.countCoin += this.race.getAdvantageCoin(cell);
+        for (Cell cell : locationCell) {
+            if (this.race.isAdvantageOpportunityCaptureCell(cell)) {
+                this.countCoin += this.race.getAdvantageCoin(cell);
+            }
         }
-        for (ACell cell : locationDeclineCell) {
-            this.countCoin += this.raceDecline.getAdvantageCoin(cell);
+        for (Cell cell : locationDeclineCell) {
+            if (this.raceDecline.isAdvantageOpportunityCaptureCell(cell)) {
+                this.countCoin += this.raceDecline.getAdvantageCoin(cell);
+            }
         }
     }
 

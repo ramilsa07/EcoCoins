@@ -1,17 +1,15 @@
 package ru.omsk.neoLab;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import ru.omsk.neoLab.board.Board;
-import ru.omsk.neoLab.board.Generators.Cells.Сell.ACell;
+import ru.omsk.neoLab.board.Generators.Cells.Сell.Cell;
 import ru.omsk.neoLab.race.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 
+@Slf4j
 public class PlayerService {
-
-    public static Logger log = LoggerFactory.getLogger(PlayerService.class);
 
     private static PlayerService instance;
 
@@ -20,7 +18,7 @@ public class PlayerService {
     private final int[] motionAreaY = new int[]{-1, 0, 1, -1, 1, -1, 0, 1};
 
     private static final ArrayList<ARace> racesPool = new ArrayList<ARace>();
-    private final HashSet<ACell> possibleCellsCapture = new HashSet<ACell>();
+    private final HashSet<Cell> possibleCellsCapture = new HashSet<Cell>();
 
     static {
         racesPool.add(new Amphibia());
@@ -41,7 +39,7 @@ public class PlayerService {
         return instance;
     }
 
-    public HashSet<ACell> findOutWherePlayerCanGo(final ACell[][] board) {
+    public HashSet<Cell> findOutWherePlayerCanGo(final Cell[][] board) {
         possibleCellsCapture.clear();
         for (int i = 0; i < board[0].length; i++) {
             possibleCellsCapture.add(board[0][i]);
@@ -54,38 +52,33 @@ public class PlayerService {
         return possibleCellsCapture;
     }
 
-    public HashSet<ACell> findOutWherePlayerCanGo(final Board board, final Player player) {
+    public HashSet<Cell> findOutWherePlayerCanGo(final Board board, final Player player) {
         possibleCellsCapture.clear();
-        for (ACell cell : player.getLocationCell()) {
+        for (Cell cell : player.getLocationCell()) {
             for (int i = 0; i < 8; i++) {
                 int x = cell.getX() + motionAreaX[i];
                 int y = cell.getY() + motionAreaY[i];
-                if (Validator.isCheckingOutputOverBoard(x, y, board.getHeight(), board.getWidth())) {
-                    if (!Validator.isCheckingBelongsCell(player, board.getBoard()[x][y])) {
-                        if (player.getCountTokens() - board.getBoard()[x][y].getCaptureCountUnit() >= 0)
+                if (Validator.isCheckingOutputOverBoard(x, y, board.getHeight(), board.getWidth()))
+                    if (!Validator.isCheckingBelongsCell(player, board.getBoard()[x][y]))
+                        if (Validator.isCheckingCapture(board.getBoard()[x][y], player))
                             possibleCellsCapture.add(board.getBoard()[x][y]);
-                    }
-                }
             }
         }
         return possibleCellsCapture;
     }
 
-    public void regionCapture(ACell cell, Player player) {
+    public void regionCapture(Cell cell, Player player) {
+        player.regionCapture(cell);
+        log.info("Захвачена территория {} c координатами [{}][{}]", cell.getType(), cell.getX(), cell.getY());
+        log.info("Осталось жетонов у игрока {} - {} от территории {}", player.getNickName(), player.getCountTokens(), cell.getType());
         LoggerGame.logRegionCaptureTrue(player);
-        player.getLocationCell().add(cell);
-        cell.setRace(player.getRace());
-        log.info("Осталось жетонов у игрока {} - {} от территории {}  и потратили жетонов {}", player.getNickName(), player.getCountTokens(), cell.getType(), cell.getCaptureCountUnit());
-        player.setCountTokens(player.getCountTokens() - cell.getCaptureCountUnit());
-        cell.setCountTokens(cell.getCaptureCountUnit());
-        cell.setBelongs(player);
     }
 
-    public void getToken(final ACell cell, final int tokens) {
+    public void getToken(final Cell cell, final int tokens) {
         cell.getToken(tokens);
     }
 
-    public void putToken(final ACell cell, final int tokens) {
+    public void putToken(final Cell cell, final int tokens) {
         cell.putToken(tokens);
     }
 

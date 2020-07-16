@@ -1,6 +1,6 @@
 package ru.omsk.neoLab.board;
 
-import ru.omsk.neoLab.board.Generators.Cells.Сell.ACell;
+import ru.omsk.neoLab.board.Generators.Cells.Сell.Cell;
 
 /*
  * Класс, хранящий доску, на которой будет проходить игра.
@@ -10,7 +10,7 @@ public class Board {
 
     private static Board instance;
 
-    protected ACell[][] board;
+    protected Cell[][] board;
 
     private int height;
     private int width;
@@ -25,11 +25,11 @@ public class Board {
         return instance;
     }
 
-    public ACell[][] getBoard() {
+    public Cell[][] getBoard() {
         return board;
     }
 
-    public void setBoard(ACell[][] board) {
+    public void setBoard(Cell[][] board) {
         this.board = board;
     }
 

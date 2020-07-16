@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import ru.omsk.neoLab.Player;
 import ru.omsk.neoLab.PlayerService;
 import ru.omsk.neoLab.board.Board;
-import ru.omsk.neoLab.board.Generators.Cells.Сell.ACell;
+import ru.omsk.neoLab.board.Generators.Cells.Сell.Cell;
 import ru.omsk.neoLab.board.Generators.Generator;
 import ru.omsk.neoLab.board.Generators.IGenerator;
 
@@ -26,7 +26,7 @@ public class SelfPlay {
     private String phase;
     private int round = 0;
 
-    private HashSet<ACell> possibleCellsCapture = new HashSet<ACell>();
+    private HashSet<Cell> possibleCellsCapture = new HashSet<Cell>();
 
     enum Phases {
         RACE_CHOICE("race choice"), // Выбор расы
@@ -56,15 +56,20 @@ public class SelfPlay {
                 phase = "race choice";
                 while (Phases.RACE_CHOICE.equalPhase(phase)) {
                     currentPlayer.changeRace(PlayerService.getRacesPool().get((random.nextInt(PlayerService.getRacesPool().size()))));
+                    log.info("{} выбрал расу {}", currentPlayer.getNickName(), currentPlayer.getRace().getNameRace());
                     phase = "capture of regions";
                 }
             }
             log.info("Началась фаза захвата территории");
             while (Phases.CAPTURE_OF_REGIONS.equalPhase(phase)) {
-
-                if (round != 1) {
-                    log.info("{} решил уйти в упадок", currentPlayer.getNickName());
+                for (Cell cell : currentPlayer.getLocationCell()) {
+                    if (cell.getCountTokens() >= 1) {
+                        currentPlayer.collectTokens();
+                    }
+                }
+                if (round != 1 && currentPlayer.getCountTokens() == 0) {
                     currentPlayer.goIntoDecline();
+                    log.info("{} решил уйти в упадок", currentPlayer.getNickName());
                     changeCourse(currentPlayer);
                     currentPlayer = players.element();
                     break;
@@ -76,7 +81,7 @@ public class SelfPlay {
                 }
                 Object[] cells = possibleCellsCapture.toArray();
                 if (!possibleCellsCapture.isEmpty())
-                    playerService.regionCapture((ACell) cells[random.nextInt(cells.length)], currentPlayer);
+                    playerService.regionCapture((Cell) cells[random.nextInt(cells.length)], currentPlayer);
                 else {
                     log.info("Начинаем перераспределять");
                     currentPlayer.shufflingTokens();
@@ -87,19 +92,15 @@ public class SelfPlay {
                     }
                 }
             }
-            if (phase.equals("getting coins")) {
-                log.info("Началась фаза c Сбор Монет");
-            }
             while (Phases.GETTING_COINS.equalPhase(phase)) {
+                log.info("Началась фаза c Сбор Монет");
                 for (Player player : players) {
                     player.collectAllCoins();
                     log.info("Теперь у {} монет {}", player.getNickName(), player.getCountCoin());
                 }
-                round++;
             }
             if (round == 10) {
                 toEndGame();
-                System.exit(0);
             }
         }
     }
@@ -125,5 +126,6 @@ public class SelfPlay {
         for (Player player : players) {
             log.info("Info {} coins {}", player.getCountCoin(), player.getNickName());
         }
+        System.exit(0);
     }
 }
