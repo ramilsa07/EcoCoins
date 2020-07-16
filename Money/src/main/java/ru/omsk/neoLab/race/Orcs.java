@@ -1,6 +1,6 @@
 package ru.omsk.neoLab.race;
 
-import ru.omsk.neoLab.board.Сell.ACell;
+import ru.omsk.neoLab.board.Generators.Cells.Сell.Cell;
 
 public class Orcs extends ARace {
 
@@ -10,7 +10,7 @@ public class Orcs extends ARace {
     }
 
     @Override
-    public int getAdvantageCaptureCell(final ACell cell) {
-        return cell.getTokensCapture() - 1;
+    public int getAdvantageCaptureCell(final Cell cell) {
+        return cell.getTokensForCapture() - 1;
     }
 }

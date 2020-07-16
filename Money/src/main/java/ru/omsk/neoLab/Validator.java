@@ -1,22 +1,23 @@
 package ru.omsk.neoLab;
 
-import ru.omsk.neoLab.board.Сell.ACell;
-import ru.omsk.neoLab.race.ARace;
-
-import java.util.ArrayList;
+import ru.omsk.neoLab.board.Generators.Cells.Сell.Cell;
 
 public final class Validator {
-
-    public static boolean isCheckingBelongsCell(Player player, ACell cell) {
-        return cell.getBelongs().equals(player);
-    }
 
     public static boolean isCheckingOutputOverBoard(int x, int y, int height, int width) {
         return x >= 0 && y >= 0 && x < height && y < width;
     }
 
-    public static boolean isCheckRaceInGame(ARace race, ArrayList<ARace> raceList) {
-        return raceList.contains(race);
+    public static boolean isCheckingCapture(Cell cell, Player player) {
+        if (cell.getCountTokens() == 0)
+            return player.getCountTokens() - player.getRace().getAdvantageCaptureCell(cell) >= 0;
+        else
+            return player.getCountTokens() - (player.getRace().getAdvantageCaptureCell(cell) + cell.getBelongs().getRace().getAdvantageDefendCell(cell) + 1) >= 0;
     }
+
+    public static boolean isCheckingBelongsCell(Player player, Cell cell) {
+        return cell.getBelongs().equals(player);
+    }
+
 
 }
