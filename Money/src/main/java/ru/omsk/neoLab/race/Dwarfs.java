@@ -1,6 +1,6 @@
 package ru.omsk.neoLab.race;
 
-import ru.omsk.neoLab.board.Generators.Cells.Сell.ACell;
+import ru.omsk.neoLab.board.Сell.ACell;
 
 public class Dwarfs extends ARace {
 

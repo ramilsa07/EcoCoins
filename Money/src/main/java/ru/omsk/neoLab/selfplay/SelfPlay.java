@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import ru.omsk.neoLab.Player;
 import ru.omsk.neoLab.PlayerService;
 import ru.omsk.neoLab.board.Board;
-import ru.omsk.neoLab.board.Generators.Cells.Сell.ACell;
+import ru.omsk.neoLab.board.Сell.ACell;
 import ru.omsk.neoLab.board.Generators.Generator;
 import ru.omsk.neoLab.board.Generators.IGenerator;
 
@@ -19,7 +19,7 @@ public class SelfPlay {
     private final Random random = new Random();
 
     private Board board = Board.GetInstance();
-    private PlayerService playerService = PlayerService.GetInstance();
+    private PlayerService playerService = PlayerService.getInstance();
 
     private Queue<Player> players = new LinkedList<Player>();
 

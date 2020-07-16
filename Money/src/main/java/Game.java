@@ -1,5 +1,5 @@
-import ru.omsk.neoLab.board.Generators.Cells.Сell.ACell;
-import ru.omsk.neoLab.board.Generators.Cells.Сell.Mushrooms;
+import ru.omsk.neoLab.board.Сell.ACell;
+import ru.omsk.neoLab.board.Сell.Mushrooms;
 import ru.omsk.neoLab.race.ARace;
 import ru.omsk.neoLab.race.Dwarfs;
 import ru.omsk.neoLab.race.Orcs;
@@ -17,6 +17,5 @@ public class Game {
         ARace race1 = new Dwarfs();
         ARace race2 = new Orcs();
         ACell cell = new Mushrooms();
-        System.out.print();
     }
 }

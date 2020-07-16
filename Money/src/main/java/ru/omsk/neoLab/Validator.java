@@ -1,6 +1,6 @@
 package ru.omsk.neoLab;
 
-import ru.omsk.neoLab.board.Generators.Cells.Сell.ACell;
+import ru.omsk.neoLab.board.Сell.ACell;
 import ru.omsk.neoLab.race.ARace;
 
 import java.util.ArrayList;

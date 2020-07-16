@@ -1,4 +1,4 @@
-package ru.omsk.neoLab.board.Generators.Cells.Сell;
+package ru.omsk.neoLab.board.Сell;
 
 import lombok.Data;
 import ru.omsk.neoLab.Player;
@@ -12,18 +12,16 @@ public abstract class ACell {
 
     protected String type;
     protected int coin = 1;
-    protected int tokensCapture = 2;
+    protected int tokensCapture = 2; // Сколько токенов нужно для захвата территории
     protected boolean abilityCapture = true;
 
     //Информация по принадлежности к игроку
     protected Player belongs = null;
-
     protected int countTokens = 0;
     protected ARace race;
 
     public void regionCapture(final Player player) {
         this.race = player.getRace();
-        this.
     }
 
     public void putToken(final int countTokens) {

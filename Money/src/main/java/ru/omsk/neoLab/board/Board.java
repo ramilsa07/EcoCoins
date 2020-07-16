@@ -1,6 +1,6 @@
 package ru.omsk.neoLab.board;
 
-import ru.omsk.neoLab.board.Generators.Cells.Сell.ACell;
+import ru.omsk.neoLab.board.Сell.ACell;
 
 /*
  * Класс, хранящий доску, на которой будет проходить игра.

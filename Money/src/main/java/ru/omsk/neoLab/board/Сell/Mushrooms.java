@@ -1,4 +1,4 @@
-package ru.omsk.neoLab.board.Generators.Cells.Сell;
+package ru.omsk.neoLab.board.Сell;
 
 public final class Mushrooms extends ACell {
 

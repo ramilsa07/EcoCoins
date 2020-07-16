@@ -3,7 +3,7 @@ package ru.omsk.neoLab;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.omsk.neoLab.board.Board;
-import ru.omsk.neoLab.board.Generators.Cells.Сell.ACell;
+import ru.omsk.neoLab.board.Сell.ACell;
 import ru.omsk.neoLab.race.*;
 
 import java.util.ArrayList;
@@ -19,8 +19,8 @@ public class PlayerService {
     private final int[] motionAreaX = new int[]{-1, -1, -1, 0, 0, 1, 1, 1};
     private final int[] motionAreaY = new int[]{-1, 0, 1, -1, 1, -1, 0, 1};
 
-    private static final ArrayList<ARace> racesPool = new ArrayList<ARace>();
-    private final HashSet<ACell> possibleCellsCapture = new HashSet<ACell>();
+    private static final ArrayList<ARace> racesPool = new ArrayList<>();
+    private final HashSet<ACell> possibleCellsCapture = new HashSet<>();
 
     static {
         racesPool.add(new Amphibia());
@@ -34,7 +34,7 @@ public class PlayerService {
     private PlayerService() {
     }
 
-    public static PlayerService GetInstance() {
+    public static PlayerService getInstance() {
         if (instance == null) {
             instance = new PlayerService();
         }
@@ -62,7 +62,7 @@ public class PlayerService {
                 int y = cell.getY() + motionAreaY[i];
                 if (Validator.isCheckingOutputOverBoard(x, y, board.getHeight(), board.getWidth())) {
                     if (!Validator.isCheckingBelongsCell(player, board.getBoard()[x][y])) {
-                        if (player.getCountTokens() - board.getBoard()[x][y].getCaptureCountUnit() >= 0)
+                        if (player.getCountTokens() - board.getBoard()[x][y].getTokensCapture() >= 0)
                             possibleCellsCapture.add(board.getBoard()[x][y]);
                     }
                 }
@@ -72,12 +72,13 @@ public class PlayerService {
     }
 
     public void regionCapture(ACell cell, Player player) {
-        LoggerGame.logRegionCaptureTrue(player);
+        LoggerGame.logRegionCaptureTrue(player, cell);
         player.getLocationCell().add(cell);
         cell.setRace(player.getRace());
-        log.info("Осталось жетонов у игрока {} - {} от территории {}  и потратили жетонов {}", player.getNickName(), player.getCountTokens(), cell.getType(), cell.getCaptureCountUnit());
-        player.setCountTokens(player.getCountTokens() - cell.getCaptureCountUnit());
-        cell.setCountTokens(cell.getCaptureCountUnit());
+        log.info("Осталось жетонов у игрока {} - {} от территории {}  и потратили жетонов {}", player.getNickName(),
+                player.getCountTokens(), cell.getType(), cell.getTokensCapture());
+        player.setCountTokens(player.getCountTokens() - cell.getTokensCapture());
+        cell.setCountTokens(cell.getTokensCapture());
         cell.setBelongs(player);
     }
 
@@ -88,7 +89,6 @@ public class PlayerService {
     public void putToken(final ACell cell, final int tokens) {
         cell.putToken(tokens);
     }
-
 
     public static ArrayList<ARace> getRacesPool() {
         return racesPool;
