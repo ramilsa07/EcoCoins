@@ -1,33 +1,22 @@
-import ru.omsk.neoLab.GameService;
-import ru.omsk.neoLab.Player;
-import ru.omsk.neoLab.board.Board;
 import ru.omsk.neoLab.board.Generators.Cells.Сell.ACell;
+import ru.omsk.neoLab.board.Generators.Cells.Сell.Mushrooms;
+import ru.omsk.neoLab.race.ARace;
+import ru.omsk.neoLab.race.Dwarfs;
+import ru.omsk.neoLab.race.Orcs;
 
 public class Game {
 
     public static void main(String[] args) {
-        Board board = Board.GetInstance();
-        ACell[][] aBoard = board.getBoard();
-        for (int i = 0; i < aBoard.length; i++) {
-            System.out.println();
-            for (int j = 0; j < aBoard[0].length; j++) {
-                System.out.print(aBoard[i][j].getType() + " ");
-            }
-        }
-        Player player = new Player("Nick");
-        ACell cell = aBoard[0][0];
-        System.out.println();
-        cell.setBelongs(player);
-        player.getLocation().add(cell);
-        cell = aBoard[0][1];
-        cell.setBelongs(player);
-        player.getLocation().add(cell);
-        cell = aBoard[1][1];
-        cell.setBelongs(player);
-        player.getLocation().add(cell);
-//        GameService gameService = GameService.GetInstance();
-//        for (ACell cells : gameService.findOutWherePlayerCanGo(board, player)) {
-//            System.out.print(cells.getType() + " --> " + cells.getX() + "-" + cells.getY() + " ");
-//        }
+        /*SelfPlay selfPlay = new SelfPlay();
+        selfPlay.createNewPlayer(new Player("SimpleBot1"));
+        selfPlay.createNewPlayer(new Player("SimpleBot2"));
+        selfPlay.Game();
+        ARace race1 = new Amphibia();
+        ARace race2 = new Orcs();
+        ACell cell = new Water();*/
+        ARace race1 = new Dwarfs();
+        ARace race2 = new Orcs();
+        ACell cell = new Mushrooms();
+        System.out.print();
     }
 }

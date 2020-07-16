@@ -1,44 +1,47 @@
 package ru.omsk.neoLab.board;
 
 import ru.omsk.neoLab.board.Generators.Cells.Сell.ACell;
-import ru.omsk.neoLab.board.Generators.Generator;
-import ru.omsk.neoLab.board.Generators.IGenerator;
 
 public class Board {
 
-    private static volatile Board instance;
+    private static Board instance;
+
     protected ACell[][] board;
 
-    private static int height;
-    private static int width;
+    private int height;
+    private int width;
 
     private Board() {
     }
 
-    public static synchronized Board GetInstance() {
+    public static Board GetInstance() {
         if (instance == null) {
             instance = new Board();
-            height = 4;
-            width = 3;
-            instance.generateBoard();
         }
         return instance;
-    }
-
-    private void generateBoard() {
-        IGenerator generator = new Generator();
-        board = generator.generate(height, width);
     }
 
     public ACell[][] getBoard() {
         return board;
     }
 
+    public void setBoard(ACell[][] board) {
+        this.board = board;
+    }
+
     public int getHeight() {
         return height;
     }
 
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
     public int getWidth() {
         return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
     }
 }

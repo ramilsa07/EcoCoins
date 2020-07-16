@@ -11,10 +11,8 @@ public class Generator implements IGenerator {
 
     private static final Logger log = LoggerFactory.getLogger(Generator.class);
 
-    private static int countWater;
-
     private final Random random = new Random();
-
+    private static int countWater;
 
     @Override
     public ACell[][] generate(int height, int width) {
@@ -29,25 +27,11 @@ public class Generator implements IGenerator {
                 board[i][j] = toRandom(maxWater);
                 board[i][j].setX(i);
                 board[i][j].setY(j);
-                log.info(board[i][j].getType() + "-- Ячейка " + board[i][j].getX() + " - " + board[i][j].getY());
             }
         }
-
-        long finish = System.currentTimeMillis();
         log.info("Генерация закончилась");
         return board;
     }
-
-  /*  public static void main(String[] args) {
-        Generator generator = new Generator();
-        board = generator.generate(4, 3);
-        for (int i = 0; i < 4; i++) {
-            System.out.println();
-            for (int j = 0; j < 3; j++) {
-                System.out.print(board[i][j].getType() + " ");
-            }
-        }
-    }*/
 
     private ACell toRandom(int maxWater) {
 
@@ -68,10 +52,8 @@ public class Generator implements IGenerator {
         }
         if ((cell.getType().equals("Water")) && (countWater < maxWater)) {
             countWater++;
-            log.info("Кол - во воды - " + countWater);
             return cell;
         } else if (cell.getType().equals("Water")) {
-            log.info("Попалась снова вода");
         }
         switch (random.nextInt(3)) {
             case 0:
@@ -85,10 +67,5 @@ public class Generator implements IGenerator {
                 break;
         }
         return cell;
-    }
-
-    private static void toFind(ACell call) {
-
-
     }
 }

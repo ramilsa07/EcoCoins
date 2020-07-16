@@ -1,5 +1,7 @@
 package ru.omsk.neoLab.race;
 
+import ru.omsk.neoLab.board.Generators.Cells.Сell.ACell;
+
 public class Dwarfs extends ARace {
 
     public Dwarfs() {
@@ -8,7 +10,7 @@ public class Dwarfs extends ARace {
     }
 
     @Override
-    public int toDefend(int countUnit) {
-        return countUnit + 1;
+    public int getAdvantageDefendCell(final ACell cell) {
+        return cell.getCountTokens() + 1;
     }
 }

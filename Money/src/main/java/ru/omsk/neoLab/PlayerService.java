@@ -1,30 +1,47 @@
 package ru.omsk.neoLab;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.omsk.neoLab.board.Board;
 import ru.omsk.neoLab.board.Generators.Cells.Сell.ACell;
-import ru.omsk.neoLab.race.ARace;
+import ru.omsk.neoLab.race.*;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 
 public class PlayerService {
 
-    // Массивы, для вычисления допустимых ходов
-    private final int[] calci = new int[]{-1, -1, -1, 0, 0, 1, 1, 1};
-    private final int[] calcj = new int[]{-1, 0, 1, -1, 1, -1, 0, 1};
+    public static Logger log = LoggerFactory.getLogger(PlayerService.class);
 
+    private static PlayerService instance;
+
+    // Массивы, для вычисления допустимых ходов
+    private final int[] motionAreaX = new int[]{-1, -1, -1, 0, 0, 1, 1, 1};
+    private final int[] motionAreaY = new int[]{-1, 0, 1, -1, 1, -1, 0, 1};
+
+    private static final ArrayList<ARace> racesPool = new ArrayList<ARace>();
     private final HashSet<ACell> possibleCellsCapture = new HashSet<ACell>();
 
-
-    public void raceChoice(HashSet<ARace> racesPool, ARace race, Player player) {
-        if (Validator.isCheckRaceInGame(race, racesPool)) {
-            player.takeRaceFromPool(race);
-            racesPool.remove(race);
-            LoggerGame.logChooseRaceTrue(player);
-        }
-        LoggerGame.logChooseRaceFalse();
+    static {
+        racesPool.add(new Amphibia());
+        racesPool.add(new Dwarfs());
+        racesPool.add(new Elfs());
+        racesPool.add(new Mushrooms());
+        racesPool.add(new Orcs());
+        racesPool.add(new Undead());
     }
 
-    public void findOutWherePlayerCanGo(ACell[][] board) {
+    private PlayerService() {
+    }
+
+    public static PlayerService GetInstance() {
+        if (instance == null) {
+            instance = new PlayerService();
+        }
+        return instance;
+    }
+
+    public HashSet<ACell> findOutWherePlayerCanGo(final ACell[][] board) {
         possibleCellsCapture.clear();
         for (int i = 0; i < board[0].length; i++) {
             possibleCellsCapture.add(board[0][i]);
@@ -32,18 +49,21 @@ public class PlayerService {
         }
         for (int i = 1; i < board.length - 1; i++) {
             possibleCellsCapture.add(board[i][0]);
-            possibleCellsCapture.add(board[i][board.length - 1]);
+            possibleCellsCapture.add(board[i][board[0].length - 1]);
         }
+        return possibleCellsCapture;
     }
 
-    public HashSet<ACell> findOutWherePlayerCanGo(Board board, Player player) {
-        for (ACell cell : player.getLocation().getCells()) {
+    public HashSet<ACell> findOutWherePlayerCanGo(final Board board, final Player player) {
+        possibleCellsCapture.clear();
+        for (ACell cell : player.getLocationCell()) {
             for (int i = 0; i < 8; i++) {
-                int x = cell.getX() + calci[i];
-                int y = cell.getY() + calcj[i];
+                int x = cell.getX() + motionAreaX[i];
+                int y = cell.getY() + motionAreaY[i];
                 if (Validator.isCheckingOutputOverBoard(x, y, board.getHeight(), board.getWidth())) {
                     if (!Validator.isCheckingBelongsCell(player, board.getBoard()[x][y])) {
-                        possibleCellsCapture.add(board.getBoard()[x][y]);
+                        if (player.getCountTokens() - board.getBoard()[x][y].getCaptureCountUnit() >= 0)
+                            possibleCellsCapture.add(board.getBoard()[x][y]);
                     }
                 }
             }
@@ -51,15 +71,27 @@ public class PlayerService {
         return possibleCellsCapture;
     }
 
-    public void unitDistribution(Player player) {
-        player.pickUpUnits();
+    public void regionCapture(ACell cell, Player player) {
+        LoggerGame.logRegionCaptureTrue(player);
+        player.getLocationCell().add(cell);
+        cell.setRace(player.getRace());
+        log.info("Осталось жетонов у игрока {} - {} от территории {}  и потратили жетонов {}", player.getNickName(), player.getCountTokens(), cell.getType(), cell.getCaptureCountUnit());
+        player.setCountTokens(player.getCountTokens() - cell.getCaptureCountUnit());
+        cell.setCountTokens(cell.getCaptureCountUnit());
+        cell.setBelongs(player);
     }
 
-    public void countMoney(Player player) {
-        player.makeCoinCount();
+    public void getToken(final ACell cell, final int tokens) {
+        cell.getToken(tokens);
     }
 
-    public void raceInDecline(Player player) {
-        player.setRaceDecline();
+    public void putToken(final ACell cell, final int tokens) {
+        cell.putToken(tokens);
     }
+
+
+    public static ArrayList<ARace> getRacesPool() {
+        return racesPool;
+    }
+
 }

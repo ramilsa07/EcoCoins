@@ -1,25 +1,32 @@
 package ru.omsk.neoLab.selfplay;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import ru.omsk.neoLab.Player;
+import ru.omsk.neoLab.PlayerService;
 import ru.omsk.neoLab.board.Board;
-import ru.omsk.neoLab.race.RaceContainer;
+import ru.omsk.neoLab.board.Generators.Cells.Сell.ACell;
+import ru.omsk.neoLab.board.Generators.Generator;
+import ru.omsk.neoLab.board.Generators.IGenerator;
 
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Random;
 
+@Slf4j
 public class SelfPlay {
 
-    private static final Logger logger = LoggerFactory.getLogger(SelfPlay.class);
+    private final Random random = new Random();
 
-    private Board board;
-    private Queue<Player> players;
+    private Board board = Board.GetInstance();
+    private PlayerService playerService = PlayerService.GetInstance();
 
-    private String nickName = null;
+    private Queue<Player> players = new LinkedList<Player>();
+
     private String phase;
-    private int round;
+    private int round = 0;
 
-    private RaceContainer race = new RaceContainer();
+    private HashSet<ACell> possibleCellsCapture = new HashSet<ACell>();
 
     enum Phases {
         RACE_CHOICE("race choice"), // Выбор расы
@@ -39,34 +46,69 @@ public class SelfPlay {
     }
 
     public void Game() {
-        board = Board.GetInstance();
+        generateBoard();
+        Player firstPlayer = players.element();
+        Player currentPlayer = players.element();
         while (true) {
-            if (round == 1) {
+            round++;
+            if (currentPlayer.isDecline() || round == 1) {
+                log.info("Началась фаза выбора расы");
                 phase = "race choice";
                 while (Phases.RACE_CHOICE.equalPhase(phase)) {
-                    if (Phases.RACE_CHOICE.equalPhase("race choice")) {
-                        logger.info("Началась фаза выбора расы");
-                        if (players.element().getRace() != null) {
-                            phase = "capture of regions";
-                        }
+                    currentPlayer.changeRace(PlayerService.getRacesPool().get((random.nextInt(PlayerService.getRacesPool().size()))));
+                    phase = "capture of regions";
+                }
+            }
+            log.info("Началась фаза захвата территории");
+            while (Phases.CAPTURE_OF_REGIONS.equalPhase(phase)) {
+
+                if (round != 1) {
+                    log.info("{} решил уйти в упадок", currentPlayer.getNickName());
+                    currentPlayer.goIntoDecline();
+                    changeCourse(currentPlayer);
+                    currentPlayer = players.element();
+                    break;
+                }
+                if (currentPlayer.getLocationCell().isEmpty()) {
+                    possibleCellsCapture = playerService.findOutWherePlayerCanGo(board.getBoard());
+                } else {
+                    possibleCellsCapture = playerService.findOutWherePlayerCanGo(board, currentPlayer);
+                }
+                Object[] cells = possibleCellsCapture.toArray();
+                if (!possibleCellsCapture.isEmpty())
+                    playerService.regionCapture((ACell) cells[random.nextInt(cells.length)], currentPlayer);
+                else {
+                    log.info("Начинаем перераспределять");
+                    currentPlayer.shufflingTokens();
+                    changeCourse(currentPlayer);
+                    currentPlayer = players.element();
+                    if (currentPlayer.equals(firstPlayer)) {
+                        phase = "getting coins";
                     }
                 }
             }
-            while (Phases.CAPTURE_OF_REGIONS.equalPhase(phase)) {
-                logger.info("Началась фаза захвата территории");
-                if (true) {
-                    phase = "getting coins";
-                }
+            if (phase.equals("getting coins")) {
+                log.info("Началась фаза c Сбор Монет");
             }
             while (Phases.GETTING_COINS.equalPhase(phase)) {
-                logger.info("Началась фаза c Сбор Монет");
-                changeCourse(players.element());
-                phase = "";
+                for (Player player : players) {
+                    player.collectAllCoins();
+                    log.info("Теперь у {} монет {}", player.getNickName(), player.getCountCoin());
+                }
+                round++;
             }
             if (round == 10) {
                 toEndGame();
+                System.exit(0);
             }
         }
+    }
+
+    private void generateBoard() {
+        IGenerator generator = new Generator();
+        board.setBoard(generator.generate(4, 3));
+        board.setHeight(4);
+        board.setWidth(3);
     }
 
 
@@ -75,31 +117,13 @@ public class SelfPlay {
         players.add(player);
     }
 
-    public void toAppointBoard() {
-
+    public void createNewPlayer(Player player) {
+        players.add(player);
     }
 
     public void toEndGame() {
-
-    }
-
-   /* public void StartGame() throws IOException{
-       System.out.println(String.format("Server started, port: %d", PORT));
-        try (final ServerSocket serverSocket = new ServerSocket(PORT)) {
-            // serverSocket.setSoTimeout(1000);
-            while (true) { // приложение с помощью System.exit() закрывается по команде от клиента
-                // Блокируется до возникновения нового соединения
-                final Socket socket = serverSocket.accept();
-                try {
-                    new Game(this, socket, null,null).start();
-                } catch (final IOException e) {
-                    // Если завершится неудачей, закрывается сокет,
-                    // в противном случае, нить закроет его:
-                    socket.close();
-                }
-            }
-        } catch (final BindException e) {
-            e.printStackTrace();
+        for (Player player : players) {
+            log.info("Info {} coins {}", player.getCountCoin(), player.getNickName());
         }
-    }*/
+    }
 }

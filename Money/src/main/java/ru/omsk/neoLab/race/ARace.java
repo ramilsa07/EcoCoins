@@ -1,25 +1,30 @@
 package ru.omsk.neoLab.race;
 
+import lombok.Data;
+import ru.omsk.neoLab.board.Generators.Cells.Сell.ACell;
+
+@Data
 public abstract class ARace {
+
     protected String nameRace;
     protected int countTokens = 6;
+
     protected boolean alive;
 
-    public String getNameRace() {
-        return nameRace;
+    public int getAdvantageCoin(final ACell cell) {
+        return cell.getCoin();
     }
 
-    public int getCountTokens() {
-        return countTokens;
+    public int getAdvantageCaptureCell(final ACell cell) {
+        return cell.getTokensCapture();
     }
 
-    //TODO:Подумуть над(Оставить только getter'ы)
-
-    public int toDefend(int countUnit) {
-        return countUnit;
-    } // Сколько нужно для защиты
-
-    public void toDecline() {
-        alive = false;
+    public int getAdvantageDefendCell(final ACell cell) {
+        return cell.getCountTokens();
     }
+
+    public boolean getAdvantageOpportunityCaptureCell(final ACell cell) {
+        return cell.isAbilityCapture();
+    }
+
 }

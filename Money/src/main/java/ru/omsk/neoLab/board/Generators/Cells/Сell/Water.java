@@ -7,8 +7,4 @@ public class Water extends ACell {
         abilityCapture = false;
     }
 
-    @Override
-    public boolean getAbilityCapture() {
-        return race.getNameRace().equals("Amphibia") || abilityCapture;
-    }
 }

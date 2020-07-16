@@ -1,5 +1,7 @@
 package ru.omsk.neoLab.race;
 
+import ru.omsk.neoLab.board.Generators.Cells.Сell.ACell;
+
 public class Orcs extends ARace {
 
     public Orcs() {
@@ -7,8 +9,8 @@ public class Orcs extends ARace {
         countTokens = 5;
     }
 
-    /*@Override
-    public int getRequirementsForCapture(ACell call){
-        return call.getRequirementsForCapture() - 1;
-    }*/
+    @Override
+    public int getAdvantageCaptureCell(final ACell cell) {
+        return cell.getTokensCapture() - 1;
+    }
 }
