@@ -7,13 +7,10 @@ import ru.omsk.neoLab.race.ARace;
 
 import java.util.ArrayList;
 
-@Slf4j
-@Data
-public class Player {
+public final class Player {
 
     private final String nickName;
-    private int countCoin;
-
+    private int countCoin = 0;
     private int countTokens = 0;
 
     private ARace race;
@@ -44,35 +41,74 @@ public class Player {
         PlayerService.getRacesPool().remove(race);
     }
 
-    public void goIntoDecline() {
-        this.decline = true;
-    }
-
-    public void regionCapture(ACell cell) {
-        cell.regionCapture(this);
-        log.info("Осталось жетонов у игрока {} - {} от территории {}  и потратили жетонов {}", this.nickName, this.countTokens, cell.getType(), this.race.);
-    }
-
-    public void shufflingTokens() {
-        for (ACell cell : locationCell) {
-            service.getToken(cell, this.countTokens);
+    public void pickUpTokens() {
+        for (ACell cell : location.getCells()) {
+            this.countTokens += cell.getCountTokens() - 1;
+            cell.setCountTokens(1);
         }
-        log.info("После перетасовки жетонов, у игрока {} - жетонов {}", this.nickName, this.countCoin);
+        LoggerGame.logPickUpTokens(this);
+        LoggerGame.logNumberOfFreeTokens(this);
     }
 
-    public void collectCountTokens(final int countTokens) {
-        this.countTokens += countTokens;
-    }
-
-    public void collectAllCoins() {
-        for (ACell cell : locationCell) {
-            this.countCoin += this.race.getAdvantageCoin(cell);
+    public void makeCoinCount() {
+        // Сбор монет с действующих рас
+        if (race.getNameRace().equals("Elfs")) {
+            if (location.getCells().contains(new Earth())) {
+                countCoin += 1;
+            }
+            if (location.getCells().contains(new Mounted())) {
+                countCoin += 1;
+            }
+            if (location.getCells().contains(new Mushrooms())) {
+                countCoin += 1;
+            }
         }
-        for (ACell cell : locationDeclineCell) {
-            this.countCoin += this.raceDecline.getAdvantageCoin(cell);
+        for (ACell cell : location.getCells()) {
+            countCoin += cell.getCoin();
+        }
+
+        // Сбор монет с упадших рас
+        if (locationDecline != null && raceDecline != null) {
+            if (raceDecline.getNameRace().equals("Elfs")) {
+                if (locationDecline.getCells().contains(new Earth())) {
+                    countCoin += 1;
+                }
+                if (locationDecline.getCells().contains(new Mounted())) {
+                    countCoin += 1;
+                }
+                if (locationDecline.getCells().contains(new Mushrooms())) {
+                    countCoin += 1;
+                }
+            }
+            for (ACell cell : locationDecline.getCells()) {
+                countCoin += cell.getCoin();
+            }
         }
     }
 
+    public String getNickName() {
+        return nickName;
+    }
 
+    public int getCountCoin() {
+        return countCoin;
+    }
+
+    public ARace getRace() {
+        return race;
+    }
+
+    public ListCell getLocation() {
+        return location;
+    }
+
+    public int getCountTokens() {
+        return countTokens;
+    }
+
+    public void setRaceDecline() {
+        raceDecline = race;
+        race = null;
+        countTokens = 0;
+    }
 }
-
