@@ -2,14 +2,15 @@ package ru.omsk.neoLab;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import ru.omsk.neoLab.board.Generators.Cells.Сell.Cell;
+import ru.omsk.neoLab.board.Сell.Cell;
 import ru.omsk.neoLab.race.ARace;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 @Slf4j
 @Data
-public class Player {
+public final class Player {
 
     private final String nickName;
     private int countCoin;
@@ -84,7 +85,5 @@ public class Player {
             }
         }
     }
-
-
 }
 

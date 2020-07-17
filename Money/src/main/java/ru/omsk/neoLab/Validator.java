@@ -1,6 +1,7 @@
 package ru.omsk.neoLab;
 
-import ru.omsk.neoLab.board.Generators.Cells.Сell.Cell;
+
+import ru.omsk.neoLab.board.Сell.Cell;
 
 public final class Validator {
 

@@ -1,7 +1,7 @@
 package ru.omsk.neoLab.race;
 
 import lombok.Data;
-import ru.omsk.neoLab.board.Generators.Cells.Сell.Cell;
+import ru.omsk.neoLab.board.Сell.Cell;
 
 @Data
 public abstract class ARace {

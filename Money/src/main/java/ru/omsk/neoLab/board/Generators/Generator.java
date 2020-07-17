@@ -3,8 +3,8 @@ package ru.omsk.neoLab.board.Generators;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.omsk.neoLab.board.Generators.Cells.Сell.Cell;
-import ru.omsk.neoLab.board.Generators.Cells.Сell.TypeCell;
+import ru.omsk.neoLab.board.Сell.Cell;
+import ru.omsk.neoLab.board.Сell.TypeCell;
 
 import java.util.Random;
 

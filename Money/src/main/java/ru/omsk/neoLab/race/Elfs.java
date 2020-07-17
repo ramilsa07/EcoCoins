@@ -1,7 +1,7 @@
 package ru.omsk.neoLab.race;
 
-import ru.omsk.neoLab.board.Generators.Cells.Сell.Cell;
-import ru.omsk.neoLab.board.Generators.Cells.Сell.TypeCell;
+import ru.omsk.neoLab.board.Сell.Cell;
+import ru.omsk.neoLab.board.Сell.TypeCell;
 
 import java.util.ArrayList;
 

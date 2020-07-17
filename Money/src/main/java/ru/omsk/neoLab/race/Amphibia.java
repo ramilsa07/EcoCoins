@@ -1,15 +1,14 @@
 package ru.omsk.neoLab.race;
 
-import ru.omsk.neoLab.board.Сell.ACell;
+import ru.omsk.neoLab.board.Сell.Cell;
 
 public class Amphibia extends ARace {
 
     public Amphibia() {
         nameRace = "Amphibia";
-        alive = true;
     }
 
-    public boolean getAdvantageOpportunityCaptureCell(final ACell cell) {
+    public boolean getAdvantageOpportunityCaptureCell(final Cell cell) {
         return cell.getType().equals("Water") || cell.isAbilityCapture();
     }
 

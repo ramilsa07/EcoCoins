@@ -1,4 +1,4 @@
-package ru.omsk.neoLab.board.Generators.Cells.Сell;
+package ru.omsk.neoLab.board.Сell;
 
 import lombok.Data;
 import ru.omsk.neoLab.Player;
@@ -44,5 +44,14 @@ public class Cell {
     public int getToken(final int countTokens) {
         this.countTokens -= countTokens;
         return countTokens;
+    }
+
+    @Override
+    public String toString() {
+        return "Cell{" +
+                "x=" + x +
+                ", y=" + y +
+                ", type=" + type +
+                '}';
     }
 }

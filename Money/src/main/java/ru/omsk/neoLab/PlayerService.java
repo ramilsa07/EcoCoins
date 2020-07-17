@@ -2,7 +2,7 @@ package ru.omsk.neoLab;
 
 import lombok.extern.slf4j.Slf4j;
 import ru.omsk.neoLab.board.Board;
-import ru.omsk.neoLab.board.Generators.Cells.Сell.Cell;
+import ru.omsk.neoLab.board.Сell.Cell;
 import ru.omsk.neoLab.race.*;
 
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import java.util.HashSet;
 
 @Slf4j
 public class PlayerService {
-
+    // TODO: Это вообще что? Что делает instance?
     private static PlayerService instance;
 
     // Массивы, для вычисления допустимых ходов
@@ -71,7 +71,7 @@ public class PlayerService {
         player.regionCapture(cell);
         log.info("Захвачена территория {} c координатами [{}][{}]", cell.getType(), cell.getX(), cell.getY());
         log.info("Осталось жетонов у игрока {} - {} от территории {}", player.getNickName(), player.getCountTokens(), cell.getType());
-        LoggerGame.logRegionCaptureTrue(player);
+        LoggerGame.logRegionCaptureTrue(player, cell);
     }
 
     public void getToken(final Cell cell, final int tokens) {

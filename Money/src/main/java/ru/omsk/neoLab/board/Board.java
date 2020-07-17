@@ -1,10 +1,11 @@
 package ru.omsk.neoLab.board;
 
-import ru.omsk.neoLab.board.Generators.Cells.Сell.Cell;
 
 /*
  * Класс, хранящий доску, на которой будет проходить игра.
  * */
+
+import ru.omsk.neoLab.board.Сell.Cell;
 
 public class Board {
 
@@ -27,6 +28,10 @@ public class Board {
 
     public Cell[][] getBoard() {
         return board;
+    }
+
+    public Cell getBoardElements(int i, int j){
+        return board[i][j];
     }
 
     public void setBoard(Cell[][] board) {

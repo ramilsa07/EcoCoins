@@ -2,7 +2,8 @@ package ru.omsk.neoLab;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.omsk.neoLab.board.Сell.ACell;
+import ru.omsk.neoLab.board.Board;
+import ru.omsk.neoLab.board.Сell.Cell;
 import ru.omsk.neoLab.race.ARace;
 
 import java.util.ArrayList;
@@ -28,21 +29,29 @@ public final class LoggerGame {
         log.error("Nick {} is already in use. Choose another nickname", nick);
     }
 
+    public static void logOutputBoard(Board board) {
+        for (int i = 0; i < board.getHeight(); i++) {
+            for (int j = 0; j < board.getWidth(); j++) {
+                log.info("{}", board.getBoardElements(i, j));
+            }
+        }
+    }
+
     public static void logStartGame(Player player1, Player player2) { // Старт игры, представление противников
         log.info("{} vs {} game begins", player1.getNickName(), player2.getNickName());
     }
 
-    public static void logPlayerRoundStart(Player player){ // Начало раунда определенного игрока
+    public static void logPlayerRoundStart(Player player) { // Начало раунда определенного игрока
         log.info("Player {} starts his turn", player.getNickName());
     }
 
-    public static void logRoundNumber(int round){ // Выводим номер раунда в лог
+    public static void logRoundNumber(int round) { // Выводим номер раунда в лог
         log.info("Round {} starts", round);
     }
 
-    public static void logWhatRacesCanIChoose(HashSet<ARace> freeRacesPool) { // Выводим на экран свободные расы
+    public static void logWhatRacesCanIChoose(ArrayList<ARace> freeRacesPool) { // Выводим на экран свободные расы
         log.info("Can choose: ");
-        for(ARace race: freeRacesPool){
+        for (ARace race : freeRacesPool) {
             log.info(race.getNameRace());
         }
     }
@@ -59,14 +68,14 @@ public final class LoggerGame {
         log.info("logNumberOfFreeTokens {}", player.getCountTokens());
     }
 
-    public static void logWhereToGo(ArrayList<ACell> possibleCellsCapture) { // Куда можно пойти
+    public static void logWhereToGo(/*ArrayList*/HashSet<Cell> possibleCellsCapture) { // Куда можно пойти
         log.info("Can go: ");
-        for (ACell cell: possibleCellsCapture){
+        for (Cell cell : possibleCellsCapture) {
             log.info("{} [{}, {}]", cell.getType(), cell.getX(), cell.getY());
         }
     }
 
-    public static void logRegionCaptureTrue(Player player, ACell cell) { // Такая-то ячейка захвачена игроком
+    public static void logRegionCaptureTrue(Player player, Cell cell) { // Такая-то ячейка захвачена игроком
         log.info("The cell {} [{}, {}] is captured by the player {}", cell.getType(), cell.getX(),
                 cell.getY(), player.getNickName());
     }
@@ -75,36 +84,36 @@ public final class LoggerGame {
         log.error("This territory cannot be captured");
     }
 
-    public static void logFewTokens(){ // Мало жетонов для захвата
+    public static void logFewTokens() { // Мало жетонов для захвата
         log.error("FewTokens");
     }
 
-    public static void logRedistributionOfTokens(Player player){ // Перераспределение жетонов
+    public static void logRedistributionOfTokens(Player player) { // Перераспределение жетонов
         log.info("{} begins the redistribution of tokens", player.getNickName());
     }
 
-    public static void logNumberOfTokensOnCell(ACell cell){ // Выводит число жетонов на ячейке
+    public static void logNumberOfTokensOnCell(Cell cell) { // Выводит число жетонов на ячейке
         log.info("On cell {} [{}, {}] {} tokens", cell.getType(), cell.getX(),
                 cell.getY(), cell.getCountTokens());
     }
 
-    public static void logGetCoins(Player player){ // Показывает сколько монеток у игрока
+    public static void logGetCoins(Player player) { // Показывает сколько монеток у игрока
         log.info("{} has {} coins", player.getNickName(), player.getCountCoin());
     }
 
-    public static void logRaceInDecline(Player player){ // Расу отправляем в упадок
+    public static void logRaceInDecline(Player player) { // Расу отправляем в упадок
         log.info("{} turned the race {} into decline", player.getNickName(), player.getRaceDecline().getNameRace());
     }
 
-    public static void logPickUpTokens(Player player){ // Берем жетоны с ячеек на руку
+    public static void logPickUpTokens(Player player) { // Берем жетоны с ячеек на руку
         log.info("{} pick up tokens", player.getNickName());
     }
 
-    public static void logEndGame(){ // Конец игры
+    public static void logEndGame() { // Конец игры
         log.info("Game over");
     }
 
-    public static void logWinner(Player player){ // Победа игрока
+    public static void logWinner(Player player) { // Победа игрока
         log.info("{} win!", player.getNickName());
     }
 }

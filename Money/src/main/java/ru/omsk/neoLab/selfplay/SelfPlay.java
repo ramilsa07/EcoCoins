@@ -1,10 +1,11 @@
 package ru.omsk.neoLab.selfplay;
 
 import lombok.extern.slf4j.Slf4j;
+import ru.omsk.neoLab.LoggerGame;
 import ru.omsk.neoLab.Player;
 import ru.omsk.neoLab.PlayerService;
 import ru.omsk.neoLab.board.Board;
-import ru.omsk.neoLab.board.Generators.Cells.Сell.Cell;
+import ru.omsk.neoLab.board.Сell.Cell;
 import ru.omsk.neoLab.board.Generators.Generator;
 import ru.omsk.neoLab.board.Generators.IGenerator;
 
@@ -18,10 +19,10 @@ public class SelfPlay {
 
     private final Random random = new Random();
 
-    private Board board = Board.GetInstance();
-    private PlayerService playerService = PlayerService.GetInstance();
+    private final Board board = Board.GetInstance(); // ЭТО ЧЕЕЕЕЕ???
+    private final PlayerService playerService = PlayerService.GetInstance();
 
-    private Queue<Player> players = new LinkedList<Player>();
+    private final Queue<Player> players = new LinkedList<Player>();
 
     private String phase;
     private int round = 0;
@@ -47,19 +48,25 @@ public class SelfPlay {
 
     public void Game() {
         generateBoard();
+        LoggerGame.logOutputBoard(board);
         Player firstPlayer = players.element();
+        LoggerGame.logNickSelection(firstPlayer);
         Player currentPlayer = players.element();
-        while (true) {
+        LoggerGame.logNickSelection(currentPlayer);
+        while (round < 10) {
             round++;
+            LoggerGame.logRoundNumber(round);
             if (currentPlayer.isDecline() || round == 1) {
                 log.info("Началась фаза выбора расы");
                 phase = "race choice";
                 while (Phases.RACE_CHOICE.equalPhase(phase)) {
+                    LoggerGame.logWhatRacesCanIChoose(PlayerService.getRacesPool()); // Почему PlayerService как класс, а не экземпляр?
                     currentPlayer.changeRace(PlayerService.getRacesPool().get((random.nextInt(PlayerService.getRacesPool().size()))));
                     log.info("{} выбрал расу {}", currentPlayer.getNickName(), currentPlayer.getRace().getNameRace());
                     phase = "capture of regions";
                 }
             }
+            LoggerGame.logWhatRacesCanIChoose(PlayerService.getRacesPool()); // Чисто посмотреть удаляется ли раса
             log.info("Началась фаза захвата территории");
             while (Phases.CAPTURE_OF_REGIONS.equalPhase(phase)) {
                 for (Cell cell : currentPlayer.getLocationCell()) {
@@ -76,8 +83,10 @@ public class SelfPlay {
                 }
                 if (currentPlayer.getLocationCell().isEmpty()) {
                     possibleCellsCapture = playerService.findOutWherePlayerCanGo(board.getBoard());
+                    LoggerGame.logWhereToGo(possibleCellsCapture);
                 } else {
                     possibleCellsCapture = playerService.findOutWherePlayerCanGo(board, currentPlayer);
+                    LoggerGame.logWhereToGo(possibleCellsCapture);
                 }
                 Object[] cells = possibleCellsCapture.toArray();
                 if (!possibleCellsCapture.isEmpty())
