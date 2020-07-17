@@ -5,9 +5,9 @@ import ru.omsk.neoLab.LoggerGame;
 import ru.omsk.neoLab.Player;
 import ru.omsk.neoLab.PlayerService;
 import ru.omsk.neoLab.board.Board;
-import ru.omsk.neoLab.board.Сell.Cell;
 import ru.omsk.neoLab.board.Generators.Generator;
 import ru.omsk.neoLab.board.Generators.IGenerator;
+import ru.omsk.neoLab.board.Сell.Cell;
 
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -25,7 +25,7 @@ public class SelfPlay {
     private final Queue<Player> players = new LinkedList<Player>();
 
     private String phase;
-    private int round = 0;
+    private int round = 1;
 
     private HashSet<Cell> possibleCellsCapture = new HashSet<Cell>();
 
@@ -46,6 +46,7 @@ public class SelfPlay {
         }
     }
 
+    //TODO:Поправить логи
     public void Game() {
         generateBoard();
         LoggerGame.logOutputBoard(board);
@@ -53,9 +54,9 @@ public class SelfPlay {
         LoggerGame.logNickSelection(firstPlayer);
         Player currentPlayer = players.element();
         LoggerGame.logNickSelection(currentPlayer);
-        while (round < 10) {
-            round++;
+        while (round <= 11) {
             LoggerGame.logRoundNumber(round);
+            //TODO:Добавить параметр для логичного упадка
             if (currentPlayer.isDecline() || round == 1) {
                 log.info("Началась фаза выбора расы");
                 phase = "race choice";
@@ -74,6 +75,7 @@ public class SelfPlay {
                         currentPlayer.collectTokens();
                     }
                 }
+                //TODO:Сколько сейчас жетонов
                 if (round != 1 && currentPlayer.getCountTokens() == 0) {
                     currentPlayer.goIntoDecline();
                     log.info("{} решил уйти в упадок", currentPlayer.getNickName());
@@ -98,7 +100,8 @@ public class SelfPlay {
                     currentPlayer = players.element();
                     if (currentPlayer.equals(firstPlayer)) {
                         phase = "getting coins";
-                    }
+                    } else
+                        break;
                 }
             }
             while (Phases.GETTING_COINS.equalPhase(phase)) {
@@ -107,6 +110,8 @@ public class SelfPlay {
                     player.collectAllCoins();
                     log.info("Теперь у {} монет {}", player.getNickName(), player.getCountCoin());
                 }
+                round++;
+                phase = "capture of regions";
             }
             if (round == 10) {
                 toEndGame();
@@ -114,7 +119,7 @@ public class SelfPlay {
         }
     }
 
-    private void generateBoard() {
+    public void generateBoard() {
         IGenerator generator = new Generator();
         board.setBoard(generator.generate(4, 3));
         board.setHeight(4);

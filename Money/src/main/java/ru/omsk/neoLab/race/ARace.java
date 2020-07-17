@@ -1,10 +1,25 @@
 package ru.omsk.neoLab.race;
 
-import lombok.Data;
 import ru.omsk.neoLab.board.Сell.Cell;
 
-@Data
+
 public abstract class ARace {
+
+    public String getNameRace() {
+        return nameRace;
+    }
+
+    public void setNameRace(String nameRace) {
+        this.nameRace = nameRace;
+    }
+
+    public int getCountTokens() {
+        return countTokens;
+    }
+
+    public void setCountTokens(int countTokens) {
+        this.countTokens = countTokens;
+    }
 
     protected String nameRace;
     protected int countTokens = 6;

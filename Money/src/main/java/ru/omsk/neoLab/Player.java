@@ -1,16 +1,16 @@
 package ru.omsk.neoLab;
 
-import lombok.Data;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.omsk.neoLab.board.Сell.Cell;
 import ru.omsk.neoLab.race.ARace;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
-@Slf4j
-@Data
+
 public final class Player {
+
+    public static Logger log = LoggerFactory.getLogger(Player.class);
 
     private final String nickName;
     private int countCoin;
@@ -64,7 +64,7 @@ public final class Player {
         for (Cell cell : locationCell) {
             service.getToken(cell, this.countTokens);
         }
-        log.info("После перетасовки жетонов, у игрока {} - жетонов {}", this.nickName, this.countCoin);
+        log.info("После перетасовки жетонов, у игрока {} - жетонов {}", this.nickName, this.countTokens);
     }
 
     public void collectTokens() {
@@ -84,6 +84,74 @@ public final class Player {
                 this.countCoin += this.raceDecline.getAdvantageCoin(cell);
             }
         }
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public int getCountCoin() {
+        return countCoin;
+    }
+
+    public void setCountCoin(int countCoin) {
+        this.countCoin = countCoin;
+    }
+
+    public int getCountTokens() {
+        return countTokens;
+    }
+
+    public void setCountTokens(int countTokens) {
+        this.countTokens = countTokens;
+    }
+
+    public ARace getRace() {
+        return race;
+    }
+
+    public void setRace(ARace race) {
+        this.race = race;
+    }
+
+    public ArrayList<Cell> getLocationCell() {
+        return locationCell;
+    }
+
+    public void setLocationCell(ArrayList<Cell> locationCell) {
+        this.locationCell = locationCell;
+    }
+
+    public ARace getRaceDecline() {
+        return raceDecline;
+    }
+
+    public void setRaceDecline(ARace raceDecline) {
+        this.raceDecline = raceDecline;
+    }
+
+    public ArrayList<Cell> getLocationDeclineCell() {
+        return locationDeclineCell;
+    }
+
+    public void setLocationDeclineCell(ArrayList<Cell> locationDeclineCell) {
+        this.locationDeclineCell = locationDeclineCell;
+    }
+
+    public PlayerService getService() {
+        return service;
+    }
+
+    public void setService(PlayerService service) {
+        this.service = service;
+    }
+
+    public boolean isDecline() {
+        return decline;
+    }
+
+    public void setDecline(boolean decline) {
+        this.decline = decline;
     }
 }
 
