@@ -99,7 +99,7 @@ public final class LoggerGame {
     }
 
     public static void logGetTokens(Player player) { // Показывает сколько свободных жетонов у игрока
-        log.info("{} has {} coins", player.getNickName(), player.getCountTokens());
+        log.info("{} has {} tokens", player.getNickName(), player.getCountTokens());
     }
 
     public static void logRaceInDecline(Player player) { // Расу отправляем в упадок

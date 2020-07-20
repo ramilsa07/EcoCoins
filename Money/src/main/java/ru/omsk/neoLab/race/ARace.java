@@ -5,22 +5,6 @@ import ru.omsk.neoLab.board.Сell.Cell;
 
 public abstract class ARace {
 
-    public String getNameRace() {
-        return nameRace;
-    }
-
-    public void setNameRace(String nameRace) {
-        this.nameRace = nameRace;
-    }
-
-    public int getCountTokens() {
-        return countTokens;
-    }
-
-    public void setCountTokens(int countTokens) {
-        this.countTokens = countTokens;
-    }
-
     protected String nameRace;
     protected int countTokens = 6;
 
@@ -40,4 +24,19 @@ public abstract class ARace {
         return cell.isAbilityCapture();
     }
 
+    public String getNameRace() {
+        return nameRace;
+    }
+
+    public void setNameRace(String nameRace) {
+        this.nameRace = nameRace;
+    }
+
+    public int getCountTokens() {
+        return countTokens;
+    }
+
+    public void setCountTokens(int countTokens) {
+        this.countTokens = countTokens;
+    }
 }

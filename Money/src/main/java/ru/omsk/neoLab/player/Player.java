@@ -88,9 +88,6 @@ public final class Player {
 
     public void collectAllCoins() {
         for (Cell cell : locationCell) {
-            if(!race.getNameRace().equals("Amphibia") && cell.getType() == TypeCell.Water){
-                continue;
-            }
             if (this.race.isAdvantageOpportunityCaptureCell(cell)) {
                 this.countCoin += this.race.getAdvantageCoin(cell);
             }
