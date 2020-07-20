@@ -1,6 +1,8 @@
-package ru.omsk.neoLab;
+package ru.omsk.neoLab.player;
 
 import lombok.extern.slf4j.Slf4j;
+import ru.omsk.neoLab.LoggerGame;
+import ru.omsk.neoLab.Validator;
 import ru.omsk.neoLab.board.Board;
 import ru.omsk.neoLab.board.Сell.Cell;
 import ru.omsk.neoLab.race.*;

@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.omsk.neoLab.board.Board;
 import ru.omsk.neoLab.board.Сell.Cell;
+import ru.omsk.neoLab.player.Player;
 import ru.omsk.neoLab.race.ARace;
 
 import java.util.ArrayList;

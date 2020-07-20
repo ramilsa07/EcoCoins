@@ -2,8 +2,8 @@ package ru.omsk.neoLab.selfplay;
 
 import lombok.extern.slf4j.Slf4j;
 import ru.omsk.neoLab.LoggerGame;
-import ru.omsk.neoLab.Player;
-import ru.omsk.neoLab.PlayerService;
+import ru.omsk.neoLab.player.Player;
+import ru.omsk.neoLab.player.PlayerService;
 import ru.omsk.neoLab.board.Board;
 import ru.omsk.neoLab.board.Generators.Generator;
 import ru.omsk.neoLab.board.Generators.IGenerator;

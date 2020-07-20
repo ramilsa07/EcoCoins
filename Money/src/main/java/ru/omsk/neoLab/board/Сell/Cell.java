@@ -1,6 +1,6 @@
 package ru.omsk.neoLab.board.Сell;
 
-import ru.omsk.neoLab.Player;
+import ru.omsk.neoLab.player.Player;
 
 
 public class Cell {
