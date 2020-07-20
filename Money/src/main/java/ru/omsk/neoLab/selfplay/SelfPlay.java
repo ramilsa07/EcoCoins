@@ -1,6 +1,7 @@
 package ru.omsk.neoLab.selfplay;
 
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.omsk.neoLab.LoggerGame;
 import ru.omsk.neoLab.Player;
 import ru.omsk.neoLab.PlayerService;
@@ -14,13 +15,18 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
 
-@Slf4j
 public class SelfPlay {
+
+    private Logger log = LoggerFactory.getLogger(SelfPlay.class);
 
     private final Random random = new Random();
 
     private final Board board = Board.GetInstance();
     private final PlayerService playerService = PlayerService.GetInstance();
+
+    public Queue<Player> getPlayers() {
+        return players;
+    }
 
     private final Queue<Player> players = new LinkedList<Player>();
 

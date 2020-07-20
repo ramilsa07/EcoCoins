@@ -1,6 +1,5 @@
 package ru.omsk.neoLab;
 
-import lombok.extern.slf4j.Slf4j;
 import ru.omsk.neoLab.board.Board;
 import ru.omsk.neoLab.board.Сell.Cell;
 import ru.omsk.neoLab.race.*;
@@ -8,7 +7,6 @@ import ru.omsk.neoLab.race.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-@Slf4j
 public class PlayerService {
     private static PlayerService instance;
 

@@ -1,5 +1,7 @@
 package ru.omsk.neoLab;
 
+import ru.omsk.neoLab.selfplay.SelfPlay;
+
 import java.io.*;
 import java.net.BindException;
 import java.net.ServerSocket;
@@ -11,6 +13,8 @@ public class Server {
 
     static final int PORT = 8081;
     static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("HH:mm:ss");
+
+    static final SelfPlay selfplay = new SelfPlay();
     static final int MAX_PLAYERS = 2;
 
     enum Command {
@@ -70,6 +74,17 @@ public class Server {
             } catch (final IOException ignored) {
             }
         }
+
+        @Override
+        public void run() {
+            try {
+                do
+                    selfplay.createNewPlayer(new Player(nickName = in.readLine()));
+                while (MAX_PLAYERS != selfplay.getPlayers().size());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 
@@ -77,15 +92,11 @@ public class Server {
     private void startServer() throws IOException {
         System.out.println(String.format("Server started, port: %d", PORT));
         try (final ServerSocket serverSocket = new ServerSocket(PORT)) {
-            // serverSocket.setSoTimeout(1000);
-            while (true) { // приложение с помощью System.exit() закрывается по команде от клиента
-                // Блокируется до возникновения нового соединения
+            while (true) {
                 final Socket socket = serverSocket.accept();
                 try {
                     new ServerSomething(this, socket).start();
                 } catch (final IOException e) {
-                    // Если завершится неудачей, закрывается сокет,
-                    // в противном случае, нить закроет его:
                     socket.close();
                 }
             }
