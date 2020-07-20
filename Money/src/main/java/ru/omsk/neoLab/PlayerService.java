@@ -10,7 +10,6 @@ import java.util.HashSet;
 
 @Slf4j
 public class PlayerService {
-    // TODO: Это вообще что? Что делает instance?
     private static PlayerService instance;
 
     // Массивы, для вычисления допустимых ходов
@@ -69,8 +68,6 @@ public class PlayerService {
 
     public void regionCapture(Cell cell, Player player) {
         player.regionCapture(cell);
-        log.info("Захвачена территория {} c координатами [{}][{}]", cell.getType(), cell.getX(), cell.getY());
-        log.info("Осталось жетонов у игрока {} - {} от территории {}", player.getNickName(), player.getCountTokens(), cell.getType());
         LoggerGame.logRegionCaptureTrue(player, cell);
     }
 
@@ -82,9 +79,7 @@ public class PlayerService {
         cell.putToken(tokens);
     }
 
-
     public static ArrayList<ARace> getRacesPool() {
         return racesPool;
     }
-
 }

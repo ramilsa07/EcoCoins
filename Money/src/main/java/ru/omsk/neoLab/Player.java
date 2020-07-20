@@ -3,6 +3,7 @@ package ru.omsk.neoLab;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.omsk.neoLab.board.Сell.Cell;
+import ru.omsk.neoLab.board.Сell.TypeCell;
 import ru.omsk.neoLab.race.ARace;
 
 import java.util.ArrayList;
@@ -51,18 +52,30 @@ public final class Player {
     }
 
     public void regionCapture(Cell cell) {
-        if (cell.getCountTokens() == 0)
+        if (cell.getCountTokens() == 0) {
             this.countTokens -= this.race.getAdvantageCaptureCell(cell);
-        else
+            cell.setCountTokens(this.race.getAdvantageCaptureCell(cell));
+        } else {
+            cell.getBelongs().locationCell.remove(cell);
             this.countTokens -= this.race.getAdvantageCaptureCell(cell) + cell.getBelongs().getRace().getAdvantageDefendCell(cell) + 1;
-        this.locationCell.add(cell);
-        cell.regionCapture(this);
-        log.info("Осталось жетонов у игрока {} - {} от территории {}  и потратили жетонов {}", this.nickName, this.countTokens, cell.getType(), 1);
+            cell.setCountTokens(this.race.getAdvantageCaptureCell(cell) + cell.getBelongs().getRace().getAdvantageDefendCell(cell) + 1);
+        }
+            this.locationCell.add(cell);
+            cell.regionCapture(this);
+        log.info("Осталось жетонов у игрока {} - {} от территории {}  и потратили жетонов {}", this.nickName,
+                this.countTokens, cell.getType(), cell.getCountTokens());
+        if(cell.getType() == TypeCell.Water && !race.getNameRace().equals("Amphibia")){
+            cell.setCountTokens(0);
+        }
     }
 
     public void shufflingTokens() {
-        for (Cell cell : locationCell) {
-            service.getToken(cell, this.countTokens);
+//        for (Cell cell : locationCell) {
+//            service.getToken(cell, this.countTokens);
+//        }
+        if(this.countTokens > 0){
+            locationCell.get(0).setCountTokens(locationCell.get(0).getCountTokens() + this.countTokens);
+            countTokens = 0;
         }
         log.info("После перетасовки жетонов, у игрока {} - жетонов {}", this.nickName, this.countTokens);
     }
@@ -75,6 +88,9 @@ public final class Player {
 
     public void collectAllCoins() {
         for (Cell cell : locationCell) {
+            if(!race.getNameRace().equals("Amphibia") && cell.getType() == TypeCell.Water){
+                continue;
+            }
             if (this.race.isAdvantageOpportunityCaptureCell(cell)) {
                 this.countCoin += this.race.getAdvantageCoin(cell);
             }

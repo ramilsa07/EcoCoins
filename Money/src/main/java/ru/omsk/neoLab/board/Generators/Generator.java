@@ -53,6 +53,7 @@ public final class Generator implements IGenerator {
                 break;
             case 3:
                 cell.setType(TypeCell.Water);
+                cell.setAbilityCapture(false);
                 break;
         }
         if (cell.getType().equals(TypeCell.Water) && (countWater < maxWater)) {

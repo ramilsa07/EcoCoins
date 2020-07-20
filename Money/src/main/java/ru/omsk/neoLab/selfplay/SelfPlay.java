@@ -19,7 +19,7 @@ public class SelfPlay {
 
     private final Random random = new Random();
 
-    private final Board board = Board.GetInstance(); // ЭТО ЧЕЕЕЕЕ???
+    private final Board board = Board.GetInstance();
     private final PlayerService playerService = PlayerService.GetInstance();
 
     private final Queue<Player> players = new LinkedList<Player>();
@@ -32,6 +32,8 @@ public class SelfPlay {
     enum Phases {
         RACE_CHOICE("race choice"), // Выбор расы
         CAPTURE_OF_REGIONS("capture of regions"), // захват регионов
+        PICK_UP_TOKENS("pick up tokens"), // В начале раунда берем жетоны на руки
+        GO_INTO_DECLINE("go into decline"), // уйти в  ̶з̶а̶п̶о̶й̶ упадок
         GETTING_COINS("getting coins"), // Получение монет
         ;
 
@@ -46,43 +48,59 @@ public class SelfPlay {
         }
     }
 
-    //TODO:Поправить логи
     public void Game() {
         generateBoard();
         LoggerGame.logOutputBoard(board);
         Player firstPlayer = players.element();
-        LoggerGame.logNickSelection(firstPlayer);
         Player currentPlayer = players.element();
-        LoggerGame.logNickSelection(currentPlayer);
-        while (round <= 11) {
-            LoggerGame.logRoundNumber(round);
-            //TODO:Добавить параметр для логичного упадка
+        while (round < 11) {
+            LoggerGame.logPlayerRoundStart(currentPlayer, round);
             if (currentPlayer.isDecline() || round == 1) {
                 log.info("Началась фаза выбора расы");
                 phase = "race choice";
                 while (Phases.RACE_CHOICE.equalPhase(phase)) {
-                    LoggerGame.logWhatRacesCanIChoose(PlayerService.getRacesPool()); // Почему PlayerService как класс, а не экземпляр?
-                    currentPlayer.changeRace(PlayerService.getRacesPool().get((random.nextInt(PlayerService.getRacesPool().size()))));
-                    log.info("{} выбрал расу {}", currentPlayer.getNickName(), currentPlayer.getRace().getNameRace());
+                    LoggerGame.logWhatRacesCanIChoose(PlayerService.getRacesPool());
+                    currentPlayer.changeRace(PlayerService.getRacesPool().get(
+                            (random.nextInt(PlayerService.getRacesPool().size()))));
+                    LoggerGame.logChooseRaceTrue(currentPlayer);
                     phase = "capture of regions";
                 }
             }
-            LoggerGame.logWhatRacesCanIChoose(PlayerService.getRacesPool()); // Чисто посмотреть удаляется ли раса
-            log.info("Началась фаза захвата территории");
-            while (Phases.CAPTURE_OF_REGIONS.equalPhase(phase)) {
-                for (Cell cell : currentPlayer.getLocationCell()) {
-                    if (cell.getCountTokens() >= 1) {
-                        currentPlayer.collectTokens();
+            if (Phases.PICK_UP_TOKENS.equalPhase(phase)) {
+                log.info("Началась фаза взятия жетонов в руки");
+                while (Phases.PICK_UP_TOKENS.equalPhase(phase)) {
+                    for (Cell cell : currentPlayer.getLocationCell()) {
+                        if (cell.getCountTokens() >= 1) {
+                            currentPlayer.collectTokens();
+                        }
+                    }
+                    LoggerGame.logGetTokens(currentPlayer);
+                    possibleCellsCapture = playerService.findOutWherePlayerCanGo(board, currentPlayer);
+                    if (possibleCellsCapture.isEmpty()) {
+                        phase = "go into decline";
+                    } else {
+                        phase = "capture of regions";
                     }
                 }
-                //TODO:Сколько сейчас жетонов
-                if (round != 1 && currentPlayer.getCountTokens() == 0) {
+            }
+            if(Phases.GO_INTO_DECLINE.equalPhase(phase)){
+                if (round != 1) {
                     currentPlayer.goIntoDecline();
                     log.info("{} решил уйти в упадок", currentPlayer.getNickName());
                     changeCourse(currentPlayer);
                     currentPlayer = players.element();
-                    break;
+                    if (currentPlayer.equals(firstPlayer)) {
+                        phase = "getting coins";
+                    } else if (currentPlayer.isDecline()) {
+                        phase = "race choice";
+                    } else {
+                        phase = "pick up tokens";
+                    }
                 }
+            }
+            log.info("Началась фаза захвата территории");
+            while (Phases.CAPTURE_OF_REGIONS.equalPhase(phase)) {
+                LoggerGame.logGetTokens(currentPlayer);
                 if (currentPlayer.getLocationCell().isEmpty()) {
                     possibleCellsCapture = playerService.findOutWherePlayerCanGo(board.getBoard());
                     LoggerGame.logWhereToGo(possibleCellsCapture);
@@ -100,9 +118,22 @@ public class SelfPlay {
                     currentPlayer = players.element();
                     if (currentPlayer.equals(firstPlayer)) {
                         phase = "getting coins";
-                    } else
                         break;
+                    } else if (currentPlayer.isDecline()) {
+                        phase = "race choice";
+                        break;
+                    } else {
+                        phase = "pick up tokens";
+                        break;
+                    }
                 }
+//                if (currentPlayer.getCountTokens() == 0) {
+//                    for (Cell cell : currentPlayer.getLocationCell()) {
+//                        if (cell.getCountTokens() >= 1) {
+//                            currentPlayer.collectTokens();
+//                        }
+//                    }
+//                }
             }
             while (Phases.GETTING_COINS.equalPhase(phase)) {
                 log.info("Началась фаза c Сбор Монет");
@@ -111,9 +142,14 @@ public class SelfPlay {
                     log.info("Теперь у {} монет {}", player.getNickName(), player.getCountCoin());
                 }
                 round++;
-                phase = "capture of regions";
+                if (currentPlayer.isDecline()) {
+                    phase = "race choice";
+                } else {
+                    phase = "pick up tokens";
+                }
+
             }
-            if (round == 10) {
+            if (round == 11) {
                 toEndGame();
             }
         }
@@ -126,7 +162,6 @@ public class SelfPlay {
         board.setWidth(3);
     }
 
-
     private void changeCourse(Player player) {
         players.poll();
         players.add(player);
@@ -134,6 +169,7 @@ public class SelfPlay {
 
     public void createNewPlayer(Player player) {
         players.add(player);
+        LoggerGame.logNickSelection(player);
     }
 
     public void toEndGame() {

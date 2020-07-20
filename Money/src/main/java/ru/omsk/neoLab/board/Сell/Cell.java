@@ -20,9 +20,7 @@ public class Cell {
 
     public void regionCapture(final Player player) {
         this.belongs = player;
-        this.countTokens = 0;
     }
-
 
     public int getTokensForCapture() {
         if (type.equals(TypeCell.Mounted)) {

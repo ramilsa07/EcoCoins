@@ -29,7 +29,7 @@ public final class LoggerGame {
         log.error("Nick {} is already in use. Choose another nickname", nick);
     }
 
-    public static void logOutputBoard(Board board) {
+    public static void logOutputBoard(Board board) { // вывести на экран карту
         for (int i = 0; i < board.getHeight(); i++) {
             for (int j = 0; j < board.getWidth(); j++) {
                 log.info("{}", board.getBoardElements(i, j));
@@ -41,8 +41,8 @@ public final class LoggerGame {
         log.info("{} vs {} game begins", player1.getNickName(), player2.getNickName());
     }
 
-    public static void logPlayerRoundStart(Player player) { // Начало раунда определенного игрока
-        log.info("Player {} starts his turn", player.getNickName());
+    public static void logPlayerRoundStart(Player player, int round) { // Начало раунда определенного игрока
+        log.info("Player {} starts {} round", player.getNickName(), round);
     }
 
     public static void logRoundNumber(int round) { // Выводим номер раунда в лог
@@ -57,18 +57,14 @@ public final class LoggerGame {
     }
 
     public static void logChooseRaceTrue(Player player) { // Какую расу выбрал игрок
-        log.info("{} chose a race of {}", player.getNickName(), player.getRace());
+        log.info("{} chose a race of {}", player.getNickName(), player.getRace().getNameRace());
     }
 
     public static void logChooseRaceFalse() { // Эта раса уже используется. Нужно выбрать другую
         log.error("This race is already in use");
     }
 
-    public static void logNumberOfFreeTokens(Player player) { // Выводим число свободных жетонов на экран
-        log.info("logNumberOfFreeTokens {}", player.getCountTokens());
-    }
-
-    public static void logWhereToGo(/*ArrayList*/HashSet<Cell> possibleCellsCapture) { // Куда можно пойти
+    public static void logWhereToGo(HashSet<Cell> possibleCellsCapture) { // Куда можно пойти
         log.info("Can go: ");
         for (Cell cell : possibleCellsCapture) {
             log.info("{} [{}, {}]", cell.getType(), cell.getX(), cell.getY());
@@ -99,6 +95,10 @@ public final class LoggerGame {
 
     public static void logGetCoins(Player player) { // Показывает сколько монеток у игрока
         log.info("{} has {} coins", player.getNickName(), player.getCountCoin());
+    }
+
+    public static void logGetTokens(Player player) { // Показывает сколько свободных жетонов у игрока
+        log.info("{} has {} coins", player.getNickName(), player.getCountTokens());
     }
 
     public static void logRaceInDecline(Player player) { // Расу отправляем в упадок
