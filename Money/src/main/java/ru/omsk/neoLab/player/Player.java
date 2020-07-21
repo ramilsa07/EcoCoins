@@ -81,16 +81,15 @@ public final class Player {
         log.info("После перетасовки жетонов, у игрока {} осталось {} жетонов", this.nickName, this.countTokens);
     }
 
-    public void collectTokens() {
-        for (Cell cell : locationCell) {
-            this.countTokens += cell.getToken(cell.getCountTokens() - 1);
-        }
+    public void collectTokens(Cell cell) {
+        countTokens += cell.getToken(cell.getCountTokens() - 1);
+        cell.setCountTokens(1);
     }
 
     public void collectAllCoins() {
         for (Cell cell : locationCell) {
-            if (this.race.isAdvantageOpportunityCaptureCell(cell)) {
-                this.countCoin += this.race.getAdvantageCoin(cell);
+            if (race.isAdvantageOpportunityCaptureCell(cell)) {
+                countCoin += race.getAdvantageCoin(cell);
             }
         }
         for (Cell cell : locationDeclineCell) {

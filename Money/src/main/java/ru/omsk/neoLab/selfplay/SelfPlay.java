@@ -72,8 +72,8 @@ public class SelfPlay {
                 LoggerGame.logStartPhasePickUpTokens();
                 while (Phases.PICK_UP_TOKENS.equalPhase(phase)) {
                     for (Cell cell : currentPlayer.getLocationCell()) {
-                        if (cell.getCountTokens() >= 1) {
-                            currentPlayer.collectTokens();
+                        if (cell.getCountTokens() > 1) {
+                            currentPlayer.collectTokens(cell);
                         }
                     }
                     LoggerGame.logGetTokens(currentPlayer);
