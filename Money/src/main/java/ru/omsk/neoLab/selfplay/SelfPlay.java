@@ -1,6 +1,5 @@
 package ru.omsk.neoLab.selfplay;
 
-import lombok.extern.slf4j.Slf4j;
 import ru.omsk.neoLab.LoggerGame;
 import ru.omsk.neoLab.player.Player;
 import ru.omsk.neoLab.player.PlayerService;
@@ -14,7 +13,6 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
 
-@Slf4j
 public class SelfPlay {
 
     private final Random random = new Random();
@@ -56,7 +54,7 @@ public class SelfPlay {
         while (round < 11) {
             LoggerGame.logPlayerRoundStart(currentPlayer, round);
             if (currentPlayer.isDecline() || round == 1) {
-                log.info("Началась фаза выбора расы");
+                LoggerGame.logStartPhaseRaceChoice();
                 phase = "race choice";
                 while (Phases.RACE_CHOICE.equalPhase(phase)) {
                     LoggerGame.logWhatRacesCanIChoose(PlayerService.getRacesPool());
@@ -67,7 +65,7 @@ public class SelfPlay {
                 }
             }
             if (Phases.PICK_UP_TOKENS.equalPhase(phase)) {
-                log.info("Началась фаза взятия жетонов в руки");
+                LoggerGame.logStartPhasePickUpTokens();
                 while (Phases.PICK_UP_TOKENS.equalPhase(phase)) {
                     for (Cell cell : currentPlayer.getLocationCell()) {
                         if (cell.getCountTokens() >= 1) {
@@ -86,7 +84,7 @@ public class SelfPlay {
             if(Phases.GO_INTO_DECLINE.equalPhase(phase)){
                 if (round != 1) {
                     currentPlayer.goIntoDecline();
-                    log.info("{} решил уйти в упадок", currentPlayer.getNickName());
+                    LoggerGame.logRaceInDecline(currentPlayer);
                     changeCourse(currentPlayer);
                     currentPlayer = players.element();
                     if (currentPlayer.equals(firstPlayer)) {
@@ -98,7 +96,7 @@ public class SelfPlay {
                     }
                 }
             }
-            log.info("Началась фаза захвата территории");
+            LoggerGame.logStartPhaseCaptureOfRegions();
             while (Phases.CAPTURE_OF_REGIONS.equalPhase(phase)) {
                 LoggerGame.logGetTokens(currentPlayer);
                 if (currentPlayer.getLocationCell().isEmpty()) {
@@ -112,7 +110,7 @@ public class SelfPlay {
                 if (!possibleCellsCapture.isEmpty())
                     playerService.regionCapture((Cell) cells[random.nextInt(cells.length)], currentPlayer);
                 else {
-                    log.info("Начинаем перераспределять");
+                    LoggerGame.logRedistributionOfTokens(currentPlayer);
                     currentPlayer.shufflingTokens();
                     changeCourse(currentPlayer);
                     currentPlayer = players.element();
@@ -127,19 +125,12 @@ public class SelfPlay {
                         break;
                     }
                 }
-//                if (currentPlayer.getCountTokens() == 0) {
-//                    for (Cell cell : currentPlayer.getLocationCell()) {
-//                        if (cell.getCountTokens() >= 1) {
-//                            currentPlayer.collectTokens();
-//                        }
-//                    }
-//                }
             }
             while (Phases.GETTING_COINS.equalPhase(phase)) {
-                log.info("Началась фаза c Сбор Монет");
+                LoggerGame.logStartPhaseGetCoins();
                 for (Player player : players) {
                     player.collectAllCoins();
-                    log.info("Теперь у {} монет {}", player.getNickName(), player.getCountCoin());
+                    LoggerGame.logGetCoins(player);
                 }
                 round++;
                 if (currentPlayer.isDecline()) {
@@ -174,8 +165,9 @@ public class SelfPlay {
 
     public void toEndGame() {
         for (Player player : players) {
-            log.info("Info {} coins {}", player.getCountCoin(), player.getNickName());
+            LoggerGame.logGetCoins(player);
         }
+        LoggerGame.logEndGame();
         System.exit(0);
     }
 }
