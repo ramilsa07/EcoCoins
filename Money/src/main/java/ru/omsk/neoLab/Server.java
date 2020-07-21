@@ -1,5 +1,6 @@
 package ru.omsk.neoLab;
 
+import ru.omsk.neoLab.player.Player;
 import ru.omsk.neoLab.selfplay.SelfPlay;
 
 import java.io.*;

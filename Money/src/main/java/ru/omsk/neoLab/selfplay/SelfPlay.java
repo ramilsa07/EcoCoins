@@ -7,18 +7,22 @@ import ru.omsk.neoLab.board.Board;
 import ru.omsk.neoLab.board.Generators.Generator;
 import ru.omsk.neoLab.board.Generators.IGenerator;
 import ru.omsk.neoLab.board.Сell.Cell;
+import ru.omsk.neoLab.simpleBot.SimpleBot;
 
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.Random;
 
 public class SelfPlay {
 
-    private final Random random = new Random();
+    private final SimpleBot bot = new SimpleBot();
 
     private final Board board = Board.GetInstance();
     private final PlayerService playerService = PlayerService.GetInstance();
+
+    public Queue<Player> getPlayers() {
+        return players;
+    }
 
     private final Queue<Player> players = new LinkedList<Player>();
 
@@ -26,6 +30,7 @@ public class SelfPlay {
     private int round = 1;
 
     private HashSet<Cell> possibleCellsCapture = new HashSet<Cell>();
+
 
     enum Phases {
         RACE_CHOICE("race choice"), // Выбор расы
@@ -58,8 +63,7 @@ public class SelfPlay {
                 phase = "race choice";
                 while (Phases.RACE_CHOICE.equalPhase(phase)) {
                     LoggerGame.logWhatRacesCanIChoose(PlayerService.getRacesPool());
-                    currentPlayer.changeRace(PlayerService.getRacesPool().get(
-                            (random.nextInt(PlayerService.getRacesPool().size()))));
+                    bot.getRandomRace(currentPlayer);
                     LoggerGame.logChooseRaceTrue(currentPlayer);
                     phase = "capture of regions";
                 }
@@ -108,7 +112,7 @@ public class SelfPlay {
                 }
                 Object[] cells = possibleCellsCapture.toArray();
                 if (!possibleCellsCapture.isEmpty())
-                    playerService.regionCapture((Cell) cells[random.nextInt(cells.length)], currentPlayer);
+                    bot.getRandomRegionToCapture(playerService, cells, currentPlayer);
                 else {
                     LoggerGame.logRedistributionOfTokens(currentPlayer);
                     currentPlayer.shufflingTokens();
