@@ -3,6 +3,7 @@ package ru.omsk.neoLab;
 import ru.omsk.neoLab.board.Board;
 import ru.omsk.neoLab.board.Generators.Generator;
 import ru.omsk.neoLab.board.Generators.IGenerator;
+import ru.omsk.neoLab.player.Player;
 import ru.omsk.neoLab.selfplay.SelfPlay;
 
 import java.io.*;

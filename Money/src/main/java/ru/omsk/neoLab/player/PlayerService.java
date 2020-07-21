@@ -9,7 +9,7 @@ import ru.omsk.neoLab.race.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-public class PlayerService {
+public final class PlayerService {
     private static PlayerService instance;
 
     // Массивы, для вычисления допустимых ходов
@@ -38,7 +38,7 @@ public class PlayerService {
         return instance;
     }
 
-    public HashSet<Cell> findOutWherePlayerCanGo(final Cell[][] board) {
+    public final HashSet<Cell> findOutWherePlayerCanGo(final Cell[][] board) {
         possibleCellsCapture.clear();
         for (int i = 0; i < board[0].length; i++) {
             possibleCellsCapture.add(board[0][i]);
@@ -51,7 +51,7 @@ public class PlayerService {
         return possibleCellsCapture;
     }
 
-    public HashSet<Cell> findOutWherePlayerCanGo(final Board board, final Player player) {
+    public final HashSet<Cell> findOutWherePlayerCanGo(final Board board, final Player player) {
         possibleCellsCapture.clear();
         for (Cell cell : player.getLocationCell()) {
             for (int i = 0; i < 8; i++) {

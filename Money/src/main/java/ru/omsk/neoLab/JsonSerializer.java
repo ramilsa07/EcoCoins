@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import ru.omsk.neoLab.board.Board;
 
-public class JsonSerializer {
+public final class JsonSerializer {
 
     public static String jsonString;
     private static ObjectMapper mapper = new ObjectMapper();

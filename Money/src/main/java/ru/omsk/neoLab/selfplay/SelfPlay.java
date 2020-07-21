@@ -13,7 +13,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class SelfPlay {
+public final class SelfPlay {
 
     private final SimpleBot bot = new SimpleBot();
 
@@ -85,7 +85,7 @@ public class SelfPlay {
                     }
                 }
             }
-            if(Phases.GO_INTO_DECLINE.equalPhase(phase)){
+            if (Phases.GO_INTO_DECLINE.equalPhase(phase)) {
                 if (round != 1) {
                     currentPlayer.goIntoDecline();
                     LoggerGame.logRaceInDecline(currentPlayer);

@@ -1,6 +1,5 @@
 package ru.omsk.neoLab.board.Generators;
 
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.omsk.neoLab.board.Сell.Cell;
@@ -20,7 +19,7 @@ public final class Generator implements IGenerator {
     private static int countWater;
 
     @Override
-    public Cell[][] generate(int height, int width) {
+    public final Cell[][] generate(final int height, final int width) {
         log.info("Генерация началась");
         Cell[][] board = new Cell[height][width];
 
@@ -29,7 +28,7 @@ public final class Generator implements IGenerator {
 
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                board[i][j] = toRandom(board[i][j], maxWater);
+                board[i][j] = toRandom(maxWater);
                 board[i][j].setX(i);
                 board[i][j].setY(j);
             }
@@ -38,9 +37,8 @@ public final class Generator implements IGenerator {
         return board;
     }
 
-    private Cell toRandom(Cell cell, int maxWater) {
-
-        cell = new Cell();
+    private Cell toRandom(final int maxWater) {
+        Cell cell = new Cell();
         switch (random.nextInt(4)) {
             case 0:
                 cell.setType(TypeCell.Earth);

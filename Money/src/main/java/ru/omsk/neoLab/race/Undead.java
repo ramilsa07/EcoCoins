@@ -6,5 +6,4 @@ public final class Undead extends ARace {
         nameRace = "Undead";
         countTokens = 11;
     }
-
 }

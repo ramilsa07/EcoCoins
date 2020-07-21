@@ -3,7 +3,7 @@ package ru.omsk.neoLab;
 import java.io.*;
 import java.net.Socket;
 
-public class Client {
+public final class Client {
 
     private static final String IP = "127.0.0.1";//"localhost";
     private static final int PORT = Server.PORT;

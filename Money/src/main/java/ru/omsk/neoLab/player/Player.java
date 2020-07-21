@@ -19,20 +19,18 @@ public final class Player {
     private int countTokens = 0;
 
     private ARace race;
-    private ArrayList<Cell> locationCell = new ArrayList<Cell>();
+    private final ArrayList<Cell> locationCell = new ArrayList<Cell>();
 
     private ARace raceDecline = null;
     private ArrayList<Cell> locationDeclineCell = new ArrayList<Cell>();
 
-    private PlayerService service = PlayerService.GetInstance();
-
     private boolean decline = false;
 
-    public Player(String nickName) {
+    public Player(final String nickName) {
         this.nickName = nickName;
     }
 
-    public void changeRace(final ARace race) {
+    public final void changeRace(final ARace race) {
         if (decline) {
             if (raceDecline != null) {
                 PlayerService.getRacesPool().add(raceDecline);
@@ -47,14 +45,14 @@ public final class Player {
         PlayerService.getRacesPool().remove(race);
     }
 
-    public void goIntoDecline() {
-        this.decline = true;
+    public final void goIntoDecline() {
+        decline = true;
         raceDecline = race;
         locationDeclineCell.addAll(locationCell);
         locationCell.clear();
     }
 
-    public void regionCapture(Cell cell) {
+    public final void regionCapture(final Cell cell) {
         if (cell.getCountTokens() == 0) {
             this.countTokens -= this.race.getAdvantageCaptureCell(cell);
             cell.setCountTokens(this.race.getAdvantageCaptureCell(cell));
@@ -64,29 +62,29 @@ public final class Player {
             this.countTokens -= this.race.getAdvantageCaptureCell(cell) + cell.getBelongs().getRace().getAdvantageDefendCell(cell) + 1;
             cell.setCountTokens(this.race.getAdvantageCaptureCell(cell) + cell.getBelongs().getRace().getAdvantageDefendCell(cell) + 1);
         }
-            this.locationCell.add(cell);
-            cell.regionCapture(this);
+        this.locationCell.add(cell);
+        cell.regionCapture(this);
         log.info("Осталось жетонов у игрока {}  {} от территории {}  и потратили жетонов {}", this.nickName,
                 this.countTokens, cell.getType(), cell.getCountTokens());
-        if(cell.getType() == TypeCell.Water && !race.getNameRace().equals("Amphibia")){
+        if (cell.getType() == TypeCell.Water && !race.getNameRace().equals("Amphibia")) {
             cell.setCountTokens(0);
         }
     }
 
-    public void shufflingTokens() {
-        if(this.countTokens > 0){
+    public final void shufflingTokens() {
+        if (this.countTokens > 0) {
             locationCell.get(0).setCountTokens(locationCell.get(0).getCountTokens() + this.countTokens);
             countTokens = 0;
         }
         log.info("После перетасовки жетонов, у игрока {} осталось {} жетонов", this.nickName, this.countTokens);
     }
 
-    public void collectTokens(Cell cell) {
+    public final void collectTokens(Cell cell) {
         countTokens += cell.getToken(cell.getCountTokens() - 1);
         cell.setCountTokens(1);
     }
 
-    public void collectAllCoins() {
+    public final void collectAllCoins() {
         for (Cell cell : locationCell) {
             if (race.isAdvantageOpportunityCaptureCell(cell)) {
                 countCoin += race.getAdvantageCoin(cell);
@@ -125,10 +123,6 @@ public final class Player {
 
     public ARace getRaceDecline() {
         return raceDecline;
-    }
-
-    public ArrayList<Cell> getLocationDeclineCell() {
-        return locationDeclineCell;
     }
 
     public boolean isDecline() {

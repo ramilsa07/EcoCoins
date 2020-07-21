@@ -24,7 +24,7 @@ public abstract class ARace {
         return cell.isAbilityCapture();
     }
 
-    public String getNameRace() {
+    public final String getNameRace() {
         return nameRace;
     }
 

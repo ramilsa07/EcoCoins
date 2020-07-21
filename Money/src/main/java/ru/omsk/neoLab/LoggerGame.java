@@ -114,19 +114,19 @@ public final class LoggerGame {
         log.info("{} win!", player.getNickName());
     }
 
-    public static void logStartPhaseRaceChoice(){
+    public static void logStartPhaseRaceChoice() {
         log.info("Началась фаза выбора расы");
     }
 
-    public static void logStartPhasePickUpTokens(){
+    public static void logStartPhasePickUpTokens() {
         log.info("Началась фаза взятия жетонов в руки");
     }
 
-    public static void logStartPhaseCaptureOfRegions(){
+    public static void logStartPhaseCaptureOfRegions() {
         log.info("Началась фаза захвата территории");
     }
 
-    public static void logStartPhaseGetCoins(){
+    public static void logStartPhaseGetCoins() {
         log.info("Началась фаза cбора Монет");
     }
 }

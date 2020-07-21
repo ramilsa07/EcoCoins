@@ -3,14 +3,13 @@ package ru.omsk.neoLab.board.Сell;
 import ru.omsk.neoLab.player.Player;
 
 
-public class Cell {
+public final class Cell {
 
     private int x;
     private int y;
 
     private TypeCell type;
-    private int coin = 1;
-    private int tokensForCapture = 2;
+    private final int coin = 1;
     private boolean abilityCapture = true;
 
     //Информация по принадлежности к игроку
@@ -18,24 +17,25 @@ public class Cell {
 
     private int countTokens = 0;
 
-    public void regionCapture(final Player player) {
+    public final void regionCapture(final Player player) {
         this.belongs = player;
     }
 
-    public int getTokensForCapture() {
+    /**
+     * Метод возвращает количество токенов требуемых для захвата ячейки определенного типа
+     * Горы - 3 токена, вода - 1 токен, земля и грибы - 2 токена
+     * @return
+     */
+    public final int getTokensForCapture() {
         if (type.equals(TypeCell.Mounted)) {
             return 3;
         } else if (type.equals(TypeCell.Water)) {
             return 1;
         } else
-            return tokensForCapture;
+            return 2;
     }
 
-    public void putToken(final int countTokens) {
-        this.countTokens += countTokens;
-    }
-
-    public int getToken(final int countTokens) {
+    public final int getToken(final int countTokens) {
         this.countTokens -= countTokens;
         return countTokens;
     }
@@ -49,63 +49,51 @@ public class Cell {
                 '}';
     }
 
-    public int getX() {
+    public final int getX() {
         return x;
     }
 
-    public void setX(int x) {
+    public final void setX(final int x) {
         this.x = x;
     }
 
-    public int getY() {
+    public final int getY() {
         return y;
     }
 
-    public void setY(int y) {
+    public final void setY(final int y) {
         this.y = y;
     }
 
-    public TypeCell getType() {
+    public final TypeCell getType() {
         return type;
     }
 
-    public void setType(TypeCell type) {
+    public final void setType(final TypeCell type) {
         this.type = type;
     }
 
-    public int getCoin() {
+    public final int getCoin() {
         return coin;
     }
 
-    public void setCoin(int coin) {
-        this.coin = coin;
-    }
-
-    public void setTokensForCapture(int tokensForCapture) {
-        this.tokensForCapture = tokensForCapture;
-    }
-
-    public boolean isAbilityCapture() {
+    public final boolean isAbilityCapture() {
         return abilityCapture;
     }
 
-    public void setAbilityCapture(boolean abilityCapture) {
+    public final void setAbilityCapture(final boolean abilityCapture) {
         this.abilityCapture = abilityCapture;
     }
 
-    public Player getBelongs() {
+    public final Player getBelongs() {
         return belongs;
     }
 
-    public void setBelongs(Player belongs) {
-        this.belongs = belongs;
-    }
-
-    public int getCountTokens() {
+    public final int getCountTokens() {
         return countTokens;
     }
 
-    public void setCountTokens(int countTokens) {
+    public final void setCountTokens(final int countTokens) {
         this.countTokens = countTokens;
     }
 }
