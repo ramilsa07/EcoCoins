@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.omsk.neoLab.board.Board;
 import ru.omsk.neoLab.board.Сell.Cell;
+import ru.omsk.neoLab.player.Player;
 import ru.omsk.neoLab.race.ARace;
 
 import java.util.ArrayList;
@@ -43,10 +44,6 @@ public final class LoggerGame {
 
     public static void logPlayerRoundStart(Player player, int round) { // Начало раунда определенного игрока
         log.info("Player {} starts {} round", player.getNickName(), round);
-    }
-
-    public static void logRoundNumber(int round) { // Выводим номер раунда в лог
-        log.info("Round {} starts", round);
     }
 
     public static void logWhatRacesCanIChoose(ArrayList<ARace> freeRacesPool) { // Выводим на экран свободные расы
@@ -105,8 +102,8 @@ public final class LoggerGame {
         log.info("{} turned the race {} into decline", player.getNickName(), player.getRaceDecline().getNameRace());
     }
 
-    public static void logPickUpTokens(Player player) { // Берем жетоны с ячеек на руку
-        log.info("{} pick up tokens", player.getNickName());
+    public static void logRaceInDecline1(Player player) { // Расу отправляем в упадок
+        log.info("{} turned into decline", player.getNickName());
     }
 
     public static void logEndGame() { // Конец игры
@@ -115,5 +112,21 @@ public final class LoggerGame {
 
     public static void logWinner(Player player) { // Победа игрока
         log.info("{} win!", player.getNickName());
+    }
+
+    public static void logStartPhaseRaceChoice(){
+        log.info("Началась фаза выбора расы");
+    }
+
+    public static void logStartPhasePickUpTokens(){
+        log.info("Началась фаза взятия жетонов в руки");
+    }
+
+    public static void logStartPhaseCaptureOfRegions(){
+        log.info("Началась фаза захвата территории");
+    }
+
+    public static void logStartPhaseGetCoins(){
+        log.info("Началась фаза cбора Монет");
     }
 }

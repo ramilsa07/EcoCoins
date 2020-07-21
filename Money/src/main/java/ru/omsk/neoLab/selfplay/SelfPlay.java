@@ -1,25 +1,21 @@
 package ru.omsk.neoLab.selfplay;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import ru.omsk.neoLab.LoggerGame;
-import ru.omsk.neoLab.Player;
-import ru.omsk.neoLab.PlayerService;
+import ru.omsk.neoLab.player.Player;
+import ru.omsk.neoLab.player.PlayerService;
 import ru.omsk.neoLab.board.Board;
 import ru.omsk.neoLab.board.Generators.Generator;
 import ru.omsk.neoLab.board.Generators.IGenerator;
 import ru.omsk.neoLab.board.Сell.Cell;
+import ru.omsk.neoLab.simpleBot.SimpleBot;
 
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.Random;
 
 public class SelfPlay {
 
-    private Logger log = LoggerFactory.getLogger(SelfPlay.class);
-
-    private final Random random = new Random();
+    private final SimpleBot bot = new SimpleBot();
 
     private final Board board = Board.GetInstance();
     private final PlayerService playerService = PlayerService.GetInstance();
@@ -34,6 +30,7 @@ public class SelfPlay {
     private int round = 1;
 
     private HashSet<Cell> possibleCellsCapture = new HashSet<Cell>();
+
 
     enum Phases {
         RACE_CHOICE("race choice"), // Выбор расы
@@ -62,18 +59,17 @@ public class SelfPlay {
         while (round < 11) {
             LoggerGame.logPlayerRoundStart(currentPlayer, round);
             if (currentPlayer.isDecline() || round == 1) {
-                log.info("Началась фаза выбора расы");
+                LoggerGame.logStartPhaseRaceChoice();
                 phase = "race choice";
                 while (Phases.RACE_CHOICE.equalPhase(phase)) {
                     LoggerGame.logWhatRacesCanIChoose(PlayerService.getRacesPool());
-                    currentPlayer.changeRace(PlayerService.getRacesPool().get(
-                            (random.nextInt(PlayerService.getRacesPool().size()))));
+                    bot.getRandomRace(currentPlayer);
                     LoggerGame.logChooseRaceTrue(currentPlayer);
                     phase = "capture of regions";
                 }
             }
             if (Phases.PICK_UP_TOKENS.equalPhase(phase)) {
-                log.info("Началась фаза взятия жетонов в руки");
+                LoggerGame.logStartPhasePickUpTokens();
                 while (Phases.PICK_UP_TOKENS.equalPhase(phase)) {
                     for (Cell cell : currentPlayer.getLocationCell()) {
                         if (cell.getCountTokens() >= 1) {
@@ -92,7 +88,7 @@ public class SelfPlay {
             if(Phases.GO_INTO_DECLINE.equalPhase(phase)){
                 if (round != 1) {
                     currentPlayer.goIntoDecline();
-                    log.info("{} решил уйти в упадок", currentPlayer.getNickName());
+                    LoggerGame.logRaceInDecline(currentPlayer);
                     changeCourse(currentPlayer);
                     currentPlayer = players.element();
                     if (currentPlayer.equals(firstPlayer)) {
@@ -104,7 +100,7 @@ public class SelfPlay {
                     }
                 }
             }
-            log.info("Началась фаза захвата территории");
+            LoggerGame.logStartPhaseCaptureOfRegions();
             while (Phases.CAPTURE_OF_REGIONS.equalPhase(phase)) {
                 LoggerGame.logGetTokens(currentPlayer);
                 if (currentPlayer.getLocationCell().isEmpty()) {
@@ -116,9 +112,9 @@ public class SelfPlay {
                 }
                 Object[] cells = possibleCellsCapture.toArray();
                 if (!possibleCellsCapture.isEmpty())
-                    playerService.regionCapture((Cell) cells[random.nextInt(cells.length)], currentPlayer);
+                    bot.getRandomRegionToCapture(playerService, cells, currentPlayer);
                 else {
-                    log.info("Начинаем перераспределять");
+                    LoggerGame.logRedistributionOfTokens(currentPlayer);
                     currentPlayer.shufflingTokens();
                     changeCourse(currentPlayer);
                     currentPlayer = players.element();
@@ -133,19 +129,12 @@ public class SelfPlay {
                         break;
                     }
                 }
-//                if (currentPlayer.getCountTokens() == 0) {
-//                    for (Cell cell : currentPlayer.getLocationCell()) {
-//                        if (cell.getCountTokens() >= 1) {
-//                            currentPlayer.collectTokens();
-//                        }
-//                    }
-//                }
             }
             while (Phases.GETTING_COINS.equalPhase(phase)) {
-                log.info("Началась фаза c Сбор Монет");
+                LoggerGame.logStartPhaseGetCoins();
                 for (Player player : players) {
                     player.collectAllCoins();
-                    log.info("Теперь у {} монет {}", player.getNickName(), player.getCountCoin());
+                    LoggerGame.logGetCoins(player);
                 }
                 round++;
                 if (currentPlayer.isDecline()) {
@@ -180,8 +169,9 @@ public class SelfPlay {
 
     public void toEndGame() {
         for (Player player : players) {
-            log.info("Info {} coins {}", player.getCountCoin(), player.getNickName());
+            LoggerGame.logGetCoins(player);
         }
+        LoggerGame.logEndGame();
         System.exit(0);
     }
 }

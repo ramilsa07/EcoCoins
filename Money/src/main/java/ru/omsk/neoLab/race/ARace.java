@@ -28,15 +28,7 @@ public abstract class ARace {
         return nameRace;
     }
 
-    public void setNameRace(String nameRace) {
-        this.nameRace = nameRace;
-    }
-
     public int getCountTokens() {
         return countTokens;
-    }
-
-    public void setCountTokens(int countTokens) {
-        this.countTokens = countTokens;
     }
 }

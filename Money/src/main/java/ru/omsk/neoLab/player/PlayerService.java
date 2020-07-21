@@ -1,5 +1,7 @@
-package ru.omsk.neoLab;
+package ru.omsk.neoLab.player;
 
+import ru.omsk.neoLab.LoggerGame;
+import ru.omsk.neoLab.Validator;
 import ru.omsk.neoLab.board.Board;
 import ru.omsk.neoLab.board.Сell.Cell;
 import ru.omsk.neoLab.race.*;
@@ -67,14 +69,6 @@ public class PlayerService {
     public void regionCapture(Cell cell, Player player) {
         player.regionCapture(cell);
         LoggerGame.logRegionCaptureTrue(player, cell);
-    }
-
-    public void getToken(final Cell cell, final int tokens) {
-        cell.getToken(tokens);
-    }
-
-    public void putToken(final Cell cell, final int tokens) {
-        cell.putToken(tokens);
     }
 
     public static ArrayList<ARace> getRacesPool() {
