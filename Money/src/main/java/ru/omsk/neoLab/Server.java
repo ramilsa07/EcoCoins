@@ -1,5 +1,8 @@
 package ru.omsk.neoLab;
 
+import ru.omsk.neoLab.board.Board;
+import ru.omsk.neoLab.board.Generators.Generator;
+import ru.omsk.neoLab.board.Generators.IGenerator;
 import ru.omsk.neoLab.selfplay.SelfPlay;
 
 import java.io.*;
@@ -45,22 +48,52 @@ public class Server {
         }
     }
 
-    private final ConcurrentLinkedQueue<ServerSomething> serverList = new ConcurrentLinkedQueue<>();
+    private final ConcurrentLinkedQueue<Game> serverList = new ConcurrentLinkedQueue<>();
 
-    private class ServerSomething extends Thread {
+    private class Game extends Thread {
 
         private final Server server;
         private final Socket socket;
-        private final BufferedReader in; // поток чтения из сокета
-        private final BufferedWriter out; // поток записи в сокет
-        private String nickName = null;
+        private final BufferedReader in;
+        private final BufferedWriter out;
 
-        private ServerSomething(final Server server, final Socket socket) throws IOException {
+        private final Board board = Board.GetInstance();
+        private final ConcurrentLinkedQueue<Player> players = new ConcurrentLinkedQueue<Player>();
+
+        private Game(final Server server, final Socket socket) throws IOException {
             this.server = server;
             this.socket = socket;
             // если потоку ввода/вывода приведут к генерированию искдючения, оно проброситься дальше
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+        }
+
+        @Override
+        public void run() {
+            try {
+                do
+                    selfplay.createNewPlayer(new Player(in.readLine()));
+                while (MAX_PLAYERS != selfplay.getPlayers().size());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        public void generateBoard() {
+            IGenerator generator = new Generator();
+            board.setBoard(generator.generate(4, 3));
+            board.setHeight(4);
+            board.setWidth(3);
+        }
+
+        private void changeCourse(Player player) {
+            players.poll();
+            players.add(player);
+        }
+
+        public void createNewPlayer(Player player) {
+            players.add(player);
+            LoggerGame.logNickSelection(player);
         }
 
         private void downService() {
@@ -74,17 +107,6 @@ public class Server {
             } catch (final IOException ignored) {
             }
         }
-
-        @Override
-        public void run() {
-            try {
-                do
-                    selfplay.createNewPlayer(new Player(nickName = in.readLine()));
-                while (MAX_PLAYERS != selfplay.getPlayers().size());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
     }
 
 
@@ -95,7 +117,7 @@ public class Server {
             while (true) {
                 final Socket socket = serverSocket.accept();
                 try {
-                    new ServerSomething(this, socket).start();
+                    new Game(this, socket).start();
                 } catch (final IOException e) {
                     socket.close();
                 }
