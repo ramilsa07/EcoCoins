@@ -2,7 +2,6 @@ package ru.omsk.neoLab.board.Сell;
 
 import ru.omsk.neoLab.player.Player;
 
-
 public class Cell {
 
     private int x;
@@ -10,10 +9,8 @@ public class Cell {
 
     private TypeCell type;
     private int coin = 1;
-    private int tokensForCapture = 2;
     private boolean abilityCapture = true;
 
-    //Информация по принадлежности к игроку
     private Player belongs = new Player("Gore");
 
     private int countTokens = 0;
@@ -23,12 +20,7 @@ public class Cell {
     }
 
     public int getTokensForCapture() {
-        if (type.equals(TypeCell.Mounted)) {
-            return 3;
-        } else if (type.equals(TypeCell.Water)) {
-            return 1;
-        } else
-            return tokensForCapture;
+        return TypeCell.toType(type);
     }
 
     public void putToken(final int countTokens) {
@@ -79,10 +71,6 @@ public class Cell {
 
     public void setCoin(int coin) {
         this.coin = coin;
-    }
-
-    public void setTokensForCapture(int tokensForCapture) {
-        this.tokensForCapture = tokensForCapture;
     }
 
     public boolean isAbilityCapture() {

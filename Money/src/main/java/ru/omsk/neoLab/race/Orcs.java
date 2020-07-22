@@ -13,7 +13,7 @@ public class Orcs extends ARace {
 
     @Override
     public int getAdvantageCaptureCell(final Cell cell) {
-        if (cell.getType() == TypeCell.Water) {
+        if (cell.getType() == TypeCell.WATER) {
             return cell.getTokensForCapture();
         }
         return cell.getTokensForCapture() - 1;

@@ -8,7 +8,6 @@ package ru.omsk.neoLab.board;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import ru.omsk.neoLab.board.Сell.Cell;
 
-
 public class Board {
 
     private static Board instance;

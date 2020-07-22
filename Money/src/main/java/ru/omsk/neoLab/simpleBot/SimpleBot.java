@@ -7,6 +7,7 @@ import ru.omsk.neoLab.player.PlayerService;
 import java.util.Random;
 
 public class SimpleBot {
+
     private final Random random = new Random();
 
     public SimpleBot() {

@@ -1,5 +1,6 @@
 package ru.omsk.neoLab.player;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.omsk.neoLab.board.Сell.Cell;
@@ -8,14 +9,13 @@ import ru.omsk.neoLab.race.ARace;
 
 import java.util.ArrayList;
 
-
+@JsonAutoDetect
 public final class Player {
 
     public static Logger log = LoggerFactory.getLogger(Player.class);
 
     private final String nickName;
     private int countCoin;
-
     private int countTokens = 0;
 
     private ARace race;
@@ -68,7 +68,7 @@ public final class Player {
             cell.regionCapture(this);
         log.info("Осталось жетонов у игрока {}  {} от территории {}  и потратили жетонов {}", this.nickName,
                 this.countTokens, cell.getType(), cell.getCountTokens());
-        if(cell.getType() == TypeCell.Water && !race.getNameRace().equals("Amphibia")){
+        if (cell.getType() == TypeCell.WATER && !race.getNameRace().equals("Amphibia")) {
             cell.setCountTokens(0);
         }
     }
@@ -134,6 +134,21 @@ public final class Player {
 
     public boolean isDecline() {
         return decline;
+    }
+
+    @Override
+    public String toString() {
+        return "Player{" +
+                "nickName='" + nickName + '\'' +
+                ", countCoin=" + countCoin +
+                ", countTokens=" + countTokens +
+                ", race=" + race +
+                ", locationCell=" + locationCell +
+                ", raceDecline=" + raceDecline +
+                ", locationDeclineCell=" + locationDeclineCell +
+                ", service=" + service +
+                ", decline=" + decline +
+                '}';
     }
 }
 
