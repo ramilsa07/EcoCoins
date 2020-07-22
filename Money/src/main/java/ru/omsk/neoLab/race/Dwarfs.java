@@ -3,7 +3,7 @@ package ru.omsk.neoLab.race;
 
 import ru.omsk.neoLab.board.Сell.Cell;
 
-public class Dwarfs extends ARace {
+public final class Dwarfs extends ARace {
 
     public Dwarfs() {
         nameRace = "Dwarfs";

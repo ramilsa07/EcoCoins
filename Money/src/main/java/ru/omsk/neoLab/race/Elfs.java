@@ -5,9 +5,9 @@ import ru.omsk.neoLab.board.Сell.TypeCell;
 
 import java.util.ArrayList;
 
-public class Elfs extends ARace {
+public final class Elfs extends ARace {
 
-    private ArrayList<TypeCell> cells = new ArrayList<TypeCell>();
+    private final ArrayList<TypeCell> cells = new ArrayList<TypeCell>();
 
     public Elfs() {
         nameRace = "Elfs";
