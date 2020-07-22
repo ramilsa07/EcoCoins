@@ -63,7 +63,7 @@ public final class SelfPlay {
                 phase = "race choice";
                 while (Phases.RACE_CHOICE.equalPhase(phase)) {
                     LoggerGame.logWhatRacesCanIChoose(PlayerService.getRacesPool());
-                    bot.getRandomRace(currentPlayer);
+                    currentPlayer.changeRace(bot.getRandomRace());
                     LoggerGame.logChooseRaceTrue(currentPlayer);
                     phase = "capture of regions";
                 }
@@ -73,7 +73,7 @@ public final class SelfPlay {
                 while (Phases.PICK_UP_TOKENS.equalPhase(phase)) {
                     for (Cell cell : currentPlayer.getLocationCell()) {
                         if (cell.getCountTokens() > 1) {
-                            currentPlayer.collectTokens(cell);
+                            currentPlayer.collectTokens();
                         }
                     }
                     LoggerGame.logGetTokens(currentPlayer);
@@ -112,7 +112,7 @@ public final class SelfPlay {
                 }
                 Object[] cells = possibleCellsCapture.toArray();
                 if (!possibleCellsCapture.isEmpty())
-                    bot.getRandomRegionToCapture(playerService, cells, currentPlayer);
+                    playerService.regionCapture(bot.getRandomRegionToCapture(cells), currentPlayer);
                 else {
                     LoggerGame.logRedistributionOfTokens(currentPlayer);
                     currentPlayer.shufflingTokens();

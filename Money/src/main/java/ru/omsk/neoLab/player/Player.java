@@ -20,12 +20,12 @@ public final class Player {
     private int countTokens = 0;
 
     private ARace race;
-    private ArrayList<Cell> locationCell = new ArrayList<Cell>();
+    private final ArrayList<Cell> locationCell = new ArrayList<Cell>();
 
     private ARace raceDecline = null;
     private ArrayList<Cell> locationDeclineCell = new ArrayList<Cell>();
 
-    private PlayerService service = PlayerService.GetInstance();
+    private final PlayerService service = PlayerService.GetInstance();
 
     private boolean decline = false;
 
