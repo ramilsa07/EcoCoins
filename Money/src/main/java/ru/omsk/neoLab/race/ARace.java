@@ -31,4 +31,8 @@ public abstract class ARace {
     public int getCountTokens() {
         return countTokens;
     }
+
+    public void clearCells(){
+
+    }
 }
