@@ -1,7 +1,8 @@
 package ru.omsk.neoLab.board.Generators;
 
-import ru.omsk.neoLab.board.Generators.Calls.Call.ACall;
+
+import ru.omsk.neoLab.board.Сell.Cell;
 
 public interface IGenerator {
-    ACall[][] generate(int height,int width);
+    Cell[][] generate(int height, int width);
 }

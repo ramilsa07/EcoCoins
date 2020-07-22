@@ -1,17 +1,17 @@
 package ru.omsk.neoLab.race;
 
-import ru.omsk.neoLab.board.Generators.Calls.Call.ACall;
 
-public class Dwarfs extends ARace {
+import ru.omsk.neoLab.board.Сell.Cell;
+
+public final class Dwarfs extends ARace {
 
     public Dwarfs() {
         nameRace = "Dwarfs";
-        countUnit = 5;
-        alive = true;
+        countTokens = 5;
     }
 
     @Override
-    public int toDefend(int countUnit) {
-        return countUnit + 1;
+    public int getAdvantageDefendCell(final Cell cell) {
+        return cell.getCountTokens() + 1;
     }
 }

@@ -1,31 +1,59 @@
 package ru.omsk.neoLab.board;
 
-import ru.omsk.neoLab.board.Generators.Calls.Call.ACall;
-import ru.omsk.neoLab.board.Generators.Generator;
-import ru.omsk.neoLab.board.Generators.IGenerator;
 
-public class Board {
+/*
+ * Класс, хранящий доску, на которой будет проходить игра.
+ * */
 
-    private static volatile Board instance;
-    protected ACall[][] board;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import ru.omsk.neoLab.board.Сell.Cell;
+
+
+public final class Board {
+
+    private static Board instance;
+
+    @JsonProperty
+    private Cell[][] board;
+
+    private int height;
+    private int width;
 
     private Board() {
     }
 
-    public static synchronized Board GetInstance() {
+    public static Board GetInstance() {
         if (instance == null) {
             instance = new Board();
-            instance.generateBoard(4, 3);
         }
         return instance;
     }
 
-    private void generateBoard(int height, int width) {
-        IGenerator generator = new Generator();
-        board = generator.generate(height, width);
+    public final Cell[][] getBoard() {
+        return board;
     }
 
-    public ACall[][] getBoard() {
-        return board;
+    public final Cell getBoardElements(int i, int j){
+        return board[i][j];
+    }
+
+    public final void setBoard(Cell[][] board) {
+        this.board = board;
+    }
+
+    public final int getHeight() {
+        return height;
+    }
+
+    public final void setHeight(int height) {
+        this.height = height;
+    }
+
+    public final int getWidth() {
+        return width;
+    }
+
+    public final void setWidth(int width) {
+        this.width = width;
     }
 }

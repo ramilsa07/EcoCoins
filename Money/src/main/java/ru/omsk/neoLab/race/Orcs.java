@@ -1,17 +1,21 @@
 package ru.omsk.neoLab.race;
 
-import ru.omsk.neoLab.board.Generators.Calls.Call.ACall;
 
-public class Orcs extends ARace {
+import ru.omsk.neoLab.board.Сell.Cell;
+import ru.omsk.neoLab.board.Сell.TypeCell;
+
+public final class Orcs extends ARace {
 
     public Orcs() {
         nameRace = "Orcs";
-        countUnit = 5;
-        alive = true;
+        countTokens = 5;
     }
 
     @Override
-    public int getRequirementsForCapture(ACall call){
-        return call.getRequirementsForCapture() - 1;
+    public int getAdvantageCaptureCell(final Cell cell) {
+        if (cell.getType() == TypeCell.Water) {
+            return cell.getTokensForCapture();
+        }
+        return cell.getTokensForCapture() - 1;
     }
 }

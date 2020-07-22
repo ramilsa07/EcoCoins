@@ -1,29 +1,34 @@
 package ru.omsk.neoLab.race;
 
-import ru.omsk.neoLab.board.Generators.Calls.Call.ACall;
+import ru.omsk.neoLab.board.Сell.Cell;
+
 
 public abstract class ARace {
-    protected String nameRace;
-    protected int countUnit; // Число юнитов определенной рассы
-    protected boolean alive;
 
-    public String getNameRace() {
+    protected String nameRace;
+    protected int countTokens = 6;
+
+    public int getAdvantageCoin(final Cell cell) {
+        return cell.getCoin();
+    }
+
+    public int getAdvantageCaptureCell(final Cell cell) {
+        return cell.getTokensForCapture();
+    }
+
+    public int getAdvantageDefendCell(final Cell cell) {
+        return cell.getCountTokens();
+    }
+
+    public boolean isAdvantageOpportunityCaptureCell(final Cell cell) {
+        return cell.isAbilityCapture();
+    }
+
+    public final String getNameRace() {
         return nameRace;
     }
 
-    public int getCountUnit() {
-        return countUnit;
-    }
-
-    public int toDefend(int countUnit) {
-        return countUnit;
-    } // Сколько нужно для защиты
-
-    public int getRequirementsForCapture(ACall call) {
-        return call.getRequirementsForCapture();
-    }
-
-    public void toDecline(){
-        alive = false;
+    public int getCountTokens() {
+        return countTokens;
     }
 }

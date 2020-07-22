@@ -1,44 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="BranchesTreeState">
-    <expand>
-      <path>
-        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-      </path>
-      <path>
-        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-      </path>
-      <path>
-        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
-      </path>
-    </expand>
-    <select>
-      <path>
-        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="BRANCH:origin/Develop" type="e8cecc67:BranchNodeDescriptor" />
-      </path>
-    </select>
-  </component>
   <component name="ChangeListManager">
-    <list default="true" id="048dcac8-1b67-47e6-ab8e-c7f02b934cae" name="Default Changelist" comment="">
+    <list default="true" id="b9c03906-7a55-4240-acbf-9f553c1fe600" name="Default Changelist" comment="Изменения">
+      <change afterPath="$PROJECT_DIR$/src/main/tests/ru/omsk/neoLab/selfplay/SelfPlayRaceAmphibiaTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dbnavigator.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_08_07_2020,_09_57_[Default_Changelist]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_08_07_2020__09_57__Default_Changelist_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Game.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/PlayerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/PlayerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/selfplay/SelfPlay.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/selfplay/SelfPlay.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/ru/omsk/neoLab/ARaceTest.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
+  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
+        <option value="Arquillian JUnit Test Class" />
+        <option value="JUnit4 Test Class" />
         <option value="Enum" />
         <option value="Class" />
       </list>
@@ -52,46 +51,54 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="GithubPullRequestsUISettings">
-    <option name="hiddenUrls">
-      <set>
-        <option value="https://github.com/ramilsa07/EcoCoins.git" />
-      </set>
-    </option>
-  </component>
   <component name="MavenImportPreferences">
     <option name="importingSettings">
       <MavenImportingSettings>
-        <option name="vmOptionsForImporter" value="-Xmx768m" />
+        <option name="importAutomatically" value="true" />
       </MavenImportingSettings>
     </option>
   </component>
-  <component name="MavenRunner">
-    <option name="jreName" value="openjdk-14" />
-  </component>
-  <component name="ProjectId" id="1eIc2i1XF47erwwvXm7qDb3be82" />
+  <component name="ProjectId" id="1eUUuKMZN8kPiPX7E65X7UVRpQ9" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.Arquillian JUnit4" value="" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4" value="" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Socket-chat-master" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.javacompiler" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
-  <component name="RunManager" selected="Application.Amphibia">
-    <configuration name="Amphibia" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="ru.omsk.neoLab.race.Amphibia" />
+  <component name="RecentsManager">
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="ru.omsk.neoLab.selfplay" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\overl\IdeaProjects\EcoCoins\Money\src\main\tests\ru\omsk" />
+      <recent name="C:\Users\overl\IdeaProjects\EcoCoins\Money" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.Client">
+    <configuration name="Client" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ru.omsk.neoLab.Client" />
       <module name="Money" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="ru.omsk.neoLab.race.*" />
+          <option name="PATTERN" value="ru.omsk.neoLab.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -99,12 +106,19 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="RaceContainer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="ru.omsk.neoLab.race.RaceContainer" />
+    <configuration name="Game" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Game" />
+      <module name="Money" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Server" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ru.omsk.neoLab.Server" />
       <module name="Money" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="ru.omsk.neoLab.race.*" />
+          <option name="PATTERN" value="ru.omsk.neoLab.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -112,195 +126,284 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Undead" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="ru.omsk.neoLab.race.Undead" />
+    <configuration name="SelfPlayRaceAmphibiaTest.TestSelfPlay" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Money" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="ru.omsk.neoLab.race.*" />
+          <option name="PATTERN" value="ru.omsk.neoLab.selfplay.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="ru.omsk.neoLab.race.main" />
-      <module name="Money" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="ru.omsk.neoLab.race.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
+      <option name="PACKAGE_NAME" value="ru.omsk.neoLab.selfplay" />
+      <option name="MAIN_CLASS_NAME" value="ru.omsk.neoLab.selfplay.SelfPlayRaceAmphibiaTest" />
+      <option name="METHOD_NAME" value="TestSelfPlay" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Amphibia" />
-        <item itemvalue="Application.RaceContainer" />
-        <item itemvalue="Application.main" />
-        <item itemvalue="Application.Undead" />
+        <item itemvalue="Application.Client" />
+        <item itemvalue="Application.Server" />
+        <item itemvalue="Application.Game" />
+        <item itemvalue="JUnit.SelfPlayRaceAmphibiaTest.TestSelfPlay" />
       </list>
     </recent_temporary>
   </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="048dcac8-1b67-47e6-ab8e-c7f02b934cae" name="Default Changelist" comment="" />
-      <created>1594012341387</created>
+      <changelist id="b9c03906-7a55-4240-acbf-9f553c1fe600" name="Default Changelist" comment="" />
+      <created>1594375886202</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1594012341387</updated>
+      <updated>1594375886202</updated>
+      <workItem from="1594375887356" duration="1275000" />
+      <workItem from="1594465371600" duration="15164000" />
+      <workItem from="1594546881480" duration="10927000" />
+      <workItem from="1594560607832" duration="159000" />
+      <workItem from="1594613642437" duration="10974000" />
+      <workItem from="1594658088233" duration="739000" />
+      <workItem from="1594703450540" duration="22756000" />
+      <workItem from="1594743276777" duration="609000" />
+      <workItem from="1594787493265" duration="16664000" />
+      <workItem from="1594816202512" duration="914000" />
+      <workItem from="1594817140716" duration="9539000" />
+      <workItem from="1594872770208" duration="15177000" />
+      <workItem from="1594960209701" duration="7061000" />
+      <workItem from="1595218457923" duration="11855000" />
     </task>
-    <task id="LOCAL-00001" summary="[+/*] Добавлены фазы игры и добавлено поле alive для рас">
-      <created>1594184788362</created>
+    <task id="LOCAL-00001" summary="Добавление x и y">
+      <created>1594376241788</created>
       <option name="number" value="00001" />
       <option name="presentableId" value="LOCAL-00001" />
       <option name="project" value="LOCAL" />
-      <updated>1594184788362</updated>
+      <updated>1594376241788</updated>
     </task>
-    <task id="LOCAL-00002" summary="[*] Добавлен класс Player, исправлены недоработки с территориями и расами">
-      <created>1594191582932</created>
+    <task id="LOCAL-00002" summary="Изменение PlayerService">
+      <created>1594615294276</created>
       <option name="number" value="00002" />
       <option name="presentableId" value="LOCAL-00002" />
       <option name="project" value="LOCAL" />
-      <updated>1594191582932</updated>
+      <updated>1594615294276</updated>
     </task>
-    <task id="LOCAL-00003" summary="[*] Мелкие ошибки">
-      <created>1594356416604</created>
+    <task id="LOCAL-00003" summary="Изменение PlayerService">
+      <created>1594622427587</created>
       <option name="number" value="00003" />
       <option name="presentableId" value="LOCAL-00003" />
       <option name="project" value="LOCAL" />
-      <updated>1594356416604</updated>
+      <updated>1594622427587</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Изменения">
+      <created>1594872906191</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1594872906191</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Изменения1">
+      <created>1594893844868</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1594893844868</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Фикс SelfPlay">
+      <created>1594963917079</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1594963917079</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Добавление Client, Server и сериализацию и десериализацию">
+      <created>1595224233588</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1595224233588</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State>
-              <option name="FILTERS">
-                <map>
-                  <entry key="branch">
-                    <value>
-                      <list>
-                        <option value="origin/Develop" />
-                      </list>
-                    </value>
-                  </entry>
-                </map>
-              </option>
-            </State>
-          </value>
-        </entry>
-      </map>
-    </option>
-    <option name="oldMeFiltersMigrated" value="true" />
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="[+/*] Добавлены фазы игры и добавлено поле alive для рас" />
-    <MESSAGE value="[*] Добавлен класс Player, исправлены недоработки с территориями и расами" />
-    <MESSAGE value="[*] Мелкие ошибки" />
-    <option name="LAST_COMMIT_MESSAGE" value="[*] Мелкие ошибки" />
+    <MESSAGE value="Добавление x и y" />
+    <MESSAGE value="Изменение PlayerService" />
+    <MESSAGE value="Изменения" />
+    <MESSAGE value="Изменения1" />
+    <MESSAGE value="Фикс SelfPlay" />
+    <MESSAGE value="Добавление Client, Server и сериализацию и десериализацию" />
+    <option name="LAST_COMMIT_MESSAGE" value="Добавление Client, Server и сериализацию и десериализацию" />
+    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="320" y="98" key="#Plugins" timestamp="1594098745125">
-      <screen x="0" y="0" width="1440" height="900" />
+    <state x="552" y="178" key="#Project_Structure" timestamp="1594559845150">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="320" y="98" key="#Plugins/0.0.1440.900@0.0.1440.900" timestamp="1594098745125" />
-    <state x="208" y="31" key="#Project_Structure" timestamp="1594030743565">
-      <screen x="0" y="0" width="1440" height="900" />
+    <state x="552" y="178" key="#Project_Structure/0.0.1920.1040@0.0.1920.1040" timestamp="1594559845150" />
+    <state x="606" y="123" key="#com.intellij.ide.util.MemberChooser" timestamp="1595241834676">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="208" y="31" key="#Project_Structure/0.0.1440.900@0.0.1440.900" timestamp="1594030743565" />
-    <state x="184" y="112" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1594016761109">
-      <screen x="0" y="0" width="1440" height="900" />
+    <state x="606" y="123" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1595241834676" />
+    <state x="808" y="409" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1594375980879">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="184" y="112" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1440.900@0.0.1440.900" timestamp="1594016761109" />
-    <state x="933" y="167" key="#com.intellij.ide.util.MemberChooser" timestamp="1594356823705">
-      <screen x="0" y="0" width="1440" height="900" />
+    <state x="808" y="409" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1594375980879" />
+    <state x="756" y="379" width="458" height="288" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1594878927956">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="933" y="167" key="#com.intellij.ide.util.MemberChooser/0.0.1440.900/1440.83.1366.768@0.0.1440.900" timestamp="1594356823705" />
-    <state x="533" y="173" key="#com.intellij.ide.util.MemberChooser/0.0.1440.900/1440.89.1366.768@0.0.1440.900" timestamp="1594185487892" />
-    <state x="933" y="167" key="#com.intellij.ide.util.MemberChooser/0.0.1440.900/1440.92.1366.768@0.0.1440.900" timestamp="1594190891068" />
-    <state x="533" y="173" key="#com.intellij.ide.util.MemberChooser/0.0.1440.900@0.0.1440.900" timestamp="1594100976640" />
-    <state x="408" y="193" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1594098612112">
-      <screen x="0" y="0" width="1440" height="900" />
+    <state x="756" y="379" width="458" height="288" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.1920.1040@0.0.1920.1040" timestamp="1594878927956" />
+    <state x="690" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1594879244906">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="408" y="193" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1440.900@0.0.1440.900" timestamp="1594098612112" />
-    <state x="297" y="25" key="CommitChangelistDialog2" timestamp="1594356416375">
-      <screen x="0" y="0" width="1440" height="900" />
+    <state x="690" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1594879244906" />
+    <state x="506" y="114" key="CommitChangelistDialog2" timestamp="1595224231611">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="297" y="25" key="CommitChangelistDialog2/0.0.1440.900/1440.115.1366.745@0.0.1440.900" timestamp="1594191582809" />
-    <state x="297" y="25" key="CommitChangelistDialog2/0.0.1440.900/1440.83.1366.768@0.0.1440.900" timestamp="1594356416375" />
-    <state x="297" y="25" key="CommitChangelistDialog2/0.0.1440.900/1440.89.1366.768@0.0.1440.900" timestamp="1594184788106" />
-    <state x="144" y="79" key="DiffContextDialog" timestamp="1594100102883">
-      <screen x="0" y="0" width="1440" height="900" />
+    <state x="506" y="114" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1595224231611" />
+    <state x="184" y="86" width="1536" height="860" key="DiffContextDialog" timestamp="1594893934882">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="144" y="79" key="DiffContextDialog/0.0.1440.900@0.0.1440.900" timestamp="1594100102883" />
-    <state width="1398" height="245" key="GridCell.Tab.0.bottom" timestamp="1594294354938">
-      <screen x="0" y="0" width="1440" height="900" />
+    <state x="184" y="86" width="1536" height="860" key="DiffContextDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1594893934882" />
+    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1595236956355">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1398" height="245" key="GridCell.Tab.0.bottom/0.0.1440.900/1440.83.1366.768@0.0.1440.900" timestamp="1594294354938" />
-    <state width="1398" height="245" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1594097310343" />
-    <state width="1398" height="245" key="GridCell.Tab.0.center" timestamp="1594294354936">
-      <screen x="0" y="0" width="1440" height="900" />
+    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1595236956355" />
+    <state width="1877" height="283" key="GridCell.Tab.0.bottom" timestamp="1595241995853">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1398" height="245" key="GridCell.Tab.0.center/0.0.1440.900/1440.83.1366.768@0.0.1440.900" timestamp="1594294354936" />
-    <state width="1398" height="245" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1594097310342" />
-    <state width="1398" height="245" key="GridCell.Tab.0.left" timestamp="1594294354935">
-      <screen x="0" y="0" width="1440" height="900" />
+    <state width="1877" height="283" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1595241995853" />
+    <state width="1877" height="283" key="GridCell.Tab.0.center" timestamp="1595241995853">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1398" height="245" key="GridCell.Tab.0.left/0.0.1440.900/1440.83.1366.768@0.0.1440.900" timestamp="1594294354935" />
-    <state width="1398" height="245" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1594097310341" />
-    <state width="1398" height="245" key="GridCell.Tab.0.right" timestamp="1594294354937">
-      <screen x="0" y="0" width="1440" height="900" />
+    <state width="1877" height="283" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1595241995853" />
+    <state width="1877" height="283" key="GridCell.Tab.0.left" timestamp="1595241995853">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1398" height="245" key="GridCell.Tab.0.right/0.0.1440.900/1440.83.1366.768@0.0.1440.900" timestamp="1594294354937" />
-    <state width="1398" height="245" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1594097310342" />
-    <state x="308" y="192" key="IDE.errors.dialog" timestamp="1594369174532">
-      <screen x="0" y="0" width="1440" height="900" />
+    <state width="1877" height="283" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1595241995853" />
+    <state width="1877" height="283" key="GridCell.Tab.0.right" timestamp="1595241995853">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="308" y="192" key="IDE.errors.dialog/0.0.1440.900/1440.83.1366.768@0.0.1440.900" timestamp="1594369174532" />
-    <state x="308" y="192" key="IDE.errors.dialog/0.0.1440.900@0.0.1440.900" timestamp="1594321422587" />
-    <state x="144" y="79" key="MergeDialog" timestamp="1594369163068">
-      <screen x="0" y="0" width="1440" height="900" />
+    <state width="1877" height="283" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1595241995853" />
+    <state width="1877" height="348" key="GridCell.Tab.1.bottom" timestamp="1594971811509">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="144" y="79" key="MergeDialog/0.0.1440.900/1440.83.1366.768@0.0.1440.900" timestamp="1594369163068" />
-    <state x="358" y="218" key="MultipleFileMergeDialog" timestamp="1594369163108">
-      <screen x="0" y="0" width="1440" height="900" />
+    <state width="1877" height="348" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1594971811509" />
+    <state width="1877" height="348" key="GridCell.Tab.1.center" timestamp="1594971811509">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="358" y="218" key="MultipleFileMergeDialog/0.0.1440.900/1440.83.1366.768@0.0.1440.900" timestamp="1594369163108" />
-    <state x="503" y="160" key="RollbackChangesDialog" timestamp="1594100112912">
-      <screen x="0" y="0" width="1440" height="900" />
+    <state width="1877" height="348" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1594971811509" />
+    <state width="1877" height="348" key="GridCell.Tab.1.left" timestamp="1594971811509">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="503" y="160" key="RollbackChangesDialog/0.0.1440.900@0.0.1440.900" timestamp="1594100112912" />
-    <state x="372" y="23" width="1024" height="804" key="SettingsEditor" timestamp="1594030974013">
-      <screen x="0" y="0" width="1440" height="900" />
+    <state width="1877" height="348" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1594971811509" />
+    <state width="1877" height="348" key="GridCell.Tab.1.right" timestamp="1594971811509">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="372" y="23" width="1024" height="804" key="SettingsEditor/0.0.1440.900@0.0.1440.900" timestamp="1594030974013" />
-    <state x="320" y="190" key="Vcs.Push.Dialog.v2" timestamp="1594356426357">
-      <screen x="0" y="0" width="1440" height="900" />
+    <state width="1877" height="348" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1594971811509" />
+    <state x="184" y="86" key="MergeDialog" timestamp="1594622575573">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="320" y="190" key="Vcs.Push.Dialog.v2/0.0.1440.900/1440.115.1366.745@0.0.1440.900" timestamp="1594191591557" />
-    <state x="320" y="190" key="Vcs.Push.Dialog.v2/0.0.1440.900/1440.83.1366.768@0.0.1440.900" timestamp="1594356426357" />
-    <state x="320" y="190" key="Vcs.Push.Dialog.v2/0.0.1440.900/1440.89.1366.768@0.0.1440.900" timestamp="1594184861540" />
-    <state x="473" y="245" key="git4idea.merge.GitMergeDialog" timestamp="1594030065233">
-      <screen x="0" y="0" width="1440" height="900" />
+    <state x="184" y="86" key="MergeDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1594622575573" />
+    <state x="672" y="236" key="MultipleFileMergeDialog" timestamp="1594893887374">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="473" y="245" key="git4idea.merge.GitMergeDialog/0.0.1440.900@0.0.1440.900" timestamp="1594030065233" />
-    <state x="414" y="245" key="git4idea.merge.GitPullDialog" timestamp="1594356438736">
-      <screen x="0" y="0" width="1440" height="900" />
+    <state x="672" y="236" key="MultipleFileMergeDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1594893887374" />
+    <state x="440" y="94" key="SettingsEditor" timestamp="1594876531866">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="414" y="245" key="git4idea.merge.GitPullDialog/0.0.1440.900/1440.115.1366.745@0.0.1440.900" timestamp="1594195126458" />
-    <state x="414" y="245" key="git4idea.merge.GitPullDialog/0.0.1440.900/1440.83.1366.768@0.0.1440.900" timestamp="1594356438736" />
-    <state x="414" y="245" key="git4idea.merge.GitPullDialog/0.0.1440.900/1440.89.1366.768@0.0.1440.900" timestamp="1594184839847" />
-    <state x="414" y="245" key="git4idea.merge.GitPullDialog/0.0.1440.900/1440.92.1366.768@0.0.1440.900" timestamp="1594196650036" />
-    <state x="414" y="245" key="git4idea.merge.GitPullDialog/0.0.1440.900@0.0.1440.900" timestamp="1594321037840" />
+    <state x="440" y="94" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1594876531866" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1595224242814">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1595224242814" />
+    <state x="731" y="223" key="com.intellij.testIntegration.createTest.CreateTestDialog" timestamp="1594547112224">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="731" y="223" key="com.intellij.testIntegration.createTest.CreateTestDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1594547112224" />
+    <state x="685" y="311" key="git4idea.merge.GitPullDialog" timestamp="1595218469318">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="685" y="311" key="git4idea.merge.GitPullDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1595218469318" />
+    <state x="616" y="240" key="run.anything.popup" timestamp="1594557352379">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1594557352379" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/PlayerService.java</url>
+          <line>39</line>
+          <option name="timeStamp" value="63" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/PlayerService.java</url>
+          <line>40</line>
+          <option name="timeStamp" value="64" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/PlayerService.java</url>
+          <line>41</line>
+          <option name="timeStamp" value="65" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/PlayerService.java</url>
+          <line>43</line>
+          <option name="timeStamp" value="66" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/PlayerService.java</url>
+          <line>42</line>
+          <option name="timeStamp" value="67" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/PlayerService.java</url>
+          <line>44</line>
+          <option name="timeStamp" value="68" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/PlayerService.java</url>
+          <line>45</line>
+          <option name="timeStamp" value="70" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/PlayerService.java</url>
+          <line>46</line>
+          <option name="timeStamp" value="71" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/PlayerService.java</url>
+          <line>47</line>
+          <option name="timeStamp" value="72" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/PlayerService.java</url>
+          <line>48</line>
+          <option name="timeStamp" value="73" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/ru/omsk/neoLab/PlayerService.java</url>
+          <line>49</line>
+          <option name="timeStamp" value="74" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="this" />
+        <watch expression="this" language="JAVA" />
+        <watch expression="board[board.length - 1][2]" />
+        <watch expression="board.length" language="JAVA" />
+        <watch expression="board.length" language="JAVA" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>

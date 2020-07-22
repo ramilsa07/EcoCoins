@@ -1,29 +1,42 @@
 package ru.omsk.neoLab.selfplay;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import ru.omsk.neoLab.Player;
+import ru.omsk.neoLab.LoggerGame;
+import ru.omsk.neoLab.player.Player;
+import ru.omsk.neoLab.player.PlayerService;
 import ru.omsk.neoLab.board.Board;
-import ru.omsk.neoLab.race.RaceContainer;
+import ru.omsk.neoLab.board.Generators.Generator;
+import ru.omsk.neoLab.board.Generators.IGenerator;
+import ru.omsk.neoLab.board.Сell.Cell;
+import ru.omsk.neoLab.simpleBot.SimpleBot;
 
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Queue;
 
-public class SelfPlay {
+public final class SelfPlay {
 
-    private static final Logger logger = LoggerFactory.getLogger(SelfPlay.class);
+    private final SimpleBot bot = new SimpleBot();
 
-    private Board board;
-    private Queue<Player> players;
+    private final Board board = Board.GetInstance();
+    private final PlayerService playerService = PlayerService.GetInstance();
 
-    private String nickName = null;
+    public Queue<Player> getPlayers() {
+        return players;
+    }
+
+    private final Queue<Player> players = new LinkedList<Player>();
+
     private String phase;
-    private int round;
+    private int round = 1;
 
-    private RaceContainer race = new RaceContainer();
+    private HashSet<Cell> possibleCellsCapture = new HashSet<Cell>();
+
 
     enum Phases {
         RACE_CHOICE("race choice"), // Выбор расы
         CAPTURE_OF_REGIONS("capture of regions"), // захват регионов
+        PICK_UP_TOKENS("pick up tokens"), // В начале раунда берем жетоны на руки
+        GO_INTO_DECLINE("go into decline"), // уйти в  ̶з̶а̶п̶о̶й̶ упадок
         GETTING_COINS("getting coins"), // Получение монет
         ;
 
@@ -39,67 +52,126 @@ public class SelfPlay {
     }
 
     public void Game() {
-        board = Board.GetInstance();
-        while (true) {
-            if (round == 1) {
+        generateBoard();
+        LoggerGame.logOutputBoard(board);
+        Player firstPlayer = players.element();
+        Player currentPlayer = players.element();
+        while (round < 11) {
+            LoggerGame.logPlayerRoundStart(currentPlayer, round);
+            if (currentPlayer.isDecline() || round == 1) {
+                LoggerGame.logStartPhaseRaceChoice();
                 phase = "race choice";
                 while (Phases.RACE_CHOICE.equalPhase(phase)) {
-                    if (Phases.RACE_CHOICE.equalPhase("race choice")) {
-                        logger.info("Началась фаза выбора расы");
-                        if (players.element().getRace() != null) {
-                            phase = "capture of regions";
+                    LoggerGame.logWhatRacesCanIChoose(PlayerService.getRacesPool());
+                    bot.getRandomRace(currentPlayer);
+                    LoggerGame.logChooseRaceTrue(currentPlayer);
+                    phase = "capture of regions";
+                }
+            }
+            if (Phases.PICK_UP_TOKENS.equalPhase(phase)) {
+                LoggerGame.logStartPhasePickUpTokens();
+                while (Phases.PICK_UP_TOKENS.equalPhase(phase)) {
+                    for (Cell cell : currentPlayer.getLocationCell()) {
+                        if (cell.getCountTokens() > 1) {
+                            currentPlayer.collectTokens(cell);
                         }
+                    }
+                    LoggerGame.logGetTokens(currentPlayer);
+                    possibleCellsCapture = playerService.findOutWherePlayerCanGo(board, currentPlayer);
+                    if (possibleCellsCapture.isEmpty()) {
+                        phase = "go into decline";
+                    } else {
+                        phase = "capture of regions";
                     }
                 }
             }
+            if (Phases.GO_INTO_DECLINE.equalPhase(phase)) {
+                if (round != 1) {
+                    currentPlayer.goIntoDecline();
+                    LoggerGame.logRaceInDecline(currentPlayer);
+                    changeCourse(currentPlayer);
+                    currentPlayer = players.element();
+                    if (currentPlayer.equals(firstPlayer)) {
+                        phase = "getting coins";
+                    } else if (currentPlayer.isDecline()) {
+                        phase = "race choice";
+                    } else {
+                        phase = "pick up tokens";
+                    }
+                }
+            }
+            LoggerGame.logStartPhaseCaptureOfRegions();
             while (Phases.CAPTURE_OF_REGIONS.equalPhase(phase)) {
-                logger.info("Началась фаза захвата территории");
-                if (true) {
-                    phase = "getting coins";
+                LoggerGame.logGetTokens(currentPlayer);
+                if (currentPlayer.getLocationCell().isEmpty()) {
+                    possibleCellsCapture = playerService.findOutWherePlayerCanGo(board.getBoard());
+                    LoggerGame.logWhereToGo(possibleCellsCapture);
+                } else {
+                    possibleCellsCapture = playerService.findOutWherePlayerCanGo(board, currentPlayer);
+                    LoggerGame.logWhereToGo(possibleCellsCapture);
+                }
+                Object[] cells = possibleCellsCapture.toArray();
+                if (!possibleCellsCapture.isEmpty())
+                    bot.getRandomRegionToCapture(playerService, cells, currentPlayer);
+                else {
+                    LoggerGame.logRedistributionOfTokens(currentPlayer);
+                    currentPlayer.shufflingTokens();
+                    changeCourse(currentPlayer);
+                    currentPlayer = players.element();
+                    if (currentPlayer.equals(firstPlayer)) {
+                        phase = "getting coins";
+                        break;
+                    } else if (currentPlayer.isDecline()) {
+                        phase = "race choice";
+                        break;
+                    } else {
+                        phase = "pick up tokens";
+                        break;
+                    }
                 }
             }
             while (Phases.GETTING_COINS.equalPhase(phase)) {
-                logger.info("Началась фаза c Сбор Монет");
-                changeCourse(players.element());
-                phase = "";
+                LoggerGame.logStartPhaseGetCoins();
+                for (Player player : players) {
+                    player.collectAllCoins();
+                    LoggerGame.logGetCoins(player);
+                }
+                round++;
+                if (currentPlayer.isDecline()) {
+                    phase = "race choice";
+                } else {
+                    phase = "pick up tokens";
+                }
+
             }
-            if (round == 10) {
+            if (round == 11) {
                 toEndGame();
             }
         }
     }
 
+    public void generateBoard() {
+        IGenerator generator = new Generator();
+        board.setBoard(generator.generate(4, 3));
+        board.setHeight(4);
+        board.setWidth(3);
+    }
 
     private void changeCourse(Player player) {
         players.poll();
         players.add(player);
     }
 
-    public void toAppointBoard() {
-
+    public void createNewPlayer(Player player) {
+        players.add(player);
+        LoggerGame.logNickSelection(player);
     }
 
     public void toEndGame() {
-
-    }
-
-   /* public void StartGame() throws IOException{
-       System.out.println(String.format("Server started, port: %d", PORT));
-        try (final ServerSocket serverSocket = new ServerSocket(PORT)) {
-            // serverSocket.setSoTimeout(1000);
-            while (true) { // приложение с помощью System.exit() закрывается по команде от клиента
-                // Блокируется до возникновения нового соединения
-                final Socket socket = serverSocket.accept();
-                try {
-                    new Game(this, socket, null,null).start();
-                } catch (final IOException e) {
-                    // Если завершится неудачей, закрывается сокет,
-                    // в противном случае, нить закроет его:
-                    socket.close();
-                }
-            }
-        } catch (final BindException e) {
-            e.printStackTrace();
+        for (Player player : players) {
+            LoggerGame.logGetCoins(player);
         }
-    }*/
+        LoggerGame.logEndGame();
+        System.exit(0);
+    }
 }
