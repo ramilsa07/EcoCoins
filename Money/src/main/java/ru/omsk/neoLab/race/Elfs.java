@@ -22,4 +22,9 @@ public final class Elfs extends ARace {
         }
         return cell.getCoin();
     }
+
+    @Override
+    public void clearCells(){
+        cells.clear();
+    }
 }

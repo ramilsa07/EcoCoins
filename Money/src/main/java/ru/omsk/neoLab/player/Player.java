@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import ru.omsk.neoLab.board.Сell.Cell;
 import ru.omsk.neoLab.board.Сell.TypeCell;
 import ru.omsk.neoLab.race.ARace;
+import ru.omsk.neoLab.race.Elfs;
 
 import java.util.ArrayList;
 
@@ -20,12 +21,12 @@ public final class Player {
     private int countTokens = 0;
 
     private ARace race;
-    private ArrayList<Cell> locationCell = new ArrayList<Cell>();
+    private final ArrayList<Cell> locationCell = new ArrayList<Cell>();
 
     private ARace raceDecline = null;
     private ArrayList<Cell> locationDeclineCell = new ArrayList<Cell>();
 
-    private PlayerService service = PlayerService.GetInstance();
+    private final PlayerService service = PlayerService.GetInstance();
 
     private boolean decline = false;
 
@@ -111,6 +112,12 @@ public final class Player {
             if (this.raceDecline.isAdvantageOpportunityCaptureCell(cell)) {
                 this.countCoin += this.raceDecline.getAdvantageCoin(cell);
             }
+        }
+        if(race.getNameRace().equals("Elfs")){
+            race.clearCells();
+        }
+        if(raceDecline != null && raceDecline.getNameRace().equals("Elfs")){
+            raceDecline.clearCells();
         }
     }
 
