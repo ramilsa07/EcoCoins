@@ -2,17 +2,18 @@ package ru.omsk.neoLab.JsonSerializer;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import ru.omsk.neoLab.board.Board;
 
-public class GameSerializer {
+public class ObjectDeserializer {
 
-    public static String jsonString;
-
-    public static void serialize(final Object object) {
+    public static Object deserialize() {
         final ObjectMapper mapper = new ObjectMapper();
+        Object object = null;
         try {
-            jsonString = mapper.writeValueAsString(object);
+            object = mapper.readValue(GameSerializer.jsonString, Board.class);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
+        return object;
     }
 }

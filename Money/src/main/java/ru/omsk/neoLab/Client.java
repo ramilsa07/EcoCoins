@@ -1,7 +1,16 @@
 package ru.omsk.neoLab;
 
-import java.io.*;
+import ru.omsk.neoLab.JsonSerializer.GameSerializer;
+import ru.omsk.neoLab.JsonSerializer.ObjectDeserializer;
+import ru.omsk.neoLab.board.Board;
+import ru.omsk.neoLab.board.Сell.Cell;
+import ru.omsk.neoLab.player.Player;
+import ru.omsk.neoLab.player.PlayerService;
+import ru.omsk.neoLab.race.ARace;
+
+import java.io.IOException;
 import java.net.Socket;
+import java.util.Random;
 
 public final class Client {
 
@@ -12,10 +21,7 @@ public final class Client {
     private final int port; // порт соединения
 
     private Socket socket = null;
-    private BufferedReader in = null; // поток чтения из сокета
-    private BufferedWriter out = null; // поток записи в сокет
-    private BufferedReader inputUser = null; // поток чтения с консоли
-    private String nickname = null; // имя клиента
+    private String nickname = null;
 
     private Client(final String ip, final int port) {
         this.ip = ip;
@@ -30,45 +36,44 @@ public final class Client {
             return;
         }
 
-        try {
-            inputUser = new BufferedReader(new InputStreamReader(System.in));
-            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-        } catch (final IOException e) {
-            downService();
-            return;
-        }
-
         System.out.println(String.format("Client started, ip: %s, port: %d", ip, port));
         pressNickname(); // перед началом необходимо спросить имя
     }
 
-    private void send(final String message) throws IOException {
-        out.write(message + "\n");
-        out.flush();
-    }
-
     private void pressNickname() {
         System.out.print("Press your nick: ");
-        try {
-            nickname = inputUser.readLine();
-            send(nickname);
-        } catch (final IOException ignored) {
-        }
+        Player player = new Player();
+        GameSerializer.serialize(player);
     }
 
     private void downService() {
         try {
             if (!socket.isClosed()) {
                 socket.close();
-                if (in != null) {
-                    in.close();
-                }
-                if (out != null) {
-                    out.close();
-                }
             }
         } catch (final IOException ignored) {
+        }
+    }
+
+    private class SimpleBot extends Thread {
+
+        private final Random random = new Random();
+        private final PlayerService service = PlayerService.GetInstance();
+
+        public ARace getRandomRace(Board board) {
+            return PlayerService.getRacesPool().get(random.nextInt(PlayerService.getRacesPool().size()));
+        }
+
+        public Cell getRandomRegionToCapture(Board board) {
+            //return (Cell) cells[random.nextInt(cells.length)];
+            return new Cell();
+        }
+
+        @Override
+        public void run() {
+            while (true) {
+                GameSerializer.serialize(getRandomRace((Board) ObjectDeserializer.deserialize()));
+            }
         }
     }
 

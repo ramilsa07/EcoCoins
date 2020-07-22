@@ -1,12 +1,12 @@
 package ru.omsk.neoLab.selfplay;
 
 import ru.omsk.neoLab.LoggerGame;
-import ru.omsk.neoLab.player.Player;
-import ru.omsk.neoLab.player.PlayerService;
 import ru.omsk.neoLab.board.Board;
 import ru.omsk.neoLab.board.Generators.Generator;
 import ru.omsk.neoLab.board.Generators.IGenerator;
 import ru.omsk.neoLab.board.Сell.Cell;
+import ru.omsk.neoLab.player.Player;
+import ru.omsk.neoLab.player.PlayerService;
 import ru.omsk.neoLab.simpleBot.SimpleBot;
 
 import java.util.HashSet;
@@ -73,7 +73,7 @@ public final class SelfPlay {
                 while (Phases.PICK_UP_TOKENS.equalPhase(phase)) {
                     for (Cell cell : currentPlayer.getLocationCell()) {
                         if (cell.getCountTokens() > 1) {
-                            currentPlayer.collectTokens(cell);
+                            currentPlayer.collectTokens();
                         }
                     }
                     LoggerGame.logGetTokens(currentPlayer);

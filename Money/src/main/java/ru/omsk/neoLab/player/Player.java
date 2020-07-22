@@ -1,6 +1,7 @@
 package ru.omsk.neoLab.player;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.omsk.neoLab.board.Сell.Cell;
@@ -28,9 +29,22 @@ public final class Player {
 
     private boolean decline = false;
 
-    public Player(String nickName) {
-        this.nickName = nickName;
+    public Player() {
+        this.nickName = Player.class.toString();
     }
+
+    public Player(@JsonProperty("nickName") String nickName, @JsonProperty("countCoin") int countCoin, @JsonProperty("countTokens") int countTokens, @JsonProperty("race") ARace race, @JsonProperty("locationCell") ArrayList<Cell> locationCell, @JsonProperty("raceDecline") ARace raceDecline, @JsonProperty("locationDeclineCell") ArrayList<Cell> locationDeclineCell, @JsonProperty("service") PlayerService service, @JsonProperty("decline") boolean decline) {
+        this.nickName = nickName;
+        this.countCoin = countCoin;
+        this.countTokens = countTokens;
+        this.race = race;
+        this.locationCell = locationCell;
+        this.raceDecline = raceDecline;
+        this.locationDeclineCell = locationDeclineCell;
+        this.service = service;
+        this.decline = decline;
+    }
+
 
     public void changeRace(final ARace race) {
         if (decline) {

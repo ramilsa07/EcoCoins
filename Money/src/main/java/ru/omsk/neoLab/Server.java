@@ -1,13 +1,18 @@
 package ru.omsk.neoLab;
 
+import ru.omsk.neoLab.JsonSerializer.GameSerializer;
+import ru.omsk.neoLab.JsonSerializer.ObjectDeserializer;
 import ru.omsk.neoLab.board.Board;
 import ru.omsk.neoLab.board.Generators.Generator;
 import ru.omsk.neoLab.board.Generators.IGenerator;
 import ru.omsk.neoLab.board.Сell.Cell;
 import ru.omsk.neoLab.player.Player;
 import ru.omsk.neoLab.player.PlayerService;
+import ru.omsk.neoLab.race.ARace;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.BindException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -69,19 +74,19 @@ public class Server {
         }
     }
 
-    private final ConcurrentLinkedQueue<Game> serverList = new ConcurrentLinkedQueue<>();
+    private final ConcurrentLinkedQueue<Player> serverList = new ConcurrentLinkedQueue<>();
 
     private class Game extends Thread {
 
         private final Server server;
         private final Socket socket;
-        private final BufferedReader in;
-        private final BufferedWriter out;
+        private final ObjectOutputStream serializer;
+        private final ObjectInputStream deserializer;
 
         private final Board board = Board.GetInstance();
         private final PlayerService playerService = PlayerService.GetInstance();
 
-        private final ConcurrentLinkedQueue<Player> players = new ConcurrentLinkedQueue<Player>();
+        private final ConcurrentLinkedQueue<Player> players = new ConcurrentLinkedQueue<>();
 
         private String phase;
         private int round = 1;
@@ -93,8 +98,8 @@ public class Server {
             this.server = server;
             this.socket = socket;
             // если потоку ввода/вывода приведут к генерированию искдючения, оно проброситься дальше
-            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+            serializer = new ObjectOutputStream(socket.getOutputStream());
+            deserializer = new ObjectInputStream(socket.getInputStream());
         }
 
         @Override
@@ -110,7 +115,8 @@ public class Server {
                     phase = "race choice";
                     while (Phases.RACE_CHOICE.equalPhase(phase)) {
                         LoggerGame.logWhatRacesCanIChoose(PlayerService.getRacesPool());
-                        currentPlayer.changeRace(PlayerService.getRacesPool().get(1));
+                        GameSerializer.serialize(board);
+                        currentPlayer.changeRace((ARace) ObjectDeserializer.deserialize());
                         LoggerGame.logChooseRaceTrue(currentPlayer);
                         phase = "capture of regions";
                     }
@@ -218,8 +224,8 @@ public class Server {
             try {
                 if (!socket.isClosed()) {
                     socket.close();
-                    in.close();
-                    out.close();
+                    serializer.close();
+                    deserializer.close();
                     server.serverList.remove(this);
                 }
             } catch (final IOException ignored) {
@@ -239,9 +245,16 @@ public class Server {
     @SuppressWarnings("InfiniteLoopStatement")
     private void startServer() throws IOException {
         System.out.println(String.format("Server started, port: %d", PORT));
+
         try (final ServerSocket serverSocket = new ServerSocket(PORT)) {
             while (true) {
-                final Socket socket = serverSocket.accept();
+                Socket socket = null;
+                do {
+                    socket = serverSocket.accept();
+                    serverList.add((Player) ObjectDeserializer.deserialize());
+                    System.out.println(serverList.element());
+                }
+                while (!(MAX_PLAYERS == serverList.size()));
                 try {
                     new Game(this, socket).start();
                 } catch (final IOException e) {

@@ -11,7 +11,7 @@ public class Cell {
     private int coin = 1;
     private boolean abilityCapture = true;
 
-    private Player belongs = new Player("Gore");
+    private Player belongs = new Player();
 
     private int countTokens = 0;
 

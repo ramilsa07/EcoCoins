@@ -6,14 +6,14 @@ import ru.omsk.neoLab.player.PlayerService;
 
 import java.util.Random;
 
-public class SimpleBot {
+public class SimpleBot extends Thread {
 
     private final Random random = new Random();
 
     public SimpleBot() {
     }
 
-    public void getRandomRace(Player currentPlayer){
+    public void getRandomRace(Player currentPlayer) {
         currentPlayer.changeRace(PlayerService.getRacesPool().get(
                 (random.nextInt(PlayerService.getRacesPool().size()))));
     }
