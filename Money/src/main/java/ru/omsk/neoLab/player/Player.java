@@ -1,5 +1,6 @@
 package ru.omsk.neoLab.player;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.omsk.neoLab.board.Сell.Cell;
@@ -9,29 +10,30 @@ import ru.omsk.neoLab.race.Elfs;
 
 import java.util.ArrayList;
 
-
+@JsonAutoDetect
 public final class Player {
 
     public static Logger log = LoggerFactory.getLogger(Player.class);
 
     private final String nickName;
     private int countCoin;
-
     private int countTokens = 0;
 
     private ARace race;
-    private final ArrayList<Cell> locationCell = new ArrayList<Cell>();
+    private ArrayList<Cell> locationCell = new ArrayList<Cell>();
 
     private ARace raceDecline = null;
     private ArrayList<Cell> locationDeclineCell = new ArrayList<Cell>();
 
+    private PlayerService service = PlayerService.GetInstance();
+
     private boolean decline = false;
 
-    public Player(final String nickName) {
+    public Player(String nickName) {
         this.nickName = nickName;
     }
 
-    public final void changeRace(final ARace race) {
+    public void changeRace(final ARace race) {
         if (decline) {
             if (raceDecline != null) {
                 PlayerService.getRacesPool().add(raceDecline);
@@ -46,14 +48,14 @@ public final class Player {
         PlayerService.getRacesPool().remove(race);
     }
 
-    public final void goIntoDecline() {
-        decline = true;
+    public void goIntoDecline() {
+        this.decline = true;
         raceDecline = race;
         locationDeclineCell.addAll(locationCell);
         locationCell.clear();
     }
 
-    public final void regionCapture(final Cell cell) {
+    public void regionCapture(Cell cell) {
         if (cell.getCountTokens() == 0) {
             this.countTokens -= this.race.getAdvantageCaptureCell(cell);
             cell.setCountTokens(this.race.getAdvantageCaptureCell(cell));
@@ -63,32 +65,33 @@ public final class Player {
             this.countTokens -= this.race.getAdvantageCaptureCell(cell) + cell.getBelongs().getRace().getAdvantageDefendCell(cell) + 1;
             cell.setCountTokens(this.race.getAdvantageCaptureCell(cell) + cell.getBelongs().getRace().getAdvantageDefendCell(cell) + 1);
         }
-        this.locationCell.add(cell);
-        cell.regionCapture(this);
+            this.locationCell.add(cell);
+            cell.regionCapture(this);
         log.info("Осталось жетонов у игрока {}  {} от территории {}  и потратили жетонов {}", this.nickName,
                 this.countTokens, cell.getType(), cell.getCountTokens());
-        if (cell.getType() == TypeCell.Water && !race.getNameRace().equals("Amphibia")) {
+        if (cell.getType() == TypeCell.WATER && !race.getNameRace().equals("Amphibia")) {
             cell.setCountTokens(0);
         }
     }
 
-    public final void shufflingTokens() {
-        if (this.countTokens > 0) {
+    public void shufflingTokens() {
+        if(this.countTokens > 0){
             locationCell.get(0).setCountTokens(locationCell.get(0).getCountTokens() + this.countTokens);
             countTokens = 0;
         }
         log.info("После перетасовки жетонов, у игрока {} осталось {} жетонов", this.nickName, this.countTokens);
     }
 
-    public final void collectTokens(Cell cell) {
-        countTokens += cell.getToken(cell.getCountTokens() - 1);
-        cell.setCountTokens(1);
+    public void collectTokens() {
+        for (Cell cell : locationCell) {
+            this.countTokens += cell.getToken(cell.getCountTokens() - 1);
+        }
     }
 
-    public final void collectAllCoins() {
+    public void collectAllCoins() {
         for (Cell cell : locationCell) {
-            if (race.isAdvantageOpportunityCaptureCell(cell)) {
-                countCoin += race.getAdvantageCoin(cell);
+            if (this.race.isAdvantageOpportunityCaptureCell(cell)) {
+                this.countCoin += this.race.getAdvantageCoin(cell);
             }
         }
         for (Cell cell : locationDeclineCell) {
@@ -132,8 +135,27 @@ public final class Player {
         return raceDecline;
     }
 
+    public ArrayList<Cell> getLocationDeclineCell() {
+        return locationDeclineCell;
+    }
+
     public boolean isDecline() {
         return decline;
+    }
+
+    @Override
+    public String toString() {
+        return "Player{" +
+                "nickName='" + nickName + '\'' +
+                ", countCoin=" + countCoin +
+                ", countTokens=" + countTokens +
+                ", race=" + race +
+                ", locationCell=" + locationCell +
+                ", raceDecline=" + raceDecline +
+                ", locationDeclineCell=" + locationDeclineCell +
+                ", service=" + service +
+                ", decline=" + decline +
+                '}';
     }
 }
 

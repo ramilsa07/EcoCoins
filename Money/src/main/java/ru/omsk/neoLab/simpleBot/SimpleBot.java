@@ -6,18 +6,19 @@ import ru.omsk.neoLab.player.PlayerService;
 
 import java.util.Random;
 
-public final class SimpleBot {
+public class SimpleBot {
+
     private final Random random = new Random();
 
     public SimpleBot() {
     }
 
-    public final void getRandomRace(Player currentPlayer) {
+    public void getRandomRace(Player currentPlayer){
         currentPlayer.changeRace(PlayerService.getRacesPool().get(
                 (random.nextInt(PlayerService.getRacesPool().size()))));
     }
 
-    public final void getRandomRegionToCapture(PlayerService playerService, Object[] cells, Player currentPlayer) {
+    public void getRandomRegionToCapture(PlayerService playerService, Object[] cells, Player currentPlayer){
         playerService.regionCapture((Cell) cells[random.nextInt(cells.length)], currentPlayer);
     }
 }

@@ -41,32 +41,32 @@ public final class Generator implements IGenerator {
         Cell cell = new Cell();
         switch (random.nextInt(4)) {
             case 0:
-                cell.setType(TypeCell.Earth);
+                cell.setType(TypeCell.EARTH);
                 break;
             case 1:
-                cell.setType(TypeCell.Mushrooms);
+                cell.setType(TypeCell.MUSHROOMS);
                 break;
             case 2:
-                cell.setType(TypeCell.Mounted);
+                cell.setType(TypeCell.MOUNTED);
                 break;
             case 3:
-                cell.setType(TypeCell.Water);
+                cell.setType(TypeCell.WATER);
                 cell.setAbilityCapture(false);
                 break;
         }
-        if (cell.getType().equals(TypeCell.Water) && (countWater < maxWater)) {
+        if (cell.getType().equals(TypeCell.WATER) && (countWater < maxWater)) {
             countWater++;
             return cell;
         }
         switch (random.nextInt(3)) {
             case 0:
-                cell.setType(TypeCell.Earth);
+                cell.setType(TypeCell.EARTH);
                 break;
             case 1:
-                cell.setType(TypeCell.Mushrooms);
+                cell.setType(TypeCell.MUSHROOMS);
                 break;
             case 2:
-                cell.setType(TypeCell.Mounted);
+                cell.setType(TypeCell.MOUNTED);
                 break;
         }
         return cell;

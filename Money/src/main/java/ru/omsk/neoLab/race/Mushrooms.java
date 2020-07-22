@@ -13,6 +13,6 @@ public final class Mushrooms extends ARace {
 
     @Override
     public int getAdvantageCoin(final Cell cell) {
-        return cell.getType().equals(TypeCell.Mushrooms) ? 2 : cell.getCoin();
+        return cell.getType().equals(TypeCell.MUSHROOMS) ? 2 : cell.getCoin();
     }
 }
