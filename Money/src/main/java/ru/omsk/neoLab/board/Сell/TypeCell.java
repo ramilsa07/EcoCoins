@@ -7,10 +7,13 @@ public enum TypeCell {
     WATER;
 
     public static int toType(TypeCell type) {
-        return switch (type) {
-            case MOUNTED -> 3;
-            case WATER -> 1;
-            default -> 2;
-        };
+        switch (type) {
+            case MOUNTED:
+                return 3;
+            case WATER:
+                return 1;
+            default:
+                return 2;
+        }
     }
 }

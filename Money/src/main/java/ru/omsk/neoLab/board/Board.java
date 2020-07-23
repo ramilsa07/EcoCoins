@@ -4,9 +4,11 @@ package ru.omsk.neoLab.board;
  * Класс, хранящий доску, на которой будет проходить игра.
  * */
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import ru.omsk.neoLab.board.Сell.Cell;
 
+@JsonAutoDetect
 public final class Board {
 
     private static Board instance;

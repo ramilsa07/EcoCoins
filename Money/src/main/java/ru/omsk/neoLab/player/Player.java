@@ -1,13 +1,13 @@
 package ru.omsk.neoLab.player;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.omsk.neoLab.board.Сell.Cell;
 import ru.omsk.neoLab.board.Сell.TypeCell;
 import ru.omsk.neoLab.race.ARace;
-import ru.omsk.neoLab.race.Elfs;
 
 import java.util.ArrayList;
 
@@ -17,20 +17,24 @@ public final class Player {
     public static Logger log = LoggerFactory.getLogger(Player.class);
 
     private final String nickName;
+    @JsonIgnore
     private int countCoin;
+    @JsonIgnore
     private int countTokens = 0;
 
     private ARace race;
-    private final ArrayList<Cell> locationCell = new ArrayList<Cell>();
-
+    @JsonIgnore
+    private ArrayList<Cell> locationCell = new ArrayList<Cell>();
+    @JsonIgnore
     private ARace raceDecline = null;
+    @JsonIgnore
     private ArrayList<Cell> locationDeclineCell = new ArrayList<Cell>();
-
-    private final PlayerService service = PlayerService.GetInstance();
+    @JsonIgnore
+    private PlayerService service = PlayerService.GetInstance();
 
     private boolean decline = false;
 
-    public Player() {
+    public Player(String nickName) {
         this.nickName = Player.class.toString();
     }
 
