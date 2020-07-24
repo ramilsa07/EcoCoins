@@ -6,7 +6,7 @@ import ru.omsk.neoLab.board.Сell.Cell;
 public abstract class ARace {
 
     protected String nameRace;
-    protected int countTokens = 6;
+    protected int countTokens;
 
     public int getAdvantageCoin(final Cell cell) {
         return cell.getCoin();

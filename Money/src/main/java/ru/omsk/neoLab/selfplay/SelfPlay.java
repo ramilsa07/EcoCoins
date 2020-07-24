@@ -37,8 +37,7 @@ public final class SelfPlay {
         CAPTURE_OF_REGIONS("capture of regions"), // захват регионов
         PICK_UP_TOKENS("pick up tokens"), // В начале раунда берем жетоны на руки
         GO_INTO_DECLINE("go into decline"), // уйти в  ̶з̶а̶п̶о̶й̶ упадок
-        GETTING_COINS("getting coins"), // Получение монет
-        ;
+        GETTING_COINS("getting coins"); // Получение монет
 
         private final String phasesName;
 

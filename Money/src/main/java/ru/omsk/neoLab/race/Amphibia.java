@@ -6,6 +6,7 @@ public final class Amphibia extends ARace {
 
     public Amphibia() {
         nameRace = "Amphibia";
+        countTokens = 6;
     }
 
     @Override

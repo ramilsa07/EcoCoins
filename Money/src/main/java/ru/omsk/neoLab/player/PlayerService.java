@@ -4,6 +4,7 @@ import ru.omsk.neoLab.LoggerGame;
 import ru.omsk.neoLab.Validator;
 import ru.omsk.neoLab.board.Board;
 import ru.omsk.neoLab.board.Сell.Cell;
+import ru.omsk.neoLab.board.Сell.TypeCell;
 import ru.omsk.neoLab.race.*;
 
 import java.util.ArrayList;

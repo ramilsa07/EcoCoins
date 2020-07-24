@@ -21,12 +21,12 @@ public final class Player {
     private int countTokens = 0;
 
     private ARace race;
-    private final ArrayList<Cell> locationCell = new ArrayList<Cell>();
+    private ArrayList<Cell> locationCell = new ArrayList<Cell>();
 
     private ARace raceDecline = null;
     private ArrayList<Cell> locationDeclineCell = new ArrayList<Cell>();
 
-    private final PlayerService service = PlayerService.GetInstance();
+    private PlayerService service = PlayerService.GetInstance();
 
     private boolean decline = false;
 
@@ -65,12 +65,20 @@ public final class Player {
     public void goIntoDecline() {
         this.decline = true;
         raceDecline = race;
+        if (locationDeclineCell.size() != 0) {
+
+        }
+        locationDeclineCell.clear();
         locationDeclineCell.addAll(locationCell);
         locationCell.clear();
     }
 
     public void regionCapture(Cell cell) {
         if (cell.getCountTokens() == 0) {
+            if (cell.getBelongs() != null) { // Для случая с водой
+                cell.getBelongs().locationCell.remove(cell);
+                cell.getBelongs().locationDeclineCell.remove(cell);
+            }
             this.countTokens -= this.race.getAdvantageCaptureCell(cell);
             cell.setCountTokens(this.race.getAdvantageCaptureCell(cell));
         } else {
@@ -79,8 +87,8 @@ public final class Player {
             this.countTokens -= this.race.getAdvantageCaptureCell(cell) + cell.getBelongs().getRace().getAdvantageDefendCell(cell) + 1;
             cell.setCountTokens(this.race.getAdvantageCaptureCell(cell) + cell.getBelongs().getRace().getAdvantageDefendCell(cell) + 1);
         }
-            this.locationCell.add(cell);
-            cell.regionCapture(this);
+        this.locationCell.add(cell);
+        cell.regionCapture(this);
         log.info("Осталось жетонов у игрока {}  {} от территории {}  и потратили жетонов {}", this.nickName,
                 this.countTokens, cell.getType(), cell.getCountTokens());
         if (cell.getType() == TypeCell.WATER && !race.getNameRace().equals("Amphibia")) {
@@ -89,7 +97,7 @@ public final class Player {
     }
 
     public void shufflingTokens() {
-        if(this.countTokens > 0){
+        if (this.countTokens > 0) {
             locationCell.get(0).setCountTokens(locationCell.get(0).getCountTokens() + this.countTokens);
             countTokens = 0;
         }
@@ -113,10 +121,10 @@ public final class Player {
                 this.countCoin += this.raceDecline.getAdvantageCoin(cell);
             }
         }
-        if(race.getNameRace().equals("Elfs")){
+        if (race.getNameRace().equals("Elfs")) {
             race.clearCells();
         }
-        if(raceDecline != null && raceDecline.getNameRace().equals("Elfs")){
+        if (raceDecline != null && raceDecline.getNameRace().equals("Elfs")) {
             raceDecline.clearCells();
         }
     }
