@@ -11,6 +11,7 @@ import ru.omsk.neoLab.player.Player;
 import ru.omsk.neoLab.player.PlayerService;
 import ru.omsk.neoLab.player.Serializer.PlayerDeserializer;
 import ru.omsk.neoLab.race.Serializer.RaceDeserializer;
+import ru.omsk.neoLab.simpleBot.SimpleBot;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -90,6 +91,7 @@ public class Server {
 
         private final Board board = Board.GetInstance();
         private final PlayerService playerService = PlayerService.GetInstance();
+        private final SimpleBot bot = new SimpleBot();
 
         private String phase;
         private int round = 1;
@@ -182,10 +184,12 @@ public class Server {
                     }
                     Object[] cells = possibleCellsCapture.toArray();
                     if (!possibleCellsCapture.isEmpty()) {
-                        //bot.getRandomRegionToCapture(playerService, cells, currentPlayer);
+                        playerService.regionCapture(bot.getRandomRegionToCapture(cells), currentPlayer);
                     } else {
-                        LoggerGame.logRedistributionOfTokens(currentPlayer);
-                        currentPlayer.shufflingTokens();
+                        if (currentPlayer.getCountTokens() > 0) {
+                            LoggerGame.logRedistributionOfTokens(currentPlayer);
+                            currentPlayer.shufflingTokens(bot.getRandomCellForDistribution(currentPlayer.getLocationCell()));
+                        }
                         changeCourse(currentPlayer);
                         currentPlayer = players.element();
                         if (currentPlayer.equals(firstPlayer)) {

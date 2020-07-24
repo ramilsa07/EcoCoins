@@ -38,6 +38,10 @@ public final class Player {
         this.nickName = Player.class.toString();
     }
 
+    public Player() {
+        this.nickName = Player.class.toString();
+    }
+
     public Player(@JsonProperty("nickName") String nickName, @JsonProperty("countCoin") int countCoin, @JsonProperty("countTokens") int countTokens, @JsonProperty("race") ARace race, @JsonProperty("locationCell") ArrayList<Cell> locationCell, @JsonProperty("raceDecline") ARace raceDecline, @JsonProperty("locationDeclineCell") ArrayList<Cell> locationDeclineCell, @JsonProperty("service") PlayerService service, @JsonProperty("decline") boolean decline) {
         this.nickName = nickName;
         this.countCoin = countCoin;
@@ -56,10 +60,7 @@ public final class Player {
             if (raceDecline != null) {
                 PlayerService.getRacesPool().add(raceDecline);
             }
-            this.raceDecline = this.race;
-            this.locationDeclineCell = this.locationCell;
             this.decline = false;
-            locationCell.clear();
         }
         this.race = race;
         this.countTokens = race.getCountTokens();
@@ -70,9 +71,12 @@ public final class Player {
         this.decline = true;
         raceDecline = race;
         if (locationDeclineCell.size() != 0) {
-
+            for (Cell cell : locationDeclineCell) {
+                cell.setBelongs(null);
+                cell.setCountTokens(0);
+            }
+            locationDeclineCell.clear();
         }
-        locationDeclineCell.clear();
         locationDeclineCell.addAll(locationCell);
         locationCell.clear();
     }
@@ -100,17 +104,17 @@ public final class Player {
         }
     }
 
-    public void shufflingTokens() {
-        if (this.countTokens > 0) {
-            locationCell.get(0).setCountTokens(locationCell.get(0).getCountTokens() + this.countTokens);
-            countTokens = 0;
-        }
+    public void shufflingTokens(Cell cell) {
+        cell.setCountTokens(cell.getCountTokens() + this.countTokens);
+        this.countTokens = 0;
         log.info("После перетасовки жетонов, у игрока {} осталось {} жетонов", this.nickName, this.countTokens);
     }
 
     public void collectTokens() {
         for (Cell cell : locationCell) {
-            this.countTokens += cell.getToken(cell.getCountTokens() - 1);
+            if (cell.getCountTokens() > 1) {
+                this.countTokens += cell.getToken(cell.getCountTokens() - 1);
+            }
         }
     }
 

@@ -70,11 +70,7 @@ public final class SelfPlay {
             if (Phases.PICK_UP_TOKENS.equalPhase(phase)) {
                 LoggerGame.logStartPhasePickUpTokens();
                 while (Phases.PICK_UP_TOKENS.equalPhase(phase)) {
-                    for (Cell cell : currentPlayer.getLocationCell()) {
-                        if (cell.getCountTokens() > 1) {
-                            currentPlayer.collectTokens();
-                        }
-                    }
+                    currentPlayer.collectTokens();
                     LoggerGame.logGetTokens(currentPlayer);
                     possibleCellsCapture = playerService.findOutWherePlayerCanGo(board, currentPlayer);
                     if (possibleCellsCapture.isEmpty()) {
@@ -113,8 +109,10 @@ public final class SelfPlay {
                 if (!possibleCellsCapture.isEmpty())
                     playerService.regionCapture(bot.getRandomRegionToCapture(cells), currentPlayer);
                 else {
-                    LoggerGame.logRedistributionOfTokens(currentPlayer);
-                    currentPlayer.shufflingTokens();
+                    if (currentPlayer.getCountTokens() > 0) {
+                        LoggerGame.logRedistributionOfTokens(currentPlayer);
+                        currentPlayer.shufflingTokens(bot.getRandomCellForDistribution(currentPlayer.getLocationCell()));
+                    }
                     changeCourse(currentPlayer);
                     currentPlayer = players.element();
                     if (currentPlayer.equals(firstPlayer)) {
