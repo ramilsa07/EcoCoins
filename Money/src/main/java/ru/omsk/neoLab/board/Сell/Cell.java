@@ -1,7 +1,11 @@
 package ru.omsk.neoLab.board.Сell;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import ru.omsk.neoLab.player.Player;
 
+@JsonAutoDetect
 public class Cell {
 
     private int x;
@@ -11,14 +15,29 @@ public class Cell {
     private int coin = 1;
     private boolean abilityCapture = true;
 
-    private Player belongs = new Player();
+    private Player belongs = new Player("Garen");
 
     private int countTokens = 0;
+
+    public Cell(@JsonProperty("x") int x, @JsonProperty("y") int y, @JsonProperty("type") TypeCell type, @JsonProperty("coin") int coin, @JsonProperty("abilityCapture") boolean abilityCapture, @JsonProperty("belongs") Player belongs, @JsonProperty("countTokens") int countTokens) {
+        this.x = x;
+        this.y = y;
+        this.type = type;
+        this.coin = coin;
+        this.abilityCapture = abilityCapture;
+        this.belongs = belongs;
+        this.countTokens = countTokens;
+    }
+
+    public Cell() {
+
+    }
 
     public void regionCapture(final Player player) {
         this.belongs = player;
     }
 
+    @JsonIgnore
     public int getTokensForCapture() {
         return TypeCell.toType(type);
     }

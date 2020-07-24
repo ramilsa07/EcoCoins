@@ -1,11 +1,16 @@
 package ru.omsk.neoLab.race;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import ru.omsk.neoLab.board.Сell.Cell;
 
 
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 public abstract class ARace {
 
+    @JsonProperty("nameRace")
     protected String nameRace;
+    @JsonProperty("countTokens")
     protected int countTokens;
 
     public int getAdvantageCoin(final Cell cell) {

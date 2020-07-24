@@ -1,13 +1,16 @@
 package ru.omsk.neoLab;
 
-import ru.omsk.neoLab.JsonSerializer.GameSerializer;
-import ru.omsk.neoLab.JsonSerializer.ObjectDeserializer;
 import ru.omsk.neoLab.board.Board;
+import ru.omsk.neoLab.board.Serializer.BoardDeserializer;
 import ru.omsk.neoLab.board.Сell.Cell;
 import ru.omsk.neoLab.player.Player;
 import ru.omsk.neoLab.player.PlayerService;
+import ru.omsk.neoLab.player.Serializer.PlayerSerializer;
 import ru.omsk.neoLab.race.ARace;
+import ru.omsk.neoLab.race.Serializer.RaceSerializer;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.Random;
@@ -19,6 +22,9 @@ public final class Client {
 
     private final String ip; // ip адрес клиента
     private final int port; // порт соединения
+
+    private DataInputStream in;
+    private DataOutputStream out;
 
     private Socket socket = null;
     private String nickname = null;
@@ -35,15 +41,25 @@ public final class Client {
             System.err.println("Socket failed");
             return;
         }
-
+        try {
+            in = new DataInputStream(socket.getInputStream());
+            out = new DataOutputStream(socket.getOutputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         System.out.println(String.format("Client started, ip: %s, port: %d", ip, port));
-        pressNickname(); // перед началом необходимо спросить имя
+        pressNickname();
+        new SimpleBot().start();
     }
 
     private void pressNickname() {
         System.out.print("Press your nick: ");
-        Player player = new Player();
-        GameSerializer.serialize(player);
+        Player player = new Player("Garen");
+        try {
+            out.writeUTF(PlayerSerializer.serialize(player));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void downService() {
@@ -72,7 +88,11 @@ public final class Client {
         @Override
         public void run() {
             while (true) {
-                GameSerializer.serialize(getRandomRace((Board) ObjectDeserializer.deserialize()));
+                try {
+                    out.writeUTF(RaceSerializer.serialize(getRandomRace(BoardDeserializer.deserialize(in.readUTF()))));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
