@@ -42,7 +42,12 @@ public final class Player {
         this.nickName = Player.class.toString();
     }
 
-    public Player(@JsonProperty("nickName") String nickName, @JsonProperty("countCoin") int countCoin, @JsonProperty("countTokens") int countTokens, @JsonProperty("race") ARace race, @JsonProperty("locationCell") ArrayList<Cell> locationCell, @JsonProperty("raceDecline") ARace raceDecline, @JsonProperty("locationDeclineCell") ArrayList<Cell> locationDeclineCell, @JsonProperty("service") PlayerService service, @JsonProperty("decline") boolean decline) {
+    public Player(@JsonProperty("nickName") String nickName, @JsonProperty("countCoin") int countCoin,
+                  @JsonProperty("countTokens") int countTokens, @JsonProperty("race") ARace race,
+                  @JsonProperty("locationCell") ArrayList<Cell> locationCell,
+                  @JsonProperty("raceDecline") ARace raceDecline,
+                  @JsonProperty("locationDeclineCell") ArrayList<Cell> locationDeclineCell,
+                  @JsonProperty("service") PlayerService service, @JsonProperty("decline") boolean decline) {
         this.nickName = nickName;
         this.countCoin = countCoin;
         this.countTokens = countTokens;
@@ -52,6 +57,12 @@ public final class Player {
         this.locationDeclineCell = locationDeclineCell;
         this.service = service;
         this.decline = decline;
+    }
+
+    public Player(Player player){
+        this(player.getNickName(), player.getCountCoin(), player.getCountTokens(), player.getRace(),
+                player.getLocationCell(), player.getRaceDecline(), player.getLocationDeclineCell(),
+                player.getService(), player.isDecline());
     }
 
 
@@ -171,6 +182,10 @@ public final class Player {
 
     public boolean isDecline() {
         return decline;
+    }
+
+    public PlayerService getService() {
+        return service;
     }
 
     @Override

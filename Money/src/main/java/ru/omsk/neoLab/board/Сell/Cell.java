@@ -19,7 +19,9 @@ public class Cell {
 
     private int countTokens = 0;
 
-    public Cell(@JsonProperty("x") int x, @JsonProperty("y") int y, @JsonProperty("type") TypeCell type, @JsonProperty("coin") int coin, @JsonProperty("abilityCapture") boolean abilityCapture, @JsonProperty("belongs") Player belongs, @JsonProperty("countTokens") int countTokens) {
+    public Cell(@JsonProperty("x") int x, @JsonProperty("y") int y, @JsonProperty("type") TypeCell type,
+                @JsonProperty("coin") int coin, @JsonProperty("abilityCapture") boolean abilityCapture,
+                @JsonProperty("belongs") Player belongs, @JsonProperty("countTokens") int countTokens) {
         this.x = x;
         this.y = y;
         this.type = type;
@@ -29,8 +31,14 @@ public class Cell {
         this.countTokens = countTokens;
     }
 
+
     public Cell() {
 
+    }
+
+    public Cell(Cell cell) {
+        this(cell.getX(), cell.getY(), cell.getType(), cell.getCoin(), cell.isAbilityCapture(),
+                cell.getBelongs(), cell.getCountTokens());
     }
 
     public void regionCapture(final Player player) {
