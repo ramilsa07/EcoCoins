@@ -65,7 +65,6 @@ public final class Player {
                 player.getService(), player.isDecline());
     }
 
-
     public void changeRace(final ARace race) {
         if (decline) {
             if (raceDecline != null) {
@@ -103,8 +102,10 @@ public final class Player {
         } else {
             cell.getBelongs().locationCell.remove(cell);
             cell.getBelongs().locationDeclineCell.remove(cell);
-            this.countTokens -= this.race.getAdvantageCaptureCell(cell) + cell.getBelongs().getRace().getAdvantageDefendCell(cell) + 1;
-            cell.setCountTokens(this.race.getAdvantageCaptureCell(cell) + cell.getBelongs().getRace().getAdvantageDefendCell(cell) + 1);
+            this.countTokens -= this.race.getAdvantageCaptureCell(cell) +
+                    cell.getBelongs().getRace().getAdvantageDefendCell(cell) + 1;
+            cell.setCountTokens(this.race.getAdvantageCaptureCell(cell) +
+                    cell.getBelongs().getRace().getAdvantageDefendCell(cell) + 1);
         }
         this.locationCell.add(cell);
         cell.regionCapture(this);
@@ -188,6 +189,10 @@ public final class Player {
         return service;
     }
 
+    public Player getClone(){
+        return new Player(this);
+    }
+
     @Override
     public String toString() {
         return "Player{" +
@@ -203,4 +208,3 @@ public final class Player {
                 '}';
     }
 }
-

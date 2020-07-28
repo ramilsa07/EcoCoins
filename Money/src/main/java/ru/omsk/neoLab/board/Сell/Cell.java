@@ -31,7 +31,6 @@ public class Cell {
         this.countTokens = countTokens;
     }
 
-
     public Cell() {
 
     }
@@ -96,10 +95,6 @@ public class Cell {
         return coin;
     }
 
-    public void setCoin(int coin) {
-        this.coin = coin;
-    }
-
     public boolean isAbilityCapture() {
         return abilityCapture;
     }
@@ -122,5 +117,9 @@ public class Cell {
 
     public void setCountTokens(int countTokens) {
         this.countTokens = countTokens;
+    }
+
+    public Cell getClone(){
+        return new Cell(this);
     }
 }
