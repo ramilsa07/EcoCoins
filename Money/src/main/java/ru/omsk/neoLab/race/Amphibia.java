@@ -13,5 +13,4 @@ public final class Amphibia extends ARace {
     public boolean isAdvantageOpportunityCaptureCell(final Cell cell) {
         return true;
     }
-
 }
