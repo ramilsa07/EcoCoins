@@ -35,7 +35,8 @@ public final class Player {
     private boolean decline = false;
 
     public Player(String nickName) {
-        this.nickName = Player.class.toString();
+//        this.nickName = Player.class.toString();
+        this.nickName = nickName;
     }
 
     public Player() {
