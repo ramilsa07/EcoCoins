@@ -1,6 +1,7 @@
 package ru.omsk.neoLab.board.Сell;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import ru.omsk.neoLab.player.Player;
@@ -10,40 +11,31 @@ public class Cell {
 
     private int x;
     private int y;
-
+    @JsonIgnore
     private TypeCell type;
+    @JsonIgnore
     private int coin = 1;
+    @JsonIgnore
     private boolean abilityCapture = true;
-
+    @JsonIgnore
     private Player belongs = new Player("Garen");
-
+    @JsonIgnore
     private int countTokens = 0;
 
-    public Cell(@JsonProperty("x") int x, @JsonProperty("y") int y, @JsonProperty("type") TypeCell type,
-                @JsonProperty("coin") int coin, @JsonProperty("abilityCapture") boolean abilityCapture,
-                @JsonProperty("belongs") Player belongs, @JsonProperty("countTokens") int countTokens) {
+    @JsonCreator
+    public Cell(@JsonProperty("x") int x, @JsonProperty("y") int y) {
         this.x = x;
         this.y = y;
-        this.type = type;
-        this.coin = coin;
-        this.abilityCapture = abilityCapture;
-        this.belongs = belongs;
-        this.countTokens = countTokens;
     }
 
+    @JsonIgnore
     public Cell() {
 
-    }
-
-    public Cell(Cell cell) {
-        this(cell.getX(), cell.getY(), cell.getType(), cell.getCoin(), cell.isAbilityCapture(),
-                cell.getBelongs(), cell.getCountTokens());
     }
 
     public void regionCapture(final Player player) {
         this.belongs = player;
     }
-
     @JsonIgnore
     public int getTokensForCapture() {
         return TypeCell.toType(type);
@@ -95,6 +87,10 @@ public class Cell {
         return coin;
     }
 
+    public void setCoin(int coin) {
+        this.coin = coin;
+    }
+
     public boolean isAbilityCapture() {
         return abilityCapture;
     }
@@ -117,9 +113,5 @@ public class Cell {
 
     public void setCountTokens(int countTokens) {
         this.countTokens = countTokens;
-    }
-
-    public Cell getClone(){
-        return new Cell(this);
     }
 }

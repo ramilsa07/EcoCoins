@@ -1,6 +1,6 @@
 package ru.omsk.neoLab.player;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.slf4j.Logger;
@@ -11,12 +11,13 @@ import ru.omsk.neoLab.race.ARace;
 
 import java.util.ArrayList;
 
-@JsonAutoDetect
-public final class Player {
+
+public class Player {
 
     public static Logger log = LoggerFactory.getLogger(Player.class);
 
-    private final String nickName;
+    private @JsonProperty("nickName")
+    String nickName;
     @JsonIgnore
     private int countCoin;
     @JsonIgnore
@@ -31,16 +32,27 @@ public final class Player {
     private ArrayList<Cell> locationDeclineCell = new ArrayList<Cell>();
     @JsonIgnore
     private PlayerService service = PlayerService.GetInstance();
-
+    @JsonIgnore
     private boolean decline = false;
 
+    @JsonIgnore
+    public Player() {
+
+    }
+
+    @JsonIgnore
     public Player(String nickName) {
-//        this.nickName = Player.class.toString();
         this.nickName = nickName;
     }
 
     public Player() {
         this.nickName = Player.class.toString();
+    }
+
+    @JsonCreator
+    public Player(@JsonProperty("nickName") String nickName, @JsonProperty("race") ARace race) {
+        this.nickName = nickName;
+        this.race = race;
     }
 
     public Player(@JsonProperty("nickName") String nickName, @JsonProperty("countCoin") int countCoin,
@@ -71,7 +83,10 @@ public final class Player {
             if (raceDecline != null) {
                 PlayerService.getRacesPool().add(raceDecline);
             }
+            this.raceDecline = this.race;
+            this.locationDeclineCell = this.locationCell;
             this.decline = false;
+            locationCell.clear();
         }
         this.race = race;
         this.countTokens = race.getCountTokens();
@@ -122,6 +137,14 @@ public final class Player {
         this.countTokens = 0;
         log.info("После перетасовки жетонов, у игрока {} осталось {} жетонов", this.nickName, this.countTokens);
     }
+
+//    public void shufflingTokens() {
+//        if (this.countTokens > 0) {
+//            locationCell.get(0).setCountTokens(locationCell.get(0).getCountTokens() + this.countTokens);
+//            countTokens = 0;
+//        }
+//        log.info("После перетасовки жетонов, у игрока {} осталось {} жетонов", this.nickName, this.countTokens);
+//    }
 
     public void collectTokens() {
         for (Cell cell : locationCell) {

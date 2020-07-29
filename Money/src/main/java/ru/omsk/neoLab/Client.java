@@ -1,21 +1,18 @@
 package ru.omsk.neoLab;
 
+import ru.omsk.neoLab.Answer.Answer;
+import ru.omsk.neoLab.Answer.ObjectSerializator;
+import ru.omsk.neoLab.Answer.RaceAnswer;
 import ru.omsk.neoLab.board.Board;
 import ru.omsk.neoLab.board.Serializer.BoardDeserializer;
-import ru.omsk.neoLab.board.Сell.Cell;
 import ru.omsk.neoLab.player.Player;
-import ru.omsk.neoLab.player.PlayerService;
-import ru.omsk.neoLab.player.Serializer.PlayerSerializer;
-import ru.omsk.neoLab.race.ARace;
-import ru.omsk.neoLab.race.Serializer.RaceSerializer;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
-import java.util.Random;
 
-public final class Client {
+public final class Client extends Player {
 
     private static final String IP = "127.0.0.1";//"localhost";
     private static final int PORT = Server.PORT;
@@ -27,6 +24,8 @@ public final class Client {
     private DataOutputStream out;
 
     private Socket socket = null;
+
+    private Board board;
     private String nickname = null;
 
     private Client(final String ip, final int port) {
@@ -49,17 +48,26 @@ public final class Client {
         }
         System.out.println(String.format("Client started, ip: %s, port: %d", ip, port));
         pressNickname();
-        new SimpleBot().start();
+        SimpleBot bot = new SimpleBot();
+        while (true) {
+            try {
+                out.flush();
+                board = BoardDeserializer.deserialize(in.readUTF());
+                out.writeUTF(ObjectSerializator.serialize(bot.getAnswer(board)));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void pressNickname() {
         System.out.print("Press your nick: ");
         Player player = new Player("Garen");
-        try {
-            out.writeUTF(PlayerSerializer.serialize(player));
+        /*try {
+            //out.writeUTF(PlayerSerializer.serialize(player));
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     private void downService() {
@@ -71,30 +79,27 @@ public final class Client {
         }
     }
 
-    private class SimpleBot extends Thread {
+    private class SimpleBot {
 
-        private final Random random = new Random();
-        private final PlayerService service = PlayerService.GetInstance();
-
-        public ARace getRandomRace(Board board) {
-            return PlayerService.getRacesPool().get(random.nextInt(PlayerService.getRacesPool().size()));
-        }
-
-        public Cell getRandomRegionToCapture(Board board) {
-            //return (Cell) cells[random.nextInt(cells.length)];
-            return new Cell();
-        }
-
-        @Override
-        public void run() {
-            while (true) {
-                try {
-                    out.writeUTF(RaceSerializer.serialize(getRandomRace(BoardDeserializer.deserialize(in.readUTF()))));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+        public Answer getAnswer(Board board) {
+            switch (board.getPhase()) {
+                case RACE_CHOICE:
+                    return new RaceAnswer(board);
+                case CAPTURE_OF_REGIONS:
+                    return new RaceAnswer(board);
+                case PICK_UP_TOKENS:
+                    return new RaceAnswer(board);
+                case GO_INTO_DECLINE:
+                    return new RaceAnswer(board);
+                case GETTING_COINS:
+                    return new RaceAnswer(board);
+                case END_GAME:
+                    return new RaceAnswer(board);
+                default:
+                    return new Answer(board);
             }
         }
+
     }
 
     public static void main(final String[] args) {
