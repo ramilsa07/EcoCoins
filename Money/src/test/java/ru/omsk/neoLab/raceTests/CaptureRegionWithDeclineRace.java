@@ -8,15 +8,13 @@ import ru.omsk.neoLab.player.PlayerService;
 
 public class CaptureRegionWithDeclineRace {
     private static final IGenerator generator = new Generator();
-    private static final Board board = Board.GetInstance();
+    private static final Board board = new Board(4, 3);
     private final PlayerService playerService = PlayerService.GetInstance();
     private final Player player = new Player();
     private final Player current = new Player();
 
     private static void createBoard() {
-        board.setHeight(4);
-        board.setWidth(3);
-        board.setBoard(generator.createStaticBoard());
+        board.generate();
     }
 
 

@@ -5,55 +5,65 @@ package ru.omsk.neoLab.board;
  * */
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import ru.omsk.neoLab.board.Generators.Generator;
+import ru.omsk.neoLab.board.Generators.IGenerator;
+import ru.omsk.neoLab.board.phases.Phases;
 import ru.omsk.neoLab.board.Сell.Cell;
 
+import java.util.HashSet;
+
 @JsonAutoDetect
-public final class Board {
+public final class Board implements IBoard {
 
-    private static Board instance;
-
-    @JsonProperty
+    @JsonProperty("board")
     private Cell[][] board;
+    @JsonProperty("phase")
+    private Phases phase;
 
     private int height;
     private int width;
 
-    private Board() {
+    @JsonProperty("possibleCells")
+    public HashSet<Cell> possibleCellsCapture = new HashSet<Cell>();
+
+    @JsonCreator
+    public Board(@JsonProperty("height") final int height, @JsonProperty("width") final int width) {
+        this.height = height;
+        this.width = width;
     }
 
-    public static Board GetInstance() {
-        if (instance == null) {
-            instance = new Board();
-        }
-        return instance;
-    }
-
-    public final Cell[][] getBoard() {
+    @Override
+    public Cell[][] generate() {
+        IGenerator generator = new Generator();
+        board = generator.generate(height, width);
         return board;
     }
 
-    public final Cell getBoardElements(int i, int j){
-        return board[i][j];
+    @Override
+    public Cell getCell(final int x, final int y) {
+        return board[x][y];
     }
 
-    public final void setBoard(Cell[][] board) {
-        this.board = board;
+    @Override
+    public void changePhase(final Phases phase) {
+        this.phase = phase;
+    }
+
+    public Cell[][] getBoard() {
+        return board;
     }
 
     public final int getHeight() {
         return height;
     }
 
-    public final void setHeight(int height) {
-        this.height = height;
-    }
-
     public final int getWidth() {
         return width;
     }
 
-    public final void setWidth(int width) {
-        this.width = width;
+    public Phases getPhase() {
+        return phase;
     }
 }

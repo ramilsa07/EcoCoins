@@ -4,13 +4,12 @@ import ru.omsk.neoLab.LoggerGame;
 import ru.omsk.neoLab.Validator;
 import ru.omsk.neoLab.board.Board;
 import ru.omsk.neoLab.board.Сell.Cell;
-import ru.omsk.neoLab.board.Сell.TypeCell;
 import ru.omsk.neoLab.race.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 
-public final class PlayerService {
+public class PlayerService {
     private static PlayerService instance;
 
     // Массивы, для вычисления допустимых ходов
@@ -18,7 +17,17 @@ public final class PlayerService {
     private final int[] motionAreaY = new int[]{-1, 0, 1, -1, 1, -1, 0, 1};
 
     private static final ArrayList<ARace> racesPool = new ArrayList<ARace>();
-    private final HashSet<Cell> possibleCellsCapture = new HashSet<Cell>();
+
+    public HashSet<Cell> getPossibleCellsCapture() {
+        return possibleCellsCapture;
+    }
+
+    public void setPossibleCellsCapture(HashSet<Cell> possibleCellsCapture) {
+        this.possibleCellsCapture = possibleCellsCapture;
+    }
+
+    public HashSet<Cell> possibleCellsCapture = new HashSet<Cell>();
+
 
     static {
         racesPool.add(new Amphibia());

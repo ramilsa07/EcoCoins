@@ -17,7 +17,7 @@ public final class SelfPlay {
 
     private final SimpleBot bot = new SimpleBot();
 
-    private final Board board = Board.GetInstance();
+    private final Board board = new Board(4, 3);
     private final PlayerService playerService = PlayerService.GetInstance();
 
     public Queue<Player> getPlayers() {
@@ -151,9 +151,6 @@ public final class SelfPlay {
 
     public void generateBoard() {
         IGenerator generator = new Generator();
-        board.setBoard(generator.generate(4, 3));
-        board.setHeight(4);
-        board.setWidth(3);
     }
 
     private void changeCourse(Player player) {

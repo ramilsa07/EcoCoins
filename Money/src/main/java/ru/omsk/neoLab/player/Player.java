@@ -1,6 +1,6 @@
 package ru.omsk.neoLab.player;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.slf4j.Logger;
@@ -11,12 +11,14 @@ import ru.omsk.neoLab.race.ARace;
 
 import java.util.ArrayList;
 
-@JsonAutoDetect
-public final class Player {
+
+public class Player {
 
     public static Logger log = LoggerFactory.getLogger(Player.class);
 
-    private final String nickName;
+
+    private @JsonProperty("nickName")
+    String nickName;
     @JsonIgnore
     private int countCoin;
     @JsonIgnore
@@ -31,23 +33,23 @@ public final class Player {
     private ArrayList<Cell> locationDeclineCell = new ArrayList<Cell>();
     @JsonIgnore
     private PlayerService service = PlayerService.GetInstance();
-
+    @JsonIgnore
     private boolean decline = false;
 
+    @JsonIgnore
+    public Player() {
+
+    }
+
+    @JsonIgnore
     public Player(String nickName) {
         this.nickName = Player.class.toString();
     }
 
-    public Player(@JsonProperty("nickName") String nickName, @JsonProperty("countCoin") int countCoin, @JsonProperty("countTokens") int countTokens, @JsonProperty("race") ARace race, @JsonProperty("locationCell") ArrayList<Cell> locationCell, @JsonProperty("raceDecline") ARace raceDecline, @JsonProperty("locationDeclineCell") ArrayList<Cell> locationDeclineCell, @JsonProperty("service") PlayerService service, @JsonProperty("decline") boolean decline) {
+    @JsonCreator
+    public Player(@JsonProperty("nickName") String nickName, @JsonProperty("race") ARace race) {
         this.nickName = nickName;
-        this.countCoin = countCoin;
-        this.countTokens = countTokens;
         this.race = race;
-        this.locationCell = locationCell;
-        this.raceDecline = raceDecline;
-        this.locationDeclineCell = locationDeclineCell;
-        this.service = service;
-        this.decline = decline;
     }
 
 

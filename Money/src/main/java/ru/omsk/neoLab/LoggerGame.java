@@ -33,7 +33,7 @@ public final class LoggerGame {
     public static void logOutputBoard(Board board) { // вывести на экран карту
         for (int i = 0; i < board.getHeight(); i++) {
             for (int j = 0; j < board.getWidth(); j++) {
-                log.info("{}", board.getBoardElements(i, j));
+                log.info("{}", board.getCell(i, j));
             }
         }
     }
