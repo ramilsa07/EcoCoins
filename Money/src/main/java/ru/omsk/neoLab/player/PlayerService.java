@@ -48,15 +48,23 @@ public class PlayerService {
         return instance;
     }
 
-    public final HashSet<Cell> findOutWherePlayerCanGo(final Cell[][] board) {
+    public final HashSet<Cell> findOutWherePlayerCanGoAtFirst(final Board board, Player player) {
         possibleCellsCapture.clear();
-        for (int i = 0; i < board[0].length; i++) {
-            possibleCellsCapture.add(board[0][i]);
-            possibleCellsCapture.add(board[board.length - 1][i]);
+        for (int i = 0; i < board.getBoard()[0].length; i++) {
+            if (Validator.isCheckingOutputOverBoard(0, i, board.getHeight(), board.getWidth()))
+                if (!Validator.isCheckingBelongsCell(player, board.getBoard()[0][i]))
+                    if (Validator.isCheckingCapture(board.getBoard()[0][i], player)) {
+                        possibleCellsCapture.add(board.getBoard()[0][i]);
+                        possibleCellsCapture.add(board.getBoard()[board.getBoard().length - 1][i]);
+                    }
         }
-        for (int i = 1; i < board.length - 1; i++) {
-            possibleCellsCapture.add(board[i][0]);
-            possibleCellsCapture.add(board[i][board[0].length - 1]);
+        for (int i = 1; i < board.getBoard().length - 1; i++) {
+            if (Validator.isCheckingOutputOverBoard(i, 0, board.getHeight(), board.getWidth()))
+                if (!Validator.isCheckingBelongsCell(player, board.getBoard()[i][0]))
+                    if (Validator.isCheckingCapture(board.getBoard()[i][0], player)) {
+                        possibleCellsCapture.add(board.getBoard()[i][0]);
+                        possibleCellsCapture.add(board.getBoard()[i][board.getBoard()[0].length - 1]);
+                    }
         }
         return possibleCellsCapture;
     }

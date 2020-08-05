@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.omsk.neoLab.LoggerGame;
 import ru.omsk.neoLab.board.Сell.Cell;
 import ru.omsk.neoLab.board.Сell.TypeCell;
 import ru.omsk.neoLab.race.ARace;
@@ -43,10 +44,6 @@ public class Player {
     @JsonIgnore
     public Player(String nickName) {
         this.nickName = nickName;
-    }
-
-    public Player() {
-        this.nickName = Player.class.toString();
     }
 
     @JsonCreator
@@ -98,7 +95,7 @@ public class Player {
         raceDecline = race;
         if (locationDeclineCell.size() != 0) {
             for (Cell cell : locationDeclineCell) {
-                cell.setBelongs(null);
+                cell.setBelongs(new Player("Garen"));
                 cell.setCountTokens(0);
             }
             locationDeclineCell.clear();
@@ -135,6 +132,7 @@ public class Player {
     public void shufflingTokens(Cell cell) {
         cell.setCountTokens(cell.getCountTokens() + this.countTokens);
         this.countTokens = 0;
+        LoggerGame.logNumberOfTokensOnCell(cell);
         log.info("После перетасовки жетонов, у игрока {} осталось {} жетонов", this.nickName, this.countTokens);
     }
 

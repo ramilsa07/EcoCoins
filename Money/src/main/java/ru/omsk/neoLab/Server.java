@@ -11,6 +11,7 @@ import ru.omsk.neoLab.board.Сell.Cell;
 import ru.omsk.neoLab.board.Сell.Serializer.CellDeserializer;
 import ru.omsk.neoLab.player.Player;
 import ru.omsk.neoLab.player.PlayerService;
+import ru.omsk.neoLab.simpleBot.SimpleBot;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -68,6 +69,7 @@ public class Server {
         private DataInputStream in;
         private DataOutputStream out;
 
+        private final SimpleBot bot = new SimpleBot();
         private Board board = new Board(4, 3);
         private final PlayerService playerService = PlayerService.GetInstance();
 
@@ -163,7 +165,7 @@ public class Server {
                         e.printStackTrace();
                     }
                     if (currentPlayer.getLocationCell().isEmpty()) {
-                        possibleCellsCapture = playerService.findOutWherePlayerCanGo(board.getBoard());
+                        possibleCellsCapture = playerService.findOutWherePlayerCanGo(board, currentPlayer);
                         LoggerGame.logWhereToGo(possibleCellsCapture);
                     } else {
                         possibleCellsCapture = playerService.findOutWherePlayerCanGo(board, currentPlayer);
@@ -172,14 +174,16 @@ public class Server {
                     Object[] cells = possibleCellsCapture.toArray();
                     if (!possibleCellsCapture.isEmpty()) {
                         try {
-                            log.info(in.readUTF());
+//                            log.info(in.readUTF());
                             playerService.regionCapture(CellDeserializer.deserialize(in.readUTF()), currentPlayer);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
                     } else {
-                        LoggerGame.logRedistributionOfTokens(currentPlayer);
-                        currentPlayer.shufflingTokens();
+                        if (currentPlayer.getCountTokens() > 0) {
+                            LoggerGame.logRedistributionOfTokens(currentPlayer);
+                            currentPlayer.shufflingTokens(bot.getRandomCellForDistribution(currentPlayer.getLocationCell()));
+                        }
                         changeCourse(currentPlayer);
                         currentPlayer = serverPlayers.element();
                         if (currentPlayer.equals(firstPlayer)) {
