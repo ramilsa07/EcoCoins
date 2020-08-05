@@ -3,10 +3,10 @@ package ru.omsk.neoLab.Answer;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class ObjectSerializator {
+public class AnswerDeserializer {
 
-    public static String serialize(final Object object) throws JsonProcessingException {
+    public static Answer deserialize(String jsonString) throws JsonProcessingException {
         final ObjectMapper mapper = new ObjectMapper();
-        return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(object);
+        return mapper.readValue(jsonString, Answer.class);
     }
 }

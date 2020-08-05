@@ -1,8 +1,7 @@
 package ru.omsk.neoLab;
 
 import ru.omsk.neoLab.Answer.Answer;
-import ru.omsk.neoLab.Answer.ObjectSerializator;
-import ru.omsk.neoLab.Answer.RaceAnswer;
+import ru.omsk.neoLab.Answer.AnswerSerializer;
 import ru.omsk.neoLab.board.Board;
 import ru.omsk.neoLab.board.Serializer.BoardDeserializer;
 import ru.omsk.neoLab.player.Player;
@@ -53,7 +52,7 @@ public final class Client extends Player {
             try {
                 out.flush();
                 board = BoardDeserializer.deserialize(in.readUTF());
-                out.writeUTF(ObjectSerializator.serialize(bot.getAnswer(board)));
+                out.writeUTF(AnswerSerializer.serialize(bot.getAnswer(board)));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -82,22 +81,8 @@ public final class Client extends Player {
     private class SimpleBot {
 
         public Answer getAnswer(Board board) {
-            switch (board.getPhase()) {
-                case RACE_CHOICE:
-                    return new RaceAnswer(board);
-                case CAPTURE_OF_REGIONS:
-                    return new RaceAnswer(board);
-                case PICK_UP_TOKENS:
-                    return new RaceAnswer(board);
-                case GO_INTO_DECLINE:
-                    return new RaceAnswer(board);
-                case GETTING_COINS:
-                    return new RaceAnswer(board);
-                case END_GAME:
-                    return new RaceAnswer(board);
-                default:
-                    return new Answer(board);
-            }
+            Answer answer = new Answer(board);
+            return answer.takeAnswer();
         }
 
     }

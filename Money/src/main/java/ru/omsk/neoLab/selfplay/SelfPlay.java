@@ -111,7 +111,7 @@ public final class SelfPlay {
                 else {
                     if (currentPlayer.getCountTokens() > 0) {
                         LoggerGame.logRedistributionOfTokens(currentPlayer);
-                        currentPlayer.shufflingTokens(bot.getRandomCellForDistribution(currentPlayer.getLocationCell()));
+                        //currentPlayer.shufflingTokens(bot.getRandomCellForDistribution(currentPlayer.getLocationCell()));
                     }
                     changeCourse(currentPlayer);
                     currentPlayer = players.element();

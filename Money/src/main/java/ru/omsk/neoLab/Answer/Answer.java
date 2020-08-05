@@ -2,29 +2,35 @@ package ru.omsk.neoLab.Answer;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import ru.omsk.neoLab.board.Board;
-import ru.omsk.neoLab.board.Сell.Cell;
-import ru.omsk.neoLab.player.PlayerService;
 
 import java.util.Random;
 
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 public class Answer {
 
     @JsonIgnore
     protected final Random random = new Random();
-    @JsonIgnore
-    private final PlayerService service = PlayerService.GetInstance();
     @JsonProperty("board")
     private Board board;
-    @JsonProperty("type")
+    @JsonProperty("board")
     private Answer type;
 
-    public Answer(final Board board) {
+    public Answer(@JsonProperty("board") final Board board) {
         this.board = board;
     }
 
-    public Cell getRandomRegionToCapture(Board board) {
-        Object[] objects = service.possibleCellsCapture.toArray();
-        return (Cell) objects[random.nextInt(service.possibleCellsCapture.size())];
+    public Answer takeAnswer() {
+        switch (board.getPhase()) {
+            case RACE_CHOICE:
+                return new RaceAnswer(board);
+            case CAPTURE_OF_REGIONS:
+                return new RaceAnswer(board);
+            case PICK_UP_TOKENS:
+                return new RaceAnswer(board);
+            default:
+                throw new IllegalStateException("Unexpected value: " + board);
+        }
     }
 }

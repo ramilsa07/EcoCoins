@@ -2,13 +2,13 @@ package ru.omsk.neoLab;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.omsk.neoLab.Answer.ObjectDeserializator;
+import ru.omsk.neoLab.Answer.AnswerDeserializer;
+import ru.omsk.neoLab.Answer.CellAnswer;
 import ru.omsk.neoLab.Answer.RaceAnswer;
 import ru.omsk.neoLab.board.Board;
 import ru.omsk.neoLab.board.Serializer.BoardSerializer;
 import ru.omsk.neoLab.board.phases.Phases;
 import ru.omsk.neoLab.board.Сell.Cell;
-import ru.omsk.neoLab.board.Сell.Serializer.CellDeserializer;
 import ru.omsk.neoLab.player.Player;
 import ru.omsk.neoLab.player.PlayerService;
 
@@ -112,7 +112,7 @@ public class Server {
                         LoggerGame.logWhatRacesCanIChoose(PlayerService.getRacesPool());
                         try {
                             out.writeUTF(BoardSerializer.serialize(board));
-                            RaceAnswer race = ObjectDeserializator.deserialize(in.readUTF());
+                            RaceAnswer race = (RaceAnswer) AnswerDeserializer.deserialize(in.readUTF());
                             currentPlayer.changeRace(race.getRace());
                             LoggerGame.logChooseRaceTrue(currentPlayer);
                             board.changePhase(Phases.CAPTURE_OF_REGIONS);
@@ -156,12 +156,6 @@ public class Server {
                 LoggerGame.logStartPhaseCaptureOfRegions();
                 while (Phases.CAPTURE_OF_REGIONS.equals(board.getPhase())) {
                     LoggerGame.logGetTokens(currentPlayer);
-                    try {
-                        out.flush();
-                        out.writeUTF(BoardSerializer.serialize(board));
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
                     if (currentPlayer.getLocationCell().isEmpty()) {
                         possibleCellsCapture = playerService.findOutWherePlayerCanGo(board.getBoard());
                         LoggerGame.logWhereToGo(possibleCellsCapture);
@@ -169,11 +163,12 @@ public class Server {
                         possibleCellsCapture = playerService.findOutWherePlayerCanGo(board, currentPlayer);
                         LoggerGame.logWhereToGo(possibleCellsCapture);
                     }
-                    Object[] cells = possibleCellsCapture.toArray();
                     if (!possibleCellsCapture.isEmpty()) {
                         try {
-                            log.info(in.readUTF());
-                            playerService.regionCapture(CellDeserializer.deserialize(in.readUTF()), currentPlayer);
+                            out.flush();
+                            out.writeUTF(BoardSerializer.serialize(board));
+                            CellAnswer answer = (CellAnswer) AnswerDeserializer.deserialize(in.readUTF());
+                            playerService.regionCapture(answer.getCell(), currentPlayer);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
