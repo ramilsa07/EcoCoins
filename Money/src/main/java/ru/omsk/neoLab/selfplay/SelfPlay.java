@@ -70,7 +70,11 @@ public final class SelfPlay {
             if (Phases.PICK_UP_TOKENS.equalPhase(phase)) {
                 LoggerGame.logStartPhasePickUpTokens();
                 while (Phases.PICK_UP_TOKENS.equalPhase(phase)) {
-                    currentPlayer.collectTokens();
+                    for (Cell cell : currentPlayer.getLocationCell()) {
+                        if (cell.getCountTokens() > 1) {
+                            currentPlayer.collectTokens();
+                        }
+                    }
                     LoggerGame.logGetTokens(currentPlayer);
                     possibleCellsCapture = playerService.findOutWherePlayerCanGo(board, currentPlayer);
                     if (possibleCellsCapture.isEmpty()) {
@@ -99,7 +103,7 @@ public final class SelfPlay {
             while (Phases.CAPTURE_OF_REGIONS.equalPhase(phase)) {
                 LoggerGame.logGetTokens(currentPlayer);
                 if (currentPlayer.getLocationCell().isEmpty()) {
-                    possibleCellsCapture = playerService.findOutWherePlayerCanGo(board.getBoard());
+                    possibleCellsCapture = playerService.findOutWherePlayerCanGoAtFirst(board, currentPlayer);
                     LoggerGame.logWhereToGo(possibleCellsCapture);
                 } else {
                     possibleCellsCapture = playerService.findOutWherePlayerCanGo(board, currentPlayer);
@@ -110,9 +114,9 @@ public final class SelfPlay {
                     playerService.regionCapture(bot.getRandomRegionToCapture(cells), currentPlayer);
                 else {
                     if (currentPlayer.getCountTokens() > 0) {
-                        LoggerGame.logRedistributionOfTokens(currentPlayer);
-                        //currentPlayer.shufflingTokens(bot.getRandomCellForDistribution(currentPlayer.getLocationCell()));
-                    }
+                            LoggerGame.logRedistributionOfTokens(currentPlayer);
+                            currentPlayer.shufflingTokens(bot.getRandomCellForDistribution(currentPlayer.getLocationCell()));
+                        }
                     changeCourse(currentPlayer);
                     currentPlayer = players.element();
                     if (currentPlayer.equals(firstPlayer)) {
@@ -149,6 +153,9 @@ public final class SelfPlay {
 
     public void generateBoard() {
         IGenerator generator = new Generator();
+//        board.setBoard(generator.generate(4, 3));
+//        board.setHeight(4);
+//        board.setWidth(3);
     }
 
     private void changeCourse(Player player) {
@@ -162,9 +169,6 @@ public final class SelfPlay {
     }
 
     public void toEndGame() {
-        for (Player player : players) {
-            LoggerGame.logGetCoins(player);
-        }
         LoggerGame.logEndGame();
         System.exit(0);
     }

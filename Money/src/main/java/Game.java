@@ -1,11 +1,12 @@
-import java.util.Random;
+import ru.omsk.neoLab.player.Player;
+import ru.omsk.neoLab.selfplay.SelfPlay;
 
-class Game {
+public class Game {
 
     public static void main(String[] args) {
-        final Random random = new Random();
-        random.nextInt(1);
-
+        SelfPlay selfPlay = new SelfPlay();
+        selfPlay.createNewPlayer(new Player("SimpleBot1"));
+        selfPlay.createNewPlayer(new Player("SimpleBot2"));
+        selfPlay.Game();
     }
-
 }

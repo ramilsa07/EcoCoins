@@ -20,6 +20,4 @@ public final class Validator {
     public static boolean isCheckingBelongsCell(Player player, Cell cell) {
         return cell.getBelongs().equals(player);
     }
-
-
 }

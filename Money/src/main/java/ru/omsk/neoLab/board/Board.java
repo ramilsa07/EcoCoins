@@ -51,7 +51,7 @@ public final class Board implements IBoard {
         this.phase = phase;
     }
 
-    public Cell[][] getBoard() {
+    public final Cell[][] getBoard() {
         return board;
     }
 

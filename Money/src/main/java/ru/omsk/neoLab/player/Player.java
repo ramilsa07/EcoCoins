@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.omsk.neoLab.LoggerGame;
 import ru.omsk.neoLab.board.Сell.Cell;
 import ru.omsk.neoLab.board.Сell.TypeCell;
 import ru.omsk.neoLab.race.ARace;
@@ -15,7 +16,6 @@ import java.util.ArrayList;
 public class Player {
 
     public static Logger log = LoggerFactory.getLogger(Player.class);
-
 
     private @JsonProperty("nickName")
     String nickName;
@@ -43,7 +43,7 @@ public class Player {
 
     @JsonIgnore
     public Player(String nickName) {
-        this.nickName = Player.class.toString();
+        this.nickName = nickName;
     }
 
     @JsonCreator
@@ -52,6 +52,28 @@ public class Player {
         this.race = race;
     }
 
+    public Player(@JsonProperty("nickName") String nickName, @JsonProperty("countCoin") int countCoin,
+                  @JsonProperty("countTokens") int countTokens, @JsonProperty("race") ARace race,
+                  @JsonProperty("locationCell") ArrayList<Cell> locationCell,
+                  @JsonProperty("raceDecline") ARace raceDecline,
+                  @JsonProperty("locationDeclineCell") ArrayList<Cell> locationDeclineCell,
+                  @JsonProperty("service") PlayerService service, @JsonProperty("decline") boolean decline) {
+        this.nickName = nickName;
+        this.countCoin = countCoin;
+        this.countTokens = countTokens;
+        this.race = race;
+        this.locationCell = locationCell;
+        this.raceDecline = raceDecline;
+        this.locationDeclineCell = locationDeclineCell;
+        this.service = service;
+        this.decline = decline;
+    }
+
+    public Player(Player player){
+        this(player.getNickName(), player.getCountCoin(), player.getCountTokens(), player.getRace(),
+                player.getLocationCell(), player.getRaceDecline(), player.getLocationDeclineCell(),
+                player.getService(), player.isDecline());
+    }
 
     public void changeRace(final ARace race) {
         if (decline) {
@@ -72,9 +94,12 @@ public class Player {
         this.decline = true;
         raceDecline = race;
         if (locationDeclineCell.size() != 0) {
-
+            for (Cell cell : locationDeclineCell) {
+                cell.setBelongs(new Player("Garen"));
+                cell.setCountTokens(0);
+            }
+            locationDeclineCell.clear();
         }
-        locationDeclineCell.clear();
         locationDeclineCell.addAll(locationCell);
         locationCell.clear();
     }
@@ -90,8 +115,10 @@ public class Player {
         } else {
             cell.getBelongs().locationCell.remove(cell);
             cell.getBelongs().locationDeclineCell.remove(cell);
-            this.countTokens -= this.race.getAdvantageCaptureCell(cell) + cell.getBelongs().getRace().getAdvantageDefendCell(cell) + 1;
-            cell.setCountTokens(this.race.getAdvantageCaptureCell(cell) + cell.getBelongs().getRace().getAdvantageDefendCell(cell) + 1);
+            this.countTokens -= this.race.getAdvantageCaptureCell(cell) +
+                    cell.getBelongs().getRace().getAdvantageDefendCell(cell) + 1;
+            cell.setCountTokens(this.race.getAdvantageCaptureCell(cell) +
+                    cell.getBelongs().getRace().getAdvantageDefendCell(cell) + 1);
         }
         this.locationCell.add(cell);
         cell.regionCapture(this);
@@ -102,17 +129,26 @@ public class Player {
         }
     }
 
-    public void shufflingTokens() {
-        if (this.countTokens > 0) {
-            locationCell.get(0).setCountTokens(locationCell.get(0).getCountTokens() + this.countTokens);
-            countTokens = 0;
-        }
+    public void shufflingTokens(Cell cell) {
+        cell.setCountTokens(cell.getCountTokens() + this.countTokens);
+        this.countTokens = 0;
+        LoggerGame.logNumberOfTokensOnCell(cell);
         log.info("После перетасовки жетонов, у игрока {} осталось {} жетонов", this.nickName, this.countTokens);
     }
 
+//    public void shufflingTokens() {
+//        if (this.countTokens > 0) {
+//            locationCell.get(0).setCountTokens(locationCell.get(0).getCountTokens() + this.countTokens);
+//            countTokens = 0;
+//        }
+//        log.info("После перетасовки жетонов, у игрока {} осталось {} жетонов", this.nickName, this.countTokens);
+//    }
+
     public void collectTokens() {
         for (Cell cell : locationCell) {
-            this.countTokens += cell.getToken(cell.getCountTokens() - 1);
+            if (cell.getCountTokens() > 1) {
+                this.countTokens += cell.getToken(cell.getCountTokens() - 1);
+            }
         }
     }
 
@@ -171,6 +207,14 @@ public class Player {
         return decline;
     }
 
+    public PlayerService getService() {
+        return service;
+    }
+
+    public Player getClone(){
+        return new Player(this);
+    }
+
     @Override
     public String toString() {
         return "Player{" +
@@ -186,4 +230,3 @@ public class Player {
                 '}';
     }
 }
-

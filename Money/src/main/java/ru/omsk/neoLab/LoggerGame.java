@@ -129,4 +129,5 @@ public final class LoggerGame {
     public static void logStartPhaseGetCoins() {
         log.info("Началась фаза cбора Монет");
     }
+
 }
