@@ -1,4 +1,4 @@
-package ru.omsk.neoLab.race;
+package ru.omsk.neoLab.Race;
 
 
 import ru.omsk.neoLab.board.Сell.Cell;

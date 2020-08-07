@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import ru.omsk.neoLab.player.Player;
+import ru.omsk.neoLab.Player.Player;
 
 @JsonAutoDetect
 public class Cell {
@@ -12,7 +12,7 @@ public class Cell {
     private int x;
     private int y;
     @JsonIgnore
-    private TypeCell type;
+    private Terrain type;
     @JsonIgnore
     private int coin = 1;
     @JsonIgnore
@@ -38,7 +38,7 @@ public class Cell {
     }
     @JsonIgnore
     public int getTokensForCapture() {
-        return TypeCell.toType(type);
+        return Terrain.toType(type);
     }
 
     public void putToken(final int countTokens) {
@@ -75,11 +75,11 @@ public class Cell {
         this.y = y;
     }
 
-    public TypeCell getType() {
+    public Terrain getType() {
         return type;
     }
 
-    public void setType(TypeCell type) {
+    public void setType(Terrain type) {
         this.type = type;
     }
 

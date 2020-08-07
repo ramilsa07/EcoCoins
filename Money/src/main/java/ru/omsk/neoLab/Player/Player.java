@@ -1,4 +1,4 @@
-package ru.omsk.neoLab.player;
+package ru.omsk.neoLab.Player;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -7,8 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.omsk.neoLab.LoggerGame;
 import ru.omsk.neoLab.board.Сell.Cell;
-import ru.omsk.neoLab.board.Сell.TypeCell;
-import ru.omsk.neoLab.race.ARace;
+import ru.omsk.neoLab.board.Сell.Terrain;
+import ru.omsk.neoLab.Race.ARace;
 
 import java.util.ArrayList;
 
@@ -124,7 +124,7 @@ public class Player {
         cell.regionCapture(this);
         log.info("Осталось жетонов у игрока {}  {} от территории {}  и потратили жетонов {}", this.nickName,
                 this.countTokens, cell.getType(), cell.getCountTokens());
-        if (cell.getType() == TypeCell.WATER && !race.getNameRace().equals("Amphibia")) {
+        if (cell.getType() == Terrain.WATER && !race.getNameRace().equals("Amphibia")) {
             cell.setCountTokens(0);
         }
     }

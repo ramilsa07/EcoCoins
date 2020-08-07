@@ -1,4 +1,4 @@
-package ru.omsk.neoLab.race;
+package ru.omsk.neoLab.Race;
 
 public final class Undead extends ARace {
 

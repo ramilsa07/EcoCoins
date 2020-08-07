@@ -1,8 +1,8 @@
-package ru.omsk.neoLab.race;
+package ru.omsk.neoLab.Race;
 
 
 import ru.omsk.neoLab.board.Сell.Cell;
-import ru.omsk.neoLab.board.Сell.TypeCell;
+import ru.omsk.neoLab.board.Сell.Terrain;
 
 public final class Mushrooms extends ARace {
 
@@ -13,6 +13,6 @@ public final class Mushrooms extends ARace {
 
     @Override
     public int getAdvantageCoin(final Cell cell) {
-        return cell.getType().equals(TypeCell.MUSHROOMS) ? 2 : cell.getCoin();
+        return cell.getType().equals(Terrain.MUSHROOMS) ? 2 : cell.getCoin();
     }
 }

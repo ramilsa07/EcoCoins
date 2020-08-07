@@ -1,17 +1,17 @@
-package ru.omsk.neoLab;
+package ru.omsk.neoLab.ServerClient;
 
-import ru.omsk.neoLab.Answer.Answer;
-import ru.omsk.neoLab.Answer.AnswerSerializer;
+import ru.omsk.neoLab.Answer.Serialize.AnswerSerialize;
+import ru.omsk.neoLab.ServerClient.Bot.SimpleBot;
 import ru.omsk.neoLab.board.Board;
 import ru.omsk.neoLab.board.Serializer.BoardDeserializer;
-import ru.omsk.neoLab.player.Player;
+import ru.omsk.neoLab.Player.Player;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
-public final class Client extends Player {
+public class Client {
 
     private static final String IP = "127.0.0.1";//"localhost";
     private static final int PORT = Server.PORT;
@@ -23,11 +23,9 @@ public final class Client extends Player {
     private DataOutputStream out;
 
     private Socket socket = null;
+    private Player player;
 
-    private Board board;
-    private String nickname = null;
-
-    private Client(final String ip, final int port) {
+    public Client(String ip, int port) {
         this.ip = ip;
         this.port = port;
     }
@@ -46,46 +44,32 @@ public final class Client extends Player {
             e.printStackTrace();
         }
         System.out.println(String.format("Client started, ip: %s, port: %d", ip, port));
-        pressNickname();
-        SimpleBot bot = new SimpleBot();
-        while (true) {
+        SimpleBot simpleBot = new SimpleBot();
+        while (isDisconnect()){
             try {
                 out.flush();
-                board = BoardDeserializer.deserialize(in.readUTF());
-                out.writeUTF(AnswerSerializer.serialize(bot.getAnswer(board)));
+                Board board = BoardDeserializer.deserialize(in.readUTF());
+                out.writeUTF(AnswerSerialize.serialize(simpleBot.getAnswer(board)));
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+        downService();
     }
 
-    private void pressNickname() {
-        System.out.print("Press your nick: ");
-        Player player = new Player("Garen");
-        /*try {
-            //out.writeUTF(PlayerSerializer.serialize(player));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
+    private boolean isDisconnect(){
+        return !socket.isClosed();
     }
 
     private void downService() {
         try {
-            if (!socket.isClosed()) {
+            if (isDisconnect()) {
                 socket.close();
             }
         } catch (final IOException ignored) {
         }
     }
 
-    private class SimpleBot {
-
-        public Answer getAnswer(Board board) {
-            Answer answer = new Answer(board);
-            return answer.takeAnswer();
-        }
-
-    }
 
     public static void main(final String[] args) {
         final Client client = new Client(IP, PORT);

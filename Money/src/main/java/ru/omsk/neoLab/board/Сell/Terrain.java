@@ -1,12 +1,12 @@
 package ru.omsk.neoLab.board.Сell;
 
-public enum TypeCell {
+public enum Terrain {
     EARTH,
     MUSHROOMS,
     MOUNTED,
     WATER;
 
-    public static int toType(TypeCell type) {
+    public static int toType(Terrain type) {
         switch (type) {
             case MOUNTED:
                 return 3;

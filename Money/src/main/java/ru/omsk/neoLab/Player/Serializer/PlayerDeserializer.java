@@ -1,8 +1,8 @@
-package ru.omsk.neoLab.player.Serializer;
+package ru.omsk.neoLab.Player.Serializer;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import ru.omsk.neoLab.player.Player;
+import ru.omsk.neoLab.Player.Player;
 
 public class PlayerDeserializer {
 

@@ -1,8 +1,8 @@
-package ru.omsk.neoLab.race.Serializer;
+package ru.omsk.neoLab.Race.Serializer;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import ru.omsk.neoLab.race.ARace;
+import ru.omsk.neoLab.Race.ARace;
 
 public class RaceDeserializer {
 

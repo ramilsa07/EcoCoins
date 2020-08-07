@@ -1,10 +1,10 @@
-package ru.omsk.neoLab.player;
+package ru.omsk.neoLab.Player;
 
 import ru.omsk.neoLab.LoggerGame;
 import ru.omsk.neoLab.Validator;
 import ru.omsk.neoLab.board.Board;
 import ru.omsk.neoLab.board.Сell.Cell;
-import ru.omsk.neoLab.race.*;
+import ru.omsk.neoLab.Race.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;

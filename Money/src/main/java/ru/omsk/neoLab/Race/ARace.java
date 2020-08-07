@@ -1,4 +1,4 @@
-package ru.omsk.neoLab.race;
+package ru.omsk.neoLab.Race;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;

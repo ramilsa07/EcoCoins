@@ -1,8 +1,8 @@
-package ru.omsk.neoLab.race;
+package ru.omsk.neoLab.Race;
 
 
 import ru.omsk.neoLab.board.Сell.Cell;
-import ru.omsk.neoLab.board.Сell.TypeCell;
+import ru.omsk.neoLab.board.Сell.Terrain;
 
 public final class Orcs extends ARace {
 
@@ -13,7 +13,7 @@ public final class Orcs extends ARace {
 
     @Override
     public int getAdvantageCaptureCell(final Cell cell) {
-        if (cell.getType() == TypeCell.WATER) {
+        if (cell.getType() == Terrain.WATER) {
             return cell.getTokensForCapture();
         }
         return cell.getTokensForCapture() - 1;

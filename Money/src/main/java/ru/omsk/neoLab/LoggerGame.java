@@ -2,10 +2,11 @@ package ru.omsk.neoLab;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.omsk.neoLab.ServerClient.ServerLobby;
 import ru.omsk.neoLab.board.Board;
 import ru.omsk.neoLab.board.Сell.Cell;
-import ru.omsk.neoLab.player.Player;
-import ru.omsk.neoLab.race.ARace;
+import ru.omsk.neoLab.Player.Player;
+import ru.omsk.neoLab.Race.ARace;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -22,8 +23,8 @@ public final class LoggerGame {
         log.info("Game for {} players", num);
     }
 
-    public static void logNickSelection(Player player) { // Игрок1 выбрал ник и присоеденился к игре
-        log.info("{} joined the game", player.getNickName());
+    public static void logNickSelection(ServerLobby serverLobby) { // Игрок1 выбрал ник и присоеденился к игре
+        log.info("{} joined the game", serverLobby.getPlayer().getNickName());
     }
 
     public static void logNickSelectionError(String nick) { // Этот ник уже используется. Выберете другой

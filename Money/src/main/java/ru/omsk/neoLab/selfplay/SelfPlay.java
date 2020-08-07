@@ -1,13 +1,14 @@
 package ru.omsk.neoLab.selfplay;
 
 import ru.omsk.neoLab.LoggerGame;
+import ru.omsk.neoLab.ServerClient.Bot.SimpleBot;
 import ru.omsk.neoLab.board.Board;
 import ru.omsk.neoLab.board.Generators.Generator;
 import ru.omsk.neoLab.board.Generators.IGenerator;
 import ru.omsk.neoLab.board.Сell.Cell;
-import ru.omsk.neoLab.player.Player;
-import ru.omsk.neoLab.player.PlayerService;
-import ru.omsk.neoLab.simpleBot.SimpleBot;
+import ru.omsk.neoLab.Player.Player;
+import ru.omsk.neoLab.Player.PlayerService;
+
 
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -62,7 +63,7 @@ public final class SelfPlay {
                 phase = "race choice";
                 while (Phases.RACE_CHOICE.equalPhase(phase)) {
                     LoggerGame.logWhatRacesCanIChoose(PlayerService.getRacesPool());
-                    currentPlayer.changeRace(bot.getRandomRace());
+                    currentPlayer.changeRace(null);
                     LoggerGame.logChooseRaceTrue(currentPlayer);
                     phase = "capture of regions";
                 }
@@ -111,11 +112,11 @@ public final class SelfPlay {
                 }
                 Object[] cells = possibleCellsCapture.toArray();
                 if (!possibleCellsCapture.isEmpty())
-                    playerService.regionCapture(bot.getRandomRegionToCapture(cells), currentPlayer);
+                    playerService.regionCapture(null, currentPlayer);
                 else {
                     if (currentPlayer.getCountTokens() > 0) {
                             LoggerGame.logRedistributionOfTokens(currentPlayer);
-                            currentPlayer.shufflingTokens(bot.getRandomCellForDistribution(currentPlayer.getLocationCell()));
+                            currentPlayer.shufflingTokens(null);
                         }
                     changeCourse(currentPlayer);
                     currentPlayer = players.element();
@@ -165,7 +166,7 @@ public final class SelfPlay {
 
     public void createNewPlayer(Player player) {
         players.add(player);
-        LoggerGame.logNickSelection(player);
+        LoggerGame.logNickSelection(null);
     }
 
     public void toEndGame() {

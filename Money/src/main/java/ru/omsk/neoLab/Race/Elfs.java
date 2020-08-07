@@ -1,13 +1,13 @@
-package ru.omsk.neoLab.race;
+package ru.omsk.neoLab.Race;
 
 import ru.omsk.neoLab.board.Сell.Cell;
-import ru.omsk.neoLab.board.Сell.TypeCell;
+import ru.omsk.neoLab.board.Сell.Terrain;
 
 import java.util.ArrayList;
 
 public final class Elfs extends ARace {
 
-    private final ArrayList<TypeCell> cells = new ArrayList<TypeCell>();
+    private final ArrayList<Terrain> cells = new ArrayList<Terrain>();
 
     public Elfs() {
         nameRace = "Elfs";

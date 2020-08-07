@@ -1,16 +1,15 @@
-package ru.omsk.neoLab;
+package ru.omsk.neoLab.ServerClient;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import ru.omsk.neoLab.Answer.AnswerDeserializer;
-import ru.omsk.neoLab.Answer.CellAnswer;
-import ru.omsk.neoLab.Answer.RaceAnswer;
+import ru.omsk.neoLab.Answer.ResponseCell;
+import ru.omsk.neoLab.Answer.ResponseRace;
+import ru.omsk.neoLab.Answer.Serialize.AnswerDeserialize;
+import ru.omsk.neoLab.LoggerGame;
 import ru.omsk.neoLab.board.Board;
 import ru.omsk.neoLab.board.Serializer.BoardSerializer;
 import ru.omsk.neoLab.board.phases.Phases;
 import ru.omsk.neoLab.board.Сell.Cell;
-import ru.omsk.neoLab.player.Player;
-import ru.omsk.neoLab.player.PlayerService;
+import ru.omsk.neoLab.Player.Player;
+import ru.omsk.neoLab.Player.PlayerService;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -18,49 +17,51 @@ import java.io.IOException;
 import java.net.BindException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class Server {
 
-    private static Logger log = LoggerFactory.getLogger(Server.class);
+    private static final int MAX_CLIENTS = 2;
 
     static final int PORT = 8081;
-    static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("HH:mm:ss");
+    private final ConcurrentLinkedQueue<ServerLobby> serverClient = new ConcurrentLinkedQueue<>();
+    private Board board;
+    private ArrayList<String> arrayList = new ArrayList<>();
 
-    private final ConcurrentLinkedQueue<Player> serverPlayers = new ConcurrentLinkedQueue<>();
-    static final int MAX_PLAYERS = 2;
-
-    enum Command {
-        WARNING("warning"),
-        STOP_CLIENT_FROM_SERVER("stop client from server"),
-        STOP_CLIENT("stop client"),
-        STOP_ALL_CLIENTS("stop all clients"),
-        STOP_SERVER("stop server"),
-        ;
-
-        private final String commandName;
-
-        Command(final String commandName) {
-            this.commandName = commandName;
-        }
-
-        boolean equalCommand(final String message) {
-            return commandName.equals(message);
-        }
-
-        static boolean isCommandMessage(final String message) {
-            for (final Command command : values()) {
-                if (command.equalCommand(message)) {
-                    return true;
+    private void startServer() throws IOException {
+        int i = 0;
+        arrayList.add("SimpleBot1");
+        arrayList.add("SimpleBot2");
+        System.out.println(String.format("Server started, port: %d", PORT));
+        try (final ServerSocket serverSocket = new ServerSocket(PORT)) {
+            while (true) {
+                Socket socket = serverSocket.accept();
+                addServerLobby(socket,arrayList.get(i));
+                System.out.println("Connected host: " +  socket);
+                i++;
+                if(serverClient.size() == MAX_CLIENTS) {
+                    try {
+                        new Game(this).start();
+                    } catch (final IOException e) {
+                        socket.close();
+                    }
                 }
             }
-            return false;
+        } catch (final BindException e) {
+            e.printStackTrace();
         }
     }
 
-    public class Game extends Thread {
+    public void addServerLobby(Socket socket, String nickName) {
+        Player player = new Player(nickName);
+        ServerLobby serverLobby = new ServerLobby(socket,player);
+        serverClient.add(serverLobby);
+        LoggerGame.logNickSelection(serverLobby);
+    }
+
+    private class Game extends Thread {
 
         private Server server;
         private Socket socket;
@@ -68,25 +69,15 @@ public class Server {
         private DataInputStream in;
         private DataOutputStream out;
 
-        private Board board = new Board(4, 3);
         private final PlayerService playerService = PlayerService.GetInstance();
 
+        public HashSet<Cell> possibleCellsCapture = new HashSet<>();
         private int round = 1;
 
-        public HashSet<Cell> getPossibleCellsCapture() {
-            return possibleCellsCapture;
-        }
 
-        public void setPossibleCellsCapture(HashSet<Cell> possibleCellsCapture) {
-            this.possibleCellsCapture = possibleCellsCapture;
-        }
-
-        public HashSet<Cell> possibleCellsCapture = new HashSet<>();
-
-
-        private Game(final Server server, final Socket socket) throws IOException {
+        private Game(final Server server) throws IOException {
             this.server = server;
-            this.socket = socket;
+            this.socket = serverClient.element().getSocketClient();
 
             in = new DataInputStream(socket.getInputStream());
             out = new DataOutputStream(socket.getOutputStream());
@@ -94,16 +85,12 @@ public class Server {
 
         @Override
         public void run() {
-            try {
-                out.flush();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
             generateBoard();
             LoggerGame.logOutputBoard(board);
-            Player firstPlayer = serverPlayers.element();
-            Player currentPlayer = serverPlayers.element();
+            Player firstPlayer = serverClient.element().getPlayer();
+            Player currentPlayer = serverClient.element().getPlayer();
             while (round < 11) {
+                this.socket = serverClient.element().getSocketClient();
                 LoggerGame.logPlayerRoundStart(currentPlayer, round);
                 if (currentPlayer.isDecline() || round == 1) {
                     LoggerGame.logStartPhaseRaceChoice();
@@ -112,7 +99,7 @@ public class Server {
                         LoggerGame.logWhatRacesCanIChoose(PlayerService.getRacesPool());
                         try {
                             out.writeUTF(BoardSerializer.serialize(board));
-                            RaceAnswer race = (RaceAnswer) AnswerDeserializer.deserialize(in.readUTF());
+                            ResponseRace race = (ResponseRace) AnswerDeserialize.deserialize(in.readUTF());
                             currentPlayer.changeRace(race.getRace());
                             LoggerGame.logChooseRaceTrue(currentPlayer);
                             board.changePhase(Phases.CAPTURE_OF_REGIONS);
@@ -142,8 +129,8 @@ public class Server {
                     if (round != 1) {
                         currentPlayer.goIntoDecline();
                         LoggerGame.logRaceInDecline(currentPlayer);
-                        changeCourse(currentPlayer);
-                        currentPlayer = serverPlayers.element();
+                        changeCourse(serverClient.element());
+                        currentPlayer = serverClient.element().getPlayer();
                         if (currentPlayer.equals(firstPlayer)) {
                             board.changePhase(Phases.GETTING_COINS);
                         } else if (currentPlayer.isDecline()) {
@@ -157,7 +144,7 @@ public class Server {
                 while (Phases.CAPTURE_OF_REGIONS.equals(board.getPhase())) {
                     LoggerGame.logGetTokens(currentPlayer);
                     if (currentPlayer.getLocationCell().isEmpty()) {
-                        possibleCellsCapture = playerService.findOutWherePlayerCanGo(board.getBoard());
+                        possibleCellsCapture = playerService.findOutWherePlayerCanGoAtFirst(board,currentPlayer);
                         LoggerGame.logWhereToGo(possibleCellsCapture);
                     } else {
                         possibleCellsCapture = playerService.findOutWherePlayerCanGo(board, currentPlayer);
@@ -167,16 +154,17 @@ public class Server {
                         try {
                             out.flush();
                             out.writeUTF(BoardSerializer.serialize(board));
-                            CellAnswer answer = (CellAnswer) AnswerDeserializer.deserialize(in.readUTF());
+                            ResponseCell answer = (ResponseCell) AnswerDeserialize.deserialize(in.readUTF());
                             playerService.regionCapture(answer.getCell(), currentPlayer);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
                     } else {
                         LoggerGame.logRedistributionOfTokens(currentPlayer);
-                        currentPlayer.shufflingTokens();
-                        changeCourse(currentPlayer);
-                        currentPlayer = serverPlayers.element();
+                        currentPlayer.shufflingTokens(new Cell());
+                        serverClient.element().setPlayer(currentPlayer);
+                        changeCourse(serverClient.element());
+                        currentPlayer = serverClient.element().getPlayer();
                         if (currentPlayer.equals(firstPlayer)) {
                             board.changePhase(Phases.GETTING_COINS);
                         } else if (currentPlayer.isDecline()) {
@@ -188,9 +176,9 @@ public class Server {
                 }
                 while (Phases.GETTING_COINS.equals(board.getPhase())) {
                     LoggerGame.logStartPhaseGetCoins();
-                    for (Player player : serverPlayers) {
-                        player.collectAllCoins();
-                        LoggerGame.logGetCoins(player);
+                    for (ServerLobby server : serverClient) {
+                        server.getPlayer().collectAllCoins();
+                        LoggerGame.logGetCoins(server.getPlayer());
                     }
                     round++;
                     if (currentPlayer.isDecline()) {
@@ -200,8 +188,9 @@ public class Server {
                     }
 
                 }
-                if (round == 11) {
-                    toEndGame();
+                if (isEndGame()) {
+                    downService();
+                    break;
                 }
             }
         }
@@ -211,53 +200,24 @@ public class Server {
             board.generate();
         }
 
-        private void changeCourse(Player player) {
-            serverPlayers.poll();
-            serverPlayers.add(player);
+        private void changeCourse(final ServerLobby serverLobby) {
+            serverClient.poll();
+            serverClient.add(serverLobby);
+            this.socket = serverClient.element().getSocketClient();
         }
 
-        public void createNewPlayer(Client client) {
-            serverPlayers.add(client);
-            LoggerGame.logNickSelection(client);
+        public boolean isEndGame() {
+            return round == 10;
         }
 
         private void downService() {
             try {
                 if (!socket.isClosed()) {
                     socket.close();
-                    server.serverPlayers.remove(this);
+                    server.serverClient.remove(this);
                 }
             } catch (final IOException ignored) {
             }
-        }
-
-        public void toEndGame() {
-            for (Player player : serverPlayers) {
-                LoggerGame.logGetCoins(player);
-            }
-            LoggerGame.logEndGame();
-            System.exit(0);
-        }
-    }
-
-
-    @SuppressWarnings("InfiniteLoopStatement")
-    private void startServer() throws IOException {
-        System.out.println(String.format("Server started, port: %d", PORT));
-
-        try (final ServerSocket serverSocket = new ServerSocket(PORT)) {
-            while (true) {
-                Socket socket = serverSocket.accept();
-                Player player = new Player();
-                serverPlayers.add(player);
-                try {
-                    new Game(this, socket).start();
-                } catch (final IOException e) {
-                    socket.close();
-                }
-            }
-        } catch (final BindException e) {
-            e.printStackTrace();
         }
     }
 
