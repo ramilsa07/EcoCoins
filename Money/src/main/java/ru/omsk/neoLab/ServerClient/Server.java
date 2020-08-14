@@ -1,15 +1,17 @@
 package ru.omsk.neoLab.ServerClient;
 
+
 import ru.omsk.neoLab.Answer.ResponseCell;
+import ru.omsk.neoLab.Answer.ResponseDecline;
 import ru.omsk.neoLab.Answer.ResponseRace;
 import ru.omsk.neoLab.Answer.Serialize.AnswerDeserialize;
 import ru.omsk.neoLab.LoggerGame;
+import ru.omsk.neoLab.Player.Player;
+import ru.omsk.neoLab.Player.PlayerService;
 import ru.omsk.neoLab.board.Board;
 import ru.omsk.neoLab.board.Serializer.BoardSerializer;
 import ru.omsk.neoLab.board.phases.Phases;
 import ru.omsk.neoLab.board.Сell.Cell;
-import ru.omsk.neoLab.Player.Player;
-import ru.omsk.neoLab.Player.PlayerService;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -29,6 +31,7 @@ public class Server {
     private final ConcurrentLinkedQueue<ServerLobby> serverClient = new ConcurrentLinkedQueue<>();
     private Board board;
     private ArrayList<String> arrayList = new ArrayList<>();
+    private Player currentPlayer;
 
     private void startServer() throws IOException {
         int i = 0;
@@ -88,7 +91,8 @@ public class Server {
             generateBoard();
             LoggerGame.logOutputBoard(board);
             Player firstPlayer = serverClient.element().getPlayer();
-            Player currentPlayer = serverClient.element().getPlayer();
+            currentPlayer = serverClient.element().getPlayer();
+            board.setCurrentPlayer(currentPlayer);
             while (round < 11) {
                 this.socket = serverClient.element().getSocketClient();
                 LoggerGame.logPlayerRoundStart(currentPlayer, round);
@@ -117,7 +121,6 @@ public class Server {
                             }
                         }
                         LoggerGame.logGetTokens(currentPlayer);
-                        possibleCellsCapture = playerService.findOutWherePlayerCanGo(board, currentPlayer);
                         if (possibleCellsCapture.isEmpty()) {
                             board.changePhase(Phases.GO_INTO_DECLINE);
                         } else {
@@ -127,51 +130,65 @@ public class Server {
                 }
                 if (Phases.GO_INTO_DECLINE.equals(board.getPhase())) {
                     if (round != 1) {
-                        currentPlayer.goIntoDecline();
-                        LoggerGame.logRaceInDecline(currentPlayer);
-                        changeCourse(serverClient.element());
-                        currentPlayer = serverClient.element().getPlayer();
-                        if (currentPlayer.equals(firstPlayer)) {
-                            board.changePhase(Phases.GETTING_COINS);
-                        } else if (currentPlayer.isDecline()) {
-                            board.changePhase(Phases.RACE_CHOICE);
-                        } else {
-                            board.changePhase(Phases.PICK_UP_TOKENS);
+                        try {
+                            out.flush();
+                            out.writeUTF(BoardSerializer.serialize(board));
+                            ResponseDecline decline = (ResponseDecline) AnswerDeserialize.deserialize(in.readUTF());
+                            if (decline.isDecline()) {
+                                currentPlayer.goIntoDecline();
+                                LoggerGame.logRaceInDecline(currentPlayer);
+                                changeCourse(serverClient.element());
+                            }
+                            LoggerGame.logRaceInDecline(currentPlayer);
+                            changeCourse(serverClient.element());
+                            currentPlayer = serverClient.element().getPlayer();
+                            if (currentPlayer.equals(firstPlayer)) {
+                                board.changePhase(Phases.GETTING_COINS);
+                            } else if (currentPlayer.isDecline()) {
+                                board.changePhase(Phases.RACE_CHOICE);
+                            } else {
+                                board.changePhase(Phases.PICK_UP_TOKENS);
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
                     }
                 }
                 LoggerGame.logStartPhaseCaptureOfRegions();
                 while (Phases.CAPTURE_OF_REGIONS.equals(board.getPhase())) {
                     LoggerGame.logGetTokens(currentPlayer);
-                    if (currentPlayer.getLocationCell().isEmpty()) {
-                        possibleCellsCapture = playerService.findOutWherePlayerCanGoAtFirst(board,currentPlayer);
-                        LoggerGame.logWhereToGo(possibleCellsCapture);
-                    } else {
-                        possibleCellsCapture = playerService.findOutWherePlayerCanGo(board, currentPlayer);
-                        LoggerGame.logWhereToGo(possibleCellsCapture);
+                    try {
+                        out.flush();
+                        out.writeUTF(BoardSerializer.serialize(board));
+                        ResponseCell answer = (ResponseCell) AnswerDeserialize.deserialize(in.readUTF());
+                        for (Cell cell : answer.getCells()) {
+                            playerService.regionCapture(cell, currentPlayer);
+                            LoggerGame.logCaptureBot(cell, currentPlayer);
+                        }
+                        board.changePhase(Phases.SHUFFLING_TOKENS);
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                    if (!possibleCellsCapture.isEmpty()) {
-                        try {
-                            out.flush();
-                            out.writeUTF(BoardSerializer.serialize(board));
-                            ResponseCell answer = (ResponseCell) AnswerDeserialize.deserialize(in.readUTF());
-                            playerService.regionCapture(answer.getCell(), currentPlayer);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                }
+                while (Phases.SHUFFLING_TOKENS.equals(board.getPhase())) {
+                    try {
+                        out.flush();
+                        out.writeUTF(BoardSerializer.serialize(board));
+                        ResponseCell cell = (ResponseCell) AnswerDeserialize.deserialize(in.readUTF());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    currentPlayer.shufflingTokens(new Cell());
+                    LoggerGame.logRedistributionOfTokens(currentPlayer);
+                    serverClient.element().setPlayer(currentPlayer);
+                    changeCourse(serverClient.element());
+                    currentPlayer = serverClient.element().getPlayer();
+                    if (currentPlayer.equals(firstPlayer)) {
+                        board.changePhase(Phases.GETTING_COINS);
+                    } else if (currentPlayer.isDecline()) {
+                        board.changePhase(Phases.RACE_CHOICE);
                     } else {
-                        LoggerGame.logRedistributionOfTokens(currentPlayer);
-                        currentPlayer.shufflingTokens(new Cell());
-                        serverClient.element().setPlayer(currentPlayer);
-                        changeCourse(serverClient.element());
-                        currentPlayer = serverClient.element().getPlayer();
-                        if (currentPlayer.equals(firstPlayer)) {
-                            board.changePhase(Phases.GETTING_COINS);
-                        } else if (currentPlayer.isDecline()) {
-                            board.changePhase(Phases.RACE_CHOICE);
-                        } else {
-                            board.changePhase(Phases.PICK_UP_TOKENS);
-                        }
+                        board.changePhase(Phases.PICK_UP_TOKENS);
                     }
                 }
                 while (Phases.GETTING_COINS.equals(board.getPhase())) {
@@ -204,6 +221,7 @@ public class Server {
             serverClient.poll();
             serverClient.add(serverLobby);
             this.socket = serverClient.element().getSocketClient();
+            board.setCurrentPlayer(serverLobby.getPlayer());
         }
 
         public boolean isEndGame() {

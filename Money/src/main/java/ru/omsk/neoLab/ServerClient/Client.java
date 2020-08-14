@@ -1,10 +1,11 @@
 package ru.omsk.neoLab.ServerClient;
 
+
 import ru.omsk.neoLab.Answer.Serialize.AnswerSerialize;
+import ru.omsk.neoLab.Player.Player;
 import ru.omsk.neoLab.ServerClient.Bot.SimpleBot;
 import ru.omsk.neoLab.board.Board;
 import ru.omsk.neoLab.board.Serializer.BoardDeserializer;
-import ru.omsk.neoLab.Player.Player;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -45,16 +46,16 @@ public class Client {
         }
         System.out.println(String.format("Client started, ip: %s, port: %d", ip, port));
         SimpleBot simpleBot = new SimpleBot();
-        while (isDisconnect()){
+        while (isDisconnect()) {
             try {
                 out.flush();
                 Board board = BoardDeserializer.deserialize(in.readUTF());
                 out.writeUTF(AnswerSerialize.serialize(simpleBot.getAnswer(board)));
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
+                downService();
             }
         }
-        downService();
     }
 
     private boolean isDisconnect(){
