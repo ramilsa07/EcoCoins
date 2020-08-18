@@ -2,7 +2,7 @@ package ru.omsk.neoLab;
 
 
 import ru.omsk.neoLab.board.Сell.Cell;
-import ru.omsk.neoLab.Player.Player;
+import ru.omsk.neoLab.player.Player;
 
 public final class Validator {
 

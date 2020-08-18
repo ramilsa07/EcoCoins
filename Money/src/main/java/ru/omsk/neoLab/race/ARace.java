@@ -1,8 +1,10 @@
-package ru.omsk.neoLab.Race;
+package ru.omsk.neoLab.race;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import ru.omsk.neoLab.board.Сell.Cell;
+
+import java.util.Objects;
 
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
@@ -37,7 +39,21 @@ public abstract class ARace {
         return countTokens;
     }
 
-    public void clearCells(){
+    public void clearCells() {
 
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ARace race = (ARace) o;
+        return countTokens == race.countTokens &&
+                Objects.equals(nameRace, race.nameRace);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nameRace, countTokens);
     }
 }

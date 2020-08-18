@@ -1,7 +1,7 @@
 package ru.omsk.neoLab.ServerClient;
 
 
-import ru.omsk.neoLab.Player.Player;
+import ru.omsk.neoLab.player.Player;
 
 import java.net.Socket;
 

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import ru.omsk.neoLab.Player.Player;
+import ru.omsk.neoLab.player.Player;
 
 @JsonAutoDetect
 public class Cell {

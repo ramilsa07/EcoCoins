@@ -1,4 +1,4 @@
-package ru.omsk.neoLab.Race;
+package ru.omsk.neoLab.race;
 
 import ru.omsk.neoLab.board.Сell.Cell;
 import ru.omsk.neoLab.board.Сell.Terrain;

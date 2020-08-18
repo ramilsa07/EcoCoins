@@ -5,8 +5,8 @@ import org.slf4j.LoggerFactory;
 import ru.omsk.neoLab.ServerClient.ServerLobby;
 import ru.omsk.neoLab.board.Board;
 import ru.omsk.neoLab.board.Сell.Cell;
-import ru.omsk.neoLab.Player.Player;
-import ru.omsk.neoLab.Race.ARace;
+import ru.omsk.neoLab.player.Player;
+import ru.omsk.neoLab.race.ARace;
 
 import java.util.ArrayList;
 import java.util.HashSet;

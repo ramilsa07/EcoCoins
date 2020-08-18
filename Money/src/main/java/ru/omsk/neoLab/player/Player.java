@@ -1,4 +1,4 @@
-package ru.omsk.neoLab.Player;
+package ru.omsk.neoLab.player;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import ru.omsk.neoLab.LoggerGame;
 import ru.omsk.neoLab.board.Сell.Cell;
 import ru.omsk.neoLab.board.Сell.Terrain;
-import ru.omsk.neoLab.Race.ARace;
+import ru.omsk.neoLab.race.ARace;
 
 import java.util.ArrayList;
 

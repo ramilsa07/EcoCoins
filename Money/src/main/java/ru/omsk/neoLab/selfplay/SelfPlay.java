@@ -1,14 +1,13 @@
 package ru.omsk.neoLab.selfplay;
 
 import ru.omsk.neoLab.LoggerGame;
-import ru.omsk.neoLab.ServerClient.Bot.SimpleBot;
+import ru.omsk.neoLab.ServerClient.aibot.SimpleBot;
 import ru.omsk.neoLab.board.Board;
 import ru.omsk.neoLab.board.Generators.Generator;
 import ru.omsk.neoLab.board.Generators.IGenerator;
 import ru.omsk.neoLab.board.Сell.Cell;
-import ru.omsk.neoLab.Player.Player;
-import ru.omsk.neoLab.Player.PlayerService;
-
+import ru.omsk.neoLab.player.Player;
+import ru.omsk.neoLab.player.PlayerService;
 
 import java.util.HashSet;
 import java.util.LinkedList;

@@ -4,6 +4,7 @@ public enum Phases {
     RACE_CHOICE("race_choice"),
     CAPTURE_OF_REGIONS("capture_of_regions"),
     PICK_UP_TOKENS("pick_up_tokens"),
+    SHUFFLING_TOKENS("shuffling_tokens"),
     GO_INTO_DECLINE("go_into_decline"),
     GETTING_COINS("getting_coins"),
     END_GAME("end_game");

@@ -1,17 +1,15 @@
 package ru.omsk.neoLab.ServerClient;
 
 
-import ru.omsk.neoLab.Answer.ResponseCell;
-import ru.omsk.neoLab.Answer.ResponseDecline;
-import ru.omsk.neoLab.Answer.ResponseRace;
-import ru.omsk.neoLab.Answer.Serialize.AnswerDeserialize;
 import ru.omsk.neoLab.LoggerGame;
-import ru.omsk.neoLab.Player.Player;
-import ru.omsk.neoLab.Player.PlayerService;
+import ru.omsk.neoLab.answer.Answer;
+import ru.omsk.neoLab.answer.Serialize.AnswerDeserialize;
 import ru.omsk.neoLab.board.Board;
 import ru.omsk.neoLab.board.Serializer.BoardSerializer;
 import ru.omsk.neoLab.board.phases.Phases;
 import ru.omsk.neoLab.board.Сell.Cell;
+import ru.omsk.neoLab.player.Player;
+import ru.omsk.neoLab.player.PlayerService;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -103,7 +101,7 @@ public class Server {
                         LoggerGame.logWhatRacesCanIChoose(PlayerService.getRacesPool());
                         try {
                             out.writeUTF(BoardSerializer.serialize(board));
-                            ResponseRace race = (ResponseRace) AnswerDeserialize.deserialize(in.readUTF());
+                            Answer race = AnswerDeserialize.deserialize(in.readUTF());
                             currentPlayer.changeRace(race.getRace());
                             LoggerGame.logChooseRaceTrue(currentPlayer);
                             board.changePhase(Phases.CAPTURE_OF_REGIONS);
@@ -133,7 +131,7 @@ public class Server {
                         try {
                             out.flush();
                             out.writeUTF(BoardSerializer.serialize(board));
-                            ResponseDecline decline = (ResponseDecline) AnswerDeserialize.deserialize(in.readUTF());
+                            Answer decline = AnswerDeserialize.deserialize(in.readUTF());
                             if (decline.isDecline()) {
                                 currentPlayer.goIntoDecline();
                                 LoggerGame.logRaceInDecline(currentPlayer);
@@ -160,7 +158,7 @@ public class Server {
                     try {
                         out.flush();
                         out.writeUTF(BoardSerializer.serialize(board));
-                        ResponseCell answer = (ResponseCell) AnswerDeserialize.deserialize(in.readUTF());
+                        Answer answer = AnswerDeserialize.deserialize(in.readUTF());
                         for (Cell cell : answer.getCells()) {
                             playerService.regionCapture(cell, currentPlayer);
                             LoggerGame.logCaptureBot(cell, currentPlayer);
@@ -174,7 +172,7 @@ public class Server {
                     try {
                         out.flush();
                         out.writeUTF(BoardSerializer.serialize(board));
-                        ResponseCell cell = (ResponseCell) AnswerDeserialize.deserialize(in.readUTF());
+                        Answer cell = AnswerDeserialize.deserialize(in.readUTF());
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

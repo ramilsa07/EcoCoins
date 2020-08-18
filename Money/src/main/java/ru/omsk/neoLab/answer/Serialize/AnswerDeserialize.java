@@ -1,8 +1,8 @@
-package ru.omsk.neoLab.Answer.Serialize;
+package ru.omsk.neoLab.answer.Serialize;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import ru.omsk.neoLab.Answer.Answer;
+import ru.omsk.neoLab.answer.Answer;
 
 public class AnswerDeserialize {
 

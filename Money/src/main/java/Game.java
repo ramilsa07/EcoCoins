@@ -1,4 +1,4 @@
-import ru.omsk.neoLab.Player.Player;
+import ru.omsk.neoLab.player.Player;
 import ru.omsk.neoLab.selfplay.SelfPlay;
 
 public class Game {

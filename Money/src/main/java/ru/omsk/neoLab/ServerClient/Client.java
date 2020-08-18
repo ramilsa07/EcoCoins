@@ -1,11 +1,11 @@
 package ru.omsk.neoLab.ServerClient;
 
 
-import ru.omsk.neoLab.Answer.Serialize.AnswerSerialize;
-import ru.omsk.neoLab.Player.Player;
-import ru.omsk.neoLab.ServerClient.Bot.SimpleBot;
+import ru.omsk.neoLab.ServerClient.aibot.SimpleBot;
+import ru.omsk.neoLab.answer.Serialize.AnswerSerialize;
 import ru.omsk.neoLab.board.Board;
 import ru.omsk.neoLab.board.Serializer.BoardDeserializer;
+import ru.omsk.neoLab.player.Player;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

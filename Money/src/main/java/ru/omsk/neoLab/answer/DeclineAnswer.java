@@ -1,19 +1,20 @@
-package ru.omsk.neoLab.Answer;
+package ru.omsk.neoLab.answer;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ResponseDecline extends Answer {
-
+public class DeclineAnswer extends Answer {
     @JsonProperty("decline")
     private boolean decline;
 
     @JsonCreator
-    public ResponseDecline(@JsonProperty("decline") boolean decline) {
+    public DeclineAnswer(boolean decline) {
+        super(decline);
         this.decline = decline;
     }
 
-    public boolean isDecline() {
-        return decline;
+    @Override
+    public String toString() {
+        return "[decline=" + decline + ']';
     }
 }
