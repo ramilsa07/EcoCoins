@@ -159,10 +159,10 @@ public class Server {
                         out.flush();
                         out.writeUTF(BoardSerializer.serialize(board));
                         Answer answer = AnswerDeserialize.deserialize(in.readUTF());
-                        for (Cell cell : answer.getCells()) {
-                            playerService.regionCapture(cell, currentPlayer);
-                            LoggerGame.logCaptureBot(cell, currentPlayer);
-                        }
+//                        for (Cell cell : answer.getCells()) {
+//                            playerService.regionCapture(cell, currentPlayer);
+//                            LoggerGame.logCaptureBot(cell, currentPlayer);
+//                        }
                         board.changePhase(Phases.SHUFFLING_TOKENS);
                     } catch (IOException e) {
                         e.printStackTrace();

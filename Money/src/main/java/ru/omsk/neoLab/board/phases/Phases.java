@@ -6,10 +6,9 @@ public enum Phases {
     PICK_UP_TOKENS("pick_up_tokens"),
     SHUFFLING_TOKENS("shuffling_tokens"),
     GO_INTO_DECLINE("go_into_decline"),
-    GETTING_COINS("getting_coins"),
-    END_GAME("end_game");
+    GETTING_COINS("getting_coins");
 
-    private String phasesName;
+    private final String phasesName;
 
     Phases(final String phasesName) {
         this.phasesName = phasesName;

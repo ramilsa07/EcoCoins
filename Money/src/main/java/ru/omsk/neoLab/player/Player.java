@@ -75,6 +75,10 @@ public class Player {
                 player.getService(), player.isDecline());
     }
 
+    public Player getCopy(){
+        return new Player(this);
+    }
+
     public void changeRace(final ARace race) {
         if (decline) {
             if (raceDecline != null) {
@@ -136,14 +140,7 @@ public class Player {
         log.info("После перетасовки жетонов, у игрока {} осталось {} жетонов", this.nickName, this.countTokens);
     }
 
-//    public void shufflingTokens() {
-//        if (this.countTokens > 0) {
-//            locationCell.get(0).setCountTokens(locationCell.get(0).getCountTokens() + this.countTokens);
-//            countTokens = 0;
-//        }
-//        log.info("После перетасовки жетонов, у игрока {} осталось {} жетонов", this.nickName, this.countTokens);
-//    }
-
+    //TODO: Проверить на корректность
     public void collectTokens() {
         for (Cell cell : locationCell) {
             if (cell.getCountTokens() > 1) {
