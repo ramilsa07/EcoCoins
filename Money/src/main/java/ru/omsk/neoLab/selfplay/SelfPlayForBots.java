@@ -1,5 +1,7 @@
 package ru.omsk.neoLab.selfplay;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.omsk.neoLab.LoggerGame;
 import ru.omsk.neoLab.ServerClient.aibot.ABot;
 import ru.omsk.neoLab.ServerClient.aibot.IBot;
@@ -7,15 +9,14 @@ import ru.omsk.neoLab.ServerClient.aibot.RandomBot;
 import ru.omsk.neoLab.answer.Answer;
 import ru.omsk.neoLab.board.Board;
 import ru.omsk.neoLab.board.phases.Phases;
-import ru.omsk.neoLab.board.Сell.Cell;
 import ru.omsk.neoLab.player.Player;
 import ru.omsk.neoLab.player.PlayerService;
 
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Queue;
 
 public class SelfPlayForBots {
+    private static final Logger log = LoggerFactory.getLogger(LoggerGame.class);
     private final Board board;
     private final PlayerService playerService = PlayerService.GetInstance();
 
@@ -23,8 +24,6 @@ public class SelfPlayForBots {
     private final Queue<ABot> bots = new LinkedList<>();
 
     private int round = 1;
-
-    private HashSet<Cell> possibleCellsCapture = new HashSet<>();
 
     public SelfPlayForBots(final IBot.IBotFactory[] factories) {
         if (factories.length != NUM_PLAYERS) {
@@ -37,11 +36,10 @@ public class SelfPlayForBots {
 
     public void Game() {
         generateBoard();
-        LoggerGame.logOutputBoard(board);
         ABot firstPlayer = bots.element();
         ABot currentPlayer = bots.element();
         while (round < 11) {
-            LoggerGame.logPlayerRoundStart(currentPlayer.getBotPlayer(), round);
+            log.info("Player {} starts {} round", currentPlayer.getBotPlayer().getNickName(), round);
             if (currentPlayer.getBotPlayer().isDecline() || round == 1) {
                 board.changePhase(Phases.RACE_CHOICE);
                 raceChoicePhase(currentPlayer);
@@ -75,27 +73,27 @@ public class SelfPlayForBots {
     }
 
     private void raceChoicePhase(ABot currentPlayer) {
-        LoggerGame.logStartPhaseRaceChoice();
+        log.info("Началась фаза выбора расы");
         while (Phases.RACE_CHOICE.equals(board.getPhase())) {
-            LoggerGame.logWhatRacesCanIChoose(PlayerService.getRacesPool());
             currentPlayer.getBotPlayer().changeRace(currentPlayer.getAnswer(board).getRace());
-            LoggerGame.logChooseRaceTrue(currentPlayer.getBotPlayer());
+            log.info("{} chose a race of {}", currentPlayer.getBotPlayer().getNickName(), currentPlayer.getBotPlayer().getRace().getNameRace());
             board.changePhase(Phases.CAPTURE_OF_REGIONS);
         }
     }
 
     private void pickUpTokensPhase(ABot currentPlayer) {
-        LoggerGame.logStartPhasePickUpTokens();
+        log.info("Началась фаза взятия жетонов в руки");
         while (Phases.PICK_UP_TOKENS.equals(board.getPhase())) {
             currentPlayer.getBotPlayer().collectTokens();
-            LoggerGame.logGetTokens(currentPlayer.getBotPlayer());
+            log.info("{} has {} tokens", currentPlayer.getBotPlayer().getNickName(), currentPlayer.getBotPlayer().getCountTokens());
             board.changePhase(Phases.GO_INTO_DECLINE);
         }
     }
 
     private void goIntoDeclinePhase(ABot currentPlayer, ABot firstPlayer) {
         currentPlayer.getBotPlayer().goIntoDecline();
-        LoggerGame.logRaceInDecline(currentPlayer.getBotPlayer());
+        log.info("{} turned the race {} into decline", currentPlayer.getBotPlayer().getNickName(),
+                currentPlayer.getBotPlayer().getRaceDecline().getNameRace());
         changeCourse(currentPlayer);
         currentPlayer = bots.element();
         if (currentPlayer.equals(firstPlayer)) {
@@ -108,7 +106,7 @@ public class SelfPlayForBots {
     }
 
     private void captureOfRegionsPhase(ABot currentPlayer, ABot firstPlayer) {
-        LoggerGame.logStartPhaseCaptureOfRegions();
+        log.info("Началась фаза захвата территории");
         while (Phases.CAPTURE_OF_REGIONS.equals(board.getPhase())) {
             Answer answer = currentPlayer.getAnswer(board);
             if (answer != null) {
@@ -132,15 +130,15 @@ public class SelfPlayForBots {
 
     private void shufflingTokensPhase(ABot currentPlayer) {
         board.changePhase(Phases.SHUFFLING_TOKENS);
-        LoggerGame.logRedistributionOfTokens(currentPlayer.getBotPlayer());
+        log.info("{} begins the redistribution of tokens", currentPlayer.getBotPlayer().getNickName());
         currentPlayer.getBotPlayer().shufflingTokens(currentPlayer.getAnswer(board).getCell());
     }
 
-    private void getCoinsPhase(ABot currentPlayer){
-        LoggerGame.logStartPhaseGetCoins();
+    private void getCoinsPhase(ABot currentPlayer) {
+        log.info("Началась фаза cбора Монет");
         for (ABot bot : bots) {
             bot.getBotPlayer().collectAllCoins();
-            LoggerGame.logGetCoins(bot.getBotPlayer());
+            log.info("{} has {} coins", bot.getBotPlayer().getNickName(), bot.getBotPlayer().getCountCoin());
         }
         round++;
         if (currentPlayer.getBotPlayer().isDecline()) {
@@ -164,7 +162,7 @@ public class SelfPlayForBots {
     }
 
     private void toEndGame() {
-        LoggerGame.logEndGame();
+        log.info("Game over");
         System.exit(0);
     }
 

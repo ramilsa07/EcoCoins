@@ -1,5 +1,7 @@
 package ru.omsk.neoLab.player;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.omsk.neoLab.LoggerGame;
 import ru.omsk.neoLab.Validator;
 import ru.omsk.neoLab.board.Board;
@@ -10,6 +12,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 public class PlayerService {
+    private static final Logger log = LoggerFactory.getLogger(LoggerGame.class);
     private static PlayerService instance;
 
     // Массивы, для вычисления допустимых ходов
@@ -78,10 +81,19 @@ public class PlayerService {
 
     public void regionCapture(Cell cell, Player player) {
         player.regionCapture(cell);
-        LoggerGame.logRegionCaptureTrue(player, cell);
+        log.info("The cell {} [{}, {}] is captured by the player {}", cell.getType(), cell.getX(),
+                cell.getY(), player.getNickName());
     }
 
     public static ArrayList<ARace> getRacesPool() {
+        logWhatRacesCanIChoose(racesPool);
         return racesPool;
+    }
+
+    public static void logWhatRacesCanIChoose(ArrayList<ARace> freeRacesPool) { // Выводим на экран свободные расы
+        log.info("Can choose: ");
+        for (ARace race : freeRacesPool) {
+            log.info(race.getNameRace());
+        }
     }
 }

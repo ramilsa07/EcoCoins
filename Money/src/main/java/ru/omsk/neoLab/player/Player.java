@@ -69,13 +69,13 @@ public class Player {
         this.decline = decline;
     }
 
-    public Player(Player player){
+    public Player(Player player) {
         this(player.getNickName(), player.getCountCoin(), player.getCountTokens(), player.getRace(),
                 player.getLocationCell(), player.getRaceDecline(), player.getLocationDeclineCell(),
                 player.getService(), player.isDecline());
     }
 
-    public Player getCopy(){
+    public Player getCopy() {
         return new Player(this);
     }
 
@@ -136,7 +136,8 @@ public class Player {
     public void shufflingTokens(Cell cell) {
         cell.setCountTokens(cell.getCountTokens() + this.countTokens);
         this.countTokens = 0;
-        LoggerGame.logNumberOfTokensOnCell(cell);
+        log.info("On cell {} [{}, {}] {} tokens", cell.getType(), cell.getX(),
+                cell.getY(), cell.getCountTokens());
         log.info("После перетасовки жетонов, у игрока {} осталось {} жетонов", this.nickName, this.countTokens);
     }
 
@@ -208,7 +209,7 @@ public class Player {
         return service;
     }
 
-    public Player getClone(){
+    public Player getClone() {
         return new Player(this);
     }
 

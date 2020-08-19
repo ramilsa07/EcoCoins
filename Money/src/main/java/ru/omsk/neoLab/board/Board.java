@@ -2,6 +2,9 @@ package ru.omsk.neoLab.board;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import ru.omsk.neoLab.LoggerGame;
 import ru.omsk.neoLab.answer.Answer;
 import ru.omsk.neoLab.board.Generators.Generator;
 import ru.omsk.neoLab.board.Generators.IGenerator;
@@ -10,6 +13,7 @@ import ru.omsk.neoLab.board.Сell.Cell;
 import ru.omsk.neoLab.player.Player;
 
 public final class Board implements IBoard {
+    private static final Logger log = LoggerFactory.getLogger(LoggerGame.class);
 
     @JsonProperty("board")
     private Cell[][] board;
@@ -55,6 +59,7 @@ public final class Board implements IBoard {
     public Cell[][] generate() {
         IGenerator generator = new Generator();
         board = generator.generate(height, width);
+        logOutputBoard(this);
         return board;
     }
 
@@ -90,5 +95,13 @@ public final class Board implements IBoard {
 
     public void setCurrentPlayer(Player currentPlayer) {
         this.currentPlayer = currentPlayer;
+    }
+
+    public static void logOutputBoard(Board board) { // вывести на экран карту
+        for (int i = 0; i < board.getHeight(); i++) {
+            for (int j = 0; j < board.getWidth(); j++) {
+                log.info("{}", board.getCell(i, j));
+            }
+        }
     }
 }
