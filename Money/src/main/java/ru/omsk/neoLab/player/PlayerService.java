@@ -18,14 +18,6 @@ public class PlayerService {
 
     private static final ArrayList<ARace> racesPool = new ArrayList<ARace>();
 
-    public HashSet<Cell> getPossibleCellsCapture() {
-        return possibleCellsCapture;
-    }
-
-    public void setPossibleCellsCapture(HashSet<Cell> possibleCellsCapture) {
-        this.possibleCellsCapture = possibleCellsCapture;
-    }
-
     public HashSet<Cell> possibleCellsCapture = new HashSet<Cell>();
 
 

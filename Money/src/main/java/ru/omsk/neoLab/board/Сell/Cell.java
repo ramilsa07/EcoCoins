@@ -41,10 +41,6 @@ public class Cell {
         return Terrain.toType(type);
     }
 
-    public void putToken(final int countTokens) {
-        this.countTokens += countTokens;
-    }
-
     public int getToken(final int countTokens) {
         this.countTokens -= countTokens;
         return countTokens;
@@ -85,10 +81,6 @@ public class Cell {
 
     public int getCoin() {
         return coin;
-    }
-
-    public void setCoin(int coin) {
-        this.coin = coin;
     }
 
     public boolean isAbilityCapture() {

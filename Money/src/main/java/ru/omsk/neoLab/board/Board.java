@@ -2,13 +2,12 @@ package ru.omsk.neoLab.board;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import ru.omsk.neoLab.answer.Answer;
 import ru.omsk.neoLab.board.Generators.Generator;
 import ru.omsk.neoLab.board.Generators.IGenerator;
 import ru.omsk.neoLab.board.phases.Phases;
 import ru.omsk.neoLab.board.Сell.Cell;
 import ru.omsk.neoLab.player.Player;
-
-import java.util.HashSet;
 
 public final class Board implements IBoard {
 
@@ -19,17 +18,37 @@ public final class Board implements IBoard {
     @JsonProperty("currentPlayer")
     private Player currentPlayer;
 
-    private int height;
-    private int width;
-
-    @JsonProperty("possibleCells")
-    public HashSet<Cell> possibleCellsCapture = new HashSet<Cell>();
-
+    private final int height;
+    private final int width;
 
     @JsonCreator
     public Board(@JsonProperty("height") final int height, @JsonProperty("width") final int width) {
         this.height = height;
         this.width = width;
+    }
+
+    @JsonCreator
+    public Board(@JsonProperty("board") Cell[][] board, @JsonProperty("phases") final Phases phase,
+                 @JsonProperty("height") final int height, @JsonProperty("width") final int width) {
+        this.board = board;
+        this.phase = phase;
+        this.height = height;
+        this.width = width;
+    }
+
+    @JsonCreator
+    public Board(@JsonProperty("board") final Board board) {
+        this(board.getBoard(), board.getPhase(), board.getHeight(), board.getWidth());
+    }
+
+    public Board getCopy(){
+        return new Board(this);
+    }
+
+    public Board getCopy(final Answer answer, final Player player){
+        final Board copy = getCopy();
+        player.regionCapture(copy.getCell(answer.getCell().getX(), answer.getCell().getY()));
+        return copy;
     }
 
     @Override
