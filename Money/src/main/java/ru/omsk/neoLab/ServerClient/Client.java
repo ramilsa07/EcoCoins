@@ -5,7 +5,6 @@ import ru.omsk.neoLab.ServerClient.aibot.SimpleBot;
 import ru.omsk.neoLab.answer.Serialize.AnswerSerialize;
 import ru.omsk.neoLab.board.Board;
 import ru.omsk.neoLab.board.Serializer.BoardDeserializer;
-import ru.omsk.neoLab.player.Player;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -24,7 +23,6 @@ public class Client {
     private DataOutputStream out;
 
     private Socket socket = null;
-    private Player player;
 
     public Client(String ip, int port) {
         this.ip = ip;
@@ -52,7 +50,6 @@ public class Client {
                 Board board = BoardDeserializer.deserialize(in.readUTF());
                 out.writeUTF(AnswerSerialize.serialize(simpleBot.getAnswer(board)));
             } catch (Exception e) {
-                e.printStackTrace();
                 downService();
             }
         }

@@ -2,12 +2,14 @@ package ru.omsk.neoLab.board;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import ru.omsk.neoLab.answer.Answer;
 import ru.omsk.neoLab.board.Generators.Generator;
 import ru.omsk.neoLab.board.Generators.IGenerator;
 import ru.omsk.neoLab.board.phases.Phases;
 import ru.omsk.neoLab.board.Сell.Cell;
 import ru.omsk.neoLab.player.Player;
+import ru.omsk.neoLab.race.*;
+
+import java.util.ArrayList;
 
 public final class Board implements IBoard {
 
@@ -17,9 +19,11 @@ public final class Board implements IBoard {
     private Phases phase;
     @JsonProperty("currentPlayer")
     private Player currentPlayer;
+    @JsonProperty("racesPool")
+    private ArrayList<ARace> racesPool = new ArrayList<>();
 
-    private final int height;
-    private final int width;
+    private int height;
+    private int width;
 
     @JsonCreator
     public Board(@JsonProperty("height") final int height, @JsonProperty("width") final int width) {
@@ -27,34 +31,23 @@ public final class Board implements IBoard {
         this.width = width;
     }
 
-    @JsonCreator
-    public Board(@JsonProperty("board") Cell[][] board, @JsonProperty("phases") final Phases phase,
-                 @JsonProperty("height") final int height, @JsonProperty("width") final int width) {
+    public Board(final Board board) {
+        this(board.getBoard(), board.getPhase(), board.getCurrentPlayer(), board.getHeight(), board.getWidth());
+    }
+
+    public Board(Cell[][] board, Phases phase, Player currentPlayer, int height, int width) {
         this.board = board;
         this.phase = phase;
+        this.currentPlayer = currentPlayer;
         this.height = height;
         this.width = width;
-    }
-
-    @JsonCreator
-    public Board(@JsonProperty("board") final Board board) {
-        this(board.getBoard(), board.getPhase(), board.getHeight(), board.getWidth());
-    }
-
-    public Board getCopy(){
-        return new Board(this);
-    }
-
-    public Board getCopy(final Answer answer, final Player player){
-        final Board copy = getCopy();
-        player.regionCapture(copy.getCell(answer.getCell().getX(), answer.getCell().getY()));
-        return copy;
     }
 
     @Override
     public Cell[][] generate() {
         IGenerator generator = new Generator();
         board = generator.generate(height, width);
+        racesPool = collectRacePool(racesPool);
         return board;
     }
 
@@ -66,6 +59,16 @@ public final class Board implements IBoard {
     @Override
     public void changePhase(final Phases phase) {
         this.phase = phase;
+    }
+
+    private ArrayList<ARace> collectRacePool(ArrayList<ARace> racesPool) {
+        racesPool.add(new Amphibia());
+        racesPool.add(new Dwarfs());
+        racesPool.add(new Elfs());
+        racesPool.add(new Mushrooms());
+        racesPool.add(new Orcs());
+        racesPool.add(new Undead());
+        return racesPool;
     }
 
     public Cell[][] getBoard() {
@@ -90,5 +93,9 @@ public final class Board implements IBoard {
 
     public void setCurrentPlayer(Player currentPlayer) {
         this.currentPlayer = currentPlayer;
+    }
+
+    public ArrayList<ARace> getRacesPool() {
+        return racesPool;
     }
 }

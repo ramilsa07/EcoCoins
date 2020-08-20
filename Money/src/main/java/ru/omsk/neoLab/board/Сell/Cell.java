@@ -5,21 +5,23 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import ru.omsk.neoLab.player.Player;
+import ru.omsk.neoLab.player.PlayerNeutral;
+import ru.omsk.neoLab.race.Undead;
 
 @JsonAutoDetect
 public class Cell {
 
     private int x;
     private int y;
-    @JsonIgnore
+    @JsonProperty("type")
     private Terrain type;
     @JsonIgnore
     private int coin = 1;
     @JsonIgnore
     private boolean abilityCapture = true;
-    @JsonIgnore
-    private Player belongs = new Player("Garen");
-    @JsonIgnore
+    @JsonProperty("belongs")
+    private Player belongs = new PlayerNeutral("Neutral", new Undead());
+    @JsonProperty("countTokens")
     private int countTokens = 0;
 
     @JsonCreator
@@ -36,9 +38,14 @@ public class Cell {
     public void regionCapture(final Player player) {
         this.belongs = player;
     }
+
     @JsonIgnore
     public int getTokensForCapture() {
         return Terrain.toType(type);
+    }
+
+    public void putToken(final int countTokens) {
+        this.countTokens += countTokens;
     }
 
     public int getToken(final int countTokens) {
@@ -81,6 +88,10 @@ public class Cell {
 
     public int getCoin() {
         return coin;
+    }
+
+    public void setCoin(int coin) {
+        this.coin = coin;
     }
 
     public boolean isAbilityCapture() {
