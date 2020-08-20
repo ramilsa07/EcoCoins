@@ -1,9 +1,6 @@
 package ru.omsk.neoLab.ServerClient;
 
 import ru.omsk.neoLab.LoggerGame;
-import ru.omsk.neoLab.answer.CellAnswer;
-import ru.omsk.neoLab.answer.DeclineAnswer;
-import ru.omsk.neoLab.answer.RaceAnswer;
 import ru.omsk.neoLab.answer.Serialize.AnswerDeserialize;
 import ru.omsk.neoLab.board.Board;
 import ru.omsk.neoLab.board.Serializer.BoardSerializer;
@@ -11,8 +8,6 @@ import ru.omsk.neoLab.board.phases.Phases;
 import ru.omsk.neoLab.board.Сell.Cell;
 import ru.omsk.neoLab.player.Player;
 import ru.omsk.neoLab.player.PlayerService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.awt.*;
 import java.io.DataInputStream;
@@ -25,7 +20,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class Server {
-    private static final Logger log = LoggerFactory.getLogger(Server.class);
+
     private static final int MAX_CLIENTS = 2;
 
     static final int PORT = 8081;
@@ -57,7 +52,7 @@ public class Server {
         Player player = new Player(nickName);
         ServerLobby serverLobby = new ServerLobby(socket, player);
         serverClient.add(serverLobby);
-        log.info("{} joined the game", serverLobby.getPlayer().getNickName());
+        LoggerGame.logNickSelection(serverLobby);
     }
 
     private class Game extends Thread {
@@ -72,6 +67,7 @@ public class Server {
 
         private Player firstPlayer;
         private Player currentPlayer;
+
         private int round = 1;
 
 
@@ -93,7 +89,7 @@ public class Server {
             while (round < 11) {
                 System.out.println("Текущий раунд - " + round);
                 board.setCurrentPlayer(currentPlayer);
-                log.info("Player {} starts {} round", currentPlayer.getNickName(), round);
+                LoggerGame.logPlayerRoundStart(currentPlayer, round);
                 if (round == 1 || currentPlayer.isDecline()) {
                     board.changePhase(Phases.RACE_CHOICE);
                     while (Phases.RACE_CHOICE.equals(board.getPhase())) {
@@ -105,6 +101,7 @@ public class Server {
                 }
                 while (Phases.PICK_UP_TOKENS.equals(board.getPhase())) {
                     pickUpTokensPhase(currentPlayer);
+                    LoggerGame.logStartPhaseCaptureOfRegions();
                 }
                 while (Phases.CAPTURE_OF_REGIONS.equals(board.getPhase())) {
                     captureRegions(currentPlayer);
@@ -137,12 +134,12 @@ public class Server {
         }
 
         private void choiceRace(final Player player) {
-            log.info("Началась фаза выбора расы");
+            LoggerGame.logStartPhaseRaceChoice();
             LoggerGame.logWhatRacesCanIChoose(board.getRacesPool());
             try {
                 out.flush();
                 out.writeUTF(BoardSerializer.serialize(board));
-                RaceAnswer race = (RaceAnswer) AnswerDeserialize.deserialize(in.readUTF());
+                ResponseRace race = (ResponseRace) AnswerDeserialize.deserialize(in.readUTF());
                 player.changeRace(race.getRace(), board);
                 board.changePhase(Phases.GO_INTO_DECLINE);
             } catch (IOException e) {
@@ -154,28 +151,32 @@ public class Server {
             try {
                 out.flush();
                 out.writeUTF(BoardSerializer.serialize(board));
-                DeclineAnswer decline = (DeclineAnswer) AnswerDeserialize.deserialize(in.readUTF());
+                ResponseDecline decline = (ResponseDecline) AnswerDeserialize.deserialize(in.readUTF());
                 if (decline.isDecline()) {
                     player.goIntoDecline();
-                    log.info("{} turned the race {} into decline", player.getNickName(), player.getRaceDecline().getNameRace());
+                    LoggerGame.logRaceInDecline(player);
+                    changeCourse(serverClient.element());
                     if (currentPlayer.equals(firstPlayer)) {
                         board.changePhase(Phases.GETTING_COINS);
+                    } else {
+                        board.changePhase(Phases.GO_INTO_DECLINE);
                     }
+                } else {
+                    board.changePhase(Phases.PICK_UP_TOKENS);
                 }
-                board.changePhase(Phases.PICK_UP_TOKENS);
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
         }
 
         private void pickUpTokensPhase(final Player currentPlayer) {
-            log.info("Началась фаза взятия жетонов в руки");
+            LoggerGame.logStartPhasePickUpTokens();
             for (Cell cell : currentPlayer.getLocationCell()) {
                 if (cell.getCountTokens() >= 1) {
                     currentPlayer.collectTokens();
                 }
             }
-            log.info("{} has {} tokens", currentPlayer.getNickName(), currentPlayer.getCountTokens());
+            LoggerGame.logGetTokens(currentPlayer);
             board.changePhase(Phases.CAPTURE_OF_REGIONS);
         }
 
@@ -183,10 +184,10 @@ public class Server {
             try {
                 out.flush();
                 out.writeUTF(BoardSerializer.serialize(board));
-                log.info("Началась фаза захвата территории");
-                CellAnswer answer = (CellAnswer) AnswerDeserialize.deserialize(in.readUTF());
+                ResponseCell answer = (ResponseCell) AnswerDeserialize.deserialize(in.readUTF());
                 for (Point point : answer.getCells()) {
                     playerService.regionCapture(board.getCell(point.x, point.y), currentPlayer);
+                    LoggerGame.logCaptureBot(board.getCell(point.x, point.y), currentPlayer);
                 }
                 board.changePhase(Phases.SHUFFLING_TOKENS);
             } catch (IOException e) {
@@ -198,16 +199,16 @@ public class Server {
             try {
                 out.flush();
                 out.writeUTF(BoardSerializer.serialize(board));
-                CellAnswer cell = (CellAnswer) AnswerDeserialize.deserialize(in.readUTF());
+                ResponseCell cell = (ResponseCell) AnswerDeserialize.deserialize(in.readUTF());
                 for (Point point : cell.getCells()) {
                     player.shufflingTokens(board.getCell(point.x, point.y));
                 }
-                log.info("{} begins the redistribution of tokens", player.getNickName());
+                LoggerGame.logRedistributionOfTokens(player);
                 serverClient.element().setPlayer(player);
                 changeCourse(serverClient.element());
                 if (currentPlayer.equals(firstPlayer)) {
                     board.changePhase(Phases.GETTING_COINS);
-                } else if (currentPlayer.isDecline()) {
+                } else if (player.isDecline()) {
                     board.changePhase(Phases.RACE_CHOICE);
                 } else {
                     board.changePhase(Phases.PICK_UP_TOKENS);
@@ -218,16 +219,16 @@ public class Server {
         }
 
         private void collectCoins(final Player player) {
-            log.info("Началась фаза cбора Монет");
+            LoggerGame.logStartPhaseGetCoins();
             for (ServerLobby server : serverClient) {
                 server.getPlayer().collectAllCoins();
-                log.info("{} has {} coins", server.getPlayer().getNickName(), server.getPlayer().getCountCoin());
+                LoggerGame.logGetCoins(server.getPlayer());
             }
             round++;
             if (player.isDecline()) {
                 board.changePhase(Phases.RACE_CHOICE);
             } else {
-                board.changePhase(Phases.PICK_UP_TOKENS);
+                board.changePhase(Phases.GO_INTO_DECLINE);
             }
         }
 
