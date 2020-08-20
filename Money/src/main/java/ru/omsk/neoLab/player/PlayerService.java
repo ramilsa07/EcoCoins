@@ -2,7 +2,6 @@ package ru.omsk.neoLab.player;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.omsk.neoLab.LoggerGame;
 import ru.omsk.neoLab.Validator;
 import ru.omsk.neoLab.board.Board;
 import ru.omsk.neoLab.board.Сell.Cell;

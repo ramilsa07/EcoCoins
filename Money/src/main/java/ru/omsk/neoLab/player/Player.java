@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.omsk.neoLab.LoggerGame;
 import ru.omsk.neoLab.board.Сell.Cell;
 import ru.omsk.neoLab.board.Сell.Terrain;
 import ru.omsk.neoLab.race.ARace;
@@ -141,7 +140,6 @@ public class Player {
         log.info("После перетасовки жетонов, у игрока {} осталось {} жетонов", this.nickName, this.countTokens);
     }
 
-    //TODO: Проверить на корректность
     public void collectTokens() {
         for (Cell cell : locationCell) {
             if (cell.getCountTokens() > 1) {

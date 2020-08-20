@@ -3,7 +3,9 @@ package ru.omsk.neoLab;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.omsk.neoLab.board.Сell.Cell;
+import ru.omsk.neoLab.race.ARace;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 
 /*
@@ -18,6 +20,13 @@ public final class LoggerGame {
         log.info("Can go: ");
         for (Cell cell : possibleCellsCapture) {
             log.info("{} [{}, {}]", cell.getType(), cell.getX(), cell.getY());
+        }
+    }
+
+    public static void logWhatRacesCanIChoose(ArrayList<ARace> freeRacesPool) { // Выводим на экран свободные расы
+        log.info("Can choose: ");
+        for (ARace race : freeRacesPool) {
+            log.info(race.getNameRace());
         }
     }
 }

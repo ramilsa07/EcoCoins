@@ -8,6 +8,8 @@ import ru.omsk.neoLab.board.phases.Phases;
 import ru.omsk.neoLab.board.Сell.Cell;
 import ru.omsk.neoLab.player.Player;
 import ru.omsk.neoLab.race.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 
