@@ -21,7 +21,7 @@ import java.util.HashSet;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class Server {
-
+    private static final Logger log = LoggerFactory.getLogger(Server.class);
     private static final int MAX_CLIENTS = 2;
 
     static final int PORT = 8081;

@@ -16,7 +16,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public final class SelfPlay {
-    private static final Logger log = LoggerFactory.getLogger(LoggerGame.class);
+    private static final Logger log = LoggerFactory.getLogger(SelfPlay.class);
     private final SimpleBot bot = new SimpleBot();
 
     private final Board board = new Board(4, 3);

@@ -12,6 +12,7 @@ import ru.omsk.neoLab.race.*;
 import java.util.ArrayList;
 
 public final class Board implements IBoard {
+    private static final Logger log = LoggerFactory.getLogger(Board.class);
 
     @JsonProperty("board")
     private Cell[][] board;
@@ -22,8 +23,8 @@ public final class Board implements IBoard {
     @JsonProperty("racesPool")
     private ArrayList<ARace> racesPool = new ArrayList<>();
 
-    private int height;
-    private int width;
+    private final int height;
+    private final int width;
 
     @JsonCreator
     public Board(@JsonProperty("height") final int height, @JsonProperty("width") final int width) {

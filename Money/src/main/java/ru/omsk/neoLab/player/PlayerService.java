@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 public class PlayerService {
-    private static final Logger log = LoggerFactory.getLogger(LoggerGame.class);
+    private static final Logger log = LoggerFactory.getLogger(PlayerService.class);
     private static PlayerService instance;
 
     // Массивы, для вычисления допустимых ходов

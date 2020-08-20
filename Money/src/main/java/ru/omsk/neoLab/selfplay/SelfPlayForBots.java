@@ -16,7 +16,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class SelfPlayForBots {
-    private static final Logger log = LoggerFactory.getLogger(LoggerGame.class);
+    private static final Logger log = LoggerFactory.getLogger(SelfPlayForBots.class);
     private final Board board;
     private final PlayerService playerService = PlayerService.GetInstance();
 
@@ -47,22 +47,13 @@ public class SelfPlayForBots {
             if (Phases.PICK_UP_TOKENS.equals(board.getPhase())) {
                 pickUpTokensPhase(currentPlayer);
             }
-            if (Phases.GO_INTO_DECLINE.equals(board.getPhase()) && currentPlayer.getAnswer(board).isDecline()) { // Phases.GO_INTO_DECLINE.equals(board.getPhase())
+            if (Phases.GO_INTO_DECLINE.equals(board.getPhase()) && currentPlayer.getAnswer(board).isDecline()) {
                 goIntoDeclinePhase(currentPlayer, firstPlayer);
             } else {
                 board.changePhase(Phases.CAPTURE_OF_REGIONS);
             }
             captureOfRegionsPhase(currentPlayer, firstPlayer);
-//
-//            changeCourse(currentPlayer);
-//            currentPlayer = bots.element();
-//            if (currentPlayer.equals(firstPlayer)) {
-//                board.changePhase(Phases.GETTING_COINS);
-//            } else if (currentPlayer.getBotPlayer().isDecline()) {
-//                board.changePhase(Phases.RACE_CHOICE);
-//            } else {
-//                board.changePhase(Phases.PICK_UP_TOKENS);
-//            }
+
             while (Phases.GETTING_COINS.equals(board.getPhase())) {
                 getCoinsPhase(currentPlayer);
             }
@@ -76,7 +67,8 @@ public class SelfPlayForBots {
         log.info("Началась фаза выбора расы");
         while (Phases.RACE_CHOICE.equals(board.getPhase())) {
             currentPlayer.getBotPlayer().changeRace(currentPlayer.getAnswer(board).getRace());
-            log.info("{} chose a race of {}", currentPlayer.getBotPlayer().getNickName(), currentPlayer.getBotPlayer().getRace().getNameRace());
+            log.info("{} chose a race of {}", currentPlayer.getBotPlayer().getNickName(),
+                    currentPlayer.getBotPlayer().getRace().getNameRace());
             board.changePhase(Phases.CAPTURE_OF_REGIONS);
         }
     }
@@ -85,7 +77,8 @@ public class SelfPlayForBots {
         log.info("Началась фаза взятия жетонов в руки");
         while (Phases.PICK_UP_TOKENS.equals(board.getPhase())) {
             currentPlayer.getBotPlayer().collectTokens();
-            log.info("{} has {} tokens", currentPlayer.getBotPlayer().getNickName(), currentPlayer.getBotPlayer().getCountTokens());
+            log.info("{} has {} tokens", currentPlayer.getBotPlayer().getNickName(),
+                    currentPlayer.getBotPlayer().getCountTokens());
             board.changePhase(Phases.GO_INTO_DECLINE);
         }
     }

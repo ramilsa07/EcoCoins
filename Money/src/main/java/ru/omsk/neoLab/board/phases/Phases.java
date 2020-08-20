@@ -8,6 +8,7 @@ public enum Phases {
     GO_INTO_DECLINE("go_into_decline"),
     GETTING_COINS("getting_coins");
 
+
     private final String phasesName;
 
     Phases(final String phasesName) {
