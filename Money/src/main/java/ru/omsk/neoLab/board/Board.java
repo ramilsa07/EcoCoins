@@ -2,14 +2,14 @@ package ru.omsk.neoLab.board;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.omsk.neoLab.board.Generators.Generator;
 import ru.omsk.neoLab.board.Generators.IGenerator;
 import ru.omsk.neoLab.board.phases.Phases;
 import ru.omsk.neoLab.board.Сell.Cell;
 import ru.omsk.neoLab.player.Player;
 import ru.omsk.neoLab.race.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 
@@ -35,13 +35,14 @@ public final class Board implements IBoard {
     }
 
     public Board(final Board board) {
-        this(board.getBoard(), board.getPhase(), board.getCurrentPlayer(), board.getHeight(), board.getWidth());
+        this(board.getBoard(), board.getPhase(), board.getCurrentPlayer(), board.getRacesPool(), board.getHeight(), board.getWidth());
     }
 
-    public Board(Cell[][] board, Phases phase, Player currentPlayer, int height, int width) {
+    public Board(Cell[][] board, Phases phase, Player currentPlayer, ArrayList<ARace> racesPool, int height, int width) {
         this.board = board;
         this.phase = phase;
         this.currentPlayer = currentPlayer;
+        this.racesPool = racesPool;
         this.height = height;
         this.width = width;
     }
