@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.omsk.neoLab.LoggerGame;
 import ru.omsk.neoLab.board.Board;
 import ru.omsk.neoLab.board.Сell.Cell;
 import ru.omsk.neoLab.race.ARace;
@@ -79,12 +78,11 @@ public class Player {
             this.locationDeclineCell.addAll(this.locationCell);
             this.decline = false;
             locationCell.clear();
-            //LoggerGame.logRaceInDecline(this);
         }
         this.race = race;
         this.countTokens = race.getCountTokens();
         board.getRacesPool().remove(race);
-        LoggerGame.logChooseRaceTrue(this);
+        log.info("{} chose a race of {}", this.getNickName(), this.getRace().getNameRace());
     }
 
     public void goIntoDecline() {
@@ -118,8 +116,9 @@ public class Player {
     public void shufflingTokens(Cell cell) {
         cell.setCountTokens(cell.getCountTokens() + 1);
         this.countTokens--;
-        LoggerGame.logNumberOfTokensOnCell(cell);
-        log.info("После перетасовки жетонов, у игрока {} осталось {} жетонов", this.nickName, this.countTokens);
+        log.info("On cell {} [{}, {}] {} tokens", cell.getType(), cell.getX(),
+                cell.getY(), cell.getCountTokens());
+        log.info("After shuffling tokens, player {} has {} tokens", this.nickName, this.countTokens);
     }
 
     public void collectTokens() {

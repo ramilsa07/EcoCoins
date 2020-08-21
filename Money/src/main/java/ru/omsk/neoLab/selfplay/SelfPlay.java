@@ -62,7 +62,7 @@ public final class SelfPlay {
                 log.info("Началась фаза выбора расы");
                 phase = "race choice";
                 while (Phases.RACE_CHOICE.equalPhase(phase)) {
-                    currentPlayer.changeRace(null);
+                    currentPlayer.changeRace(null, null);
                     log.info("{} chose a race of {}", currentPlayer.getNickName(), currentPlayer.getRace().getNameRace());
                     phase = "capture of regions";
                 }

@@ -66,7 +66,7 @@ public class SelfPlayForBots {
     private void raceChoicePhase(ABot currentPlayer) {
         log.info("Началась фаза выбора расы");
         while (Phases.RACE_CHOICE.equals(board.getPhase())) {
-            currentPlayer.getBotPlayer().changeRace(currentPlayer.getAnswer(board).getRace());
+            currentPlayer.getBotPlayer().changeRace(currentPlayer.getAnswer(board).getRace(), null);
             log.info("{} chose a race of {}", currentPlayer.getBotPlayer().getNickName(),
                     currentPlayer.getBotPlayer().getRace().getNameRace());
             board.changePhase(Phases.CAPTURE_OF_REGIONS);

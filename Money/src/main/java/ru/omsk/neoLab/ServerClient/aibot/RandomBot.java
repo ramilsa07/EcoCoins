@@ -9,6 +9,8 @@ import ru.omsk.neoLab.board.Сell.Cell;
 import ru.omsk.neoLab.player.Player;
 import ru.omsk.neoLab.player.PlayerService;
 
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
 
@@ -39,7 +41,11 @@ public class RandomBot extends ABot {
         Object[] cells = possibleCellsCapture.toArray();
 
         if (!possibleCellsCapture.isEmpty()) {
-            return new CellAnswer((Cell) cells[random.nextInt(cells.length)]);
+//            return new CellAnswer((Cell
+//            ) cells[random.nextInt(cells.length)]);
+            ArrayList<Point> points = new ArrayList<Point>();
+            points.add((Point) cells[random.nextInt(cells.length)]);
+            return new CellAnswer(points);
         } else {
             return null;
         }
@@ -59,7 +65,11 @@ public class RandomBot extends ABot {
     }
 
     private CellAnswer getShufflingAnswer(Player player) {
-        return new CellAnswer(player.getLocationCell().get(random.nextInt(player.getLocationCell().size())));
+        ArrayList<Point> points = new ArrayList<>();
+        Cell cell = player.getLocationCell().get(random.nextInt(player.getLocationCell().size()));
+        points.add(new Point(cell.getX(), cell.getY()));
+//        return new CellAnswer(player.getLocationCell().get(random.nextInt(player.getLocationCell().size())));
+        return new CellAnswer(points);
     }
 
     @Override

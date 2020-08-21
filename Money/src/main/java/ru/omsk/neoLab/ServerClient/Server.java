@@ -1,6 +1,11 @@
 package ru.omsk.neoLab.ServerClient;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.omsk.neoLab.LoggerGame;
+import ru.omsk.neoLab.answer.CellAnswer;
+import ru.omsk.neoLab.answer.DeclineAnswer;
+import ru.omsk.neoLab.answer.RaceAnswer;
 import ru.omsk.neoLab.answer.Serialize.AnswerDeserialize;
 import ru.omsk.neoLab.board.Board;
 import ru.omsk.neoLab.board.Serializer.BoardSerializer;
@@ -20,7 +25,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class Server {
-
+    private static final Logger log = LoggerFactory.getLogger(Server.class);
     private static final int MAX_CLIENTS = 2;
 
     static final int PORT = 8081;
@@ -52,7 +57,7 @@ public class Server {
         Player player = new Player(nickName);
         ServerLobby serverLobby = new ServerLobby(socket, player);
         serverClient.add(serverLobby);
-        LoggerGame.logNickSelection(serverLobby);
+        log.info("{} joined the game", serverLobby.getPlayer().getNickName());
     }
 
     private class Game extends Thread {
@@ -89,7 +94,7 @@ public class Server {
             while (round < 11) {
                 System.out.println("Текущий раунд - " + round);
                 board.setCurrentPlayer(currentPlayer);
-                LoggerGame.logPlayerRoundStart(currentPlayer, round);
+                log.info("Player {} starts {} round", currentPlayer.getNickName(), round);
                 if (round == 1 || currentPlayer.isDecline()) {
                     board.changePhase(Phases.RACE_CHOICE);
                     while (Phases.RACE_CHOICE.equals(board.getPhase())) {
@@ -101,7 +106,6 @@ public class Server {
                 }
                 while (Phases.PICK_UP_TOKENS.equals(board.getPhase())) {
                     pickUpTokensPhase(currentPlayer);
-                    LoggerGame.logStartPhaseCaptureOfRegions();
                 }
                 while (Phases.CAPTURE_OF_REGIONS.equals(board.getPhase())) {
                     captureRegions(currentPlayer);
@@ -134,12 +138,12 @@ public class Server {
         }
 
         private void choiceRace(final Player player) {
-            LoggerGame.logStartPhaseRaceChoice();
+            log.info("Race selection phase has begun");
             LoggerGame.logWhatRacesCanIChoose(board.getRacesPool());
             try {
                 out.flush();
                 out.writeUTF(BoardSerializer.serialize(board));
-                ResponseRace race = (ResponseRace) AnswerDeserialize.deserialize(in.readUTF());
+                RaceAnswer race = (RaceAnswer) AnswerDeserialize.deserialize(in.readUTF());
                 player.changeRace(race.getRace(), board);
                 board.changePhase(Phases.GO_INTO_DECLINE);
             } catch (IOException e) {
@@ -151,10 +155,10 @@ public class Server {
             try {
                 out.flush();
                 out.writeUTF(BoardSerializer.serialize(board));
-                ResponseDecline decline = (ResponseDecline) AnswerDeserialize.deserialize(in.readUTF());
+                DeclineAnswer decline = (DeclineAnswer) AnswerDeserialize.deserialize(in.readUTF());
                 if (decline.isDecline()) {
                     player.goIntoDecline();
-                    LoggerGame.logRaceInDecline(player);
+                    log.info("{} turned the race {} into decline", player.getNickName(), player.getRaceDecline().getNameRace());
                     changeCourse(serverClient.element());
                     if (currentPlayer.equals(firstPlayer)) {
                         board.changePhase(Phases.GETTING_COINS);
@@ -170,13 +174,13 @@ public class Server {
         }
 
         private void pickUpTokensPhase(final Player currentPlayer) {
-            LoggerGame.logStartPhasePickUpTokens();
+            log.info("The phase of picking up tokens has begun");
             for (Cell cell : currentPlayer.getLocationCell()) {
                 if (cell.getCountTokens() >= 1) {
                     currentPlayer.collectTokens();
                 }
             }
-            LoggerGame.logGetTokens(currentPlayer);
+            log.info("{} has {} tokens", currentPlayer.getNickName(), currentPlayer.getCountTokens());
             board.changePhase(Phases.CAPTURE_OF_REGIONS);
         }
 
@@ -184,10 +188,11 @@ public class Server {
             try {
                 out.flush();
                 out.writeUTF(BoardSerializer.serialize(board));
-                ResponseCell answer = (ResponseCell) AnswerDeserialize.deserialize(in.readUTF());
+                log.info("Territory capture phase has begun");
+                CellAnswer answer = (CellAnswer) AnswerDeserialize.deserialize(in.readUTF());
                 for (Point point : answer.getCells()) {
                     playerService.regionCapture(board.getCell(point.x, point.y), currentPlayer);
-                    LoggerGame.logCaptureBot(board.getCell(point.x, point.y), currentPlayer);
+//                    LoggerGame.logCaptureBot(board.getCell(point.x, point.y), currentPlayer);
                 }
                 board.changePhase(Phases.SHUFFLING_TOKENS);
             } catch (IOException e) {
@@ -199,11 +204,11 @@ public class Server {
             try {
                 out.flush();
                 out.writeUTF(BoardSerializer.serialize(board));
-                ResponseCell cell = (ResponseCell) AnswerDeserialize.deserialize(in.readUTF());
+                CellAnswer cell = (CellAnswer) AnswerDeserialize.deserialize(in.readUTF());
                 for (Point point : cell.getCells()) {
                     player.shufflingTokens(board.getCell(point.x, point.y));
                 }
-                LoggerGame.logRedistributionOfTokens(player);
+                log.info("{} begins the redistribution of tokens", player.getNickName());
                 serverClient.element().setPlayer(player);
                 changeCourse(serverClient.element());
                 if (currentPlayer.equals(firstPlayer)) {
@@ -219,10 +224,10 @@ public class Server {
         }
 
         private void collectCoins(final Player player) {
-            LoggerGame.logStartPhaseGetCoins();
+            log.info("The phase of collecting Coins has begun");
             for (ServerLobby server : serverClient) {
                 server.getPlayer().collectAllCoins();
-                LoggerGame.logGetCoins(server.getPlayer());
+                log.info("{} has {} coins", server.getPlayer().getNickName(), server.getPlayer().getCountCoin());
             }
             round++;
             if (player.isDecline()) {
