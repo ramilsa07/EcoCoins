@@ -13,7 +13,7 @@ public interface IBot {
 
     Answer getAnswer(final Board board);
 
-    Player getBotPlayer();
-
-    String getName();
+//    Player getBotPlayer();
+//
+//    String getName();
 }

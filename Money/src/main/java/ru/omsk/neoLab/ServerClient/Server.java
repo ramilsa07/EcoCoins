@@ -87,7 +87,6 @@ public class Server {
         @Override
         public void run() {
             generateBoard();
-            //LoggerGame.logOutputBoard(board);
             firstPlayer = serverClient.element().getPlayer();
             currentPlayer = serverClient.element().getPlayer();
             board.changePhase(Phases.RACE_CHOICE);

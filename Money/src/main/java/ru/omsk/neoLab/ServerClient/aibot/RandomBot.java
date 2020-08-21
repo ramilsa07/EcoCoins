@@ -18,8 +18,7 @@ public class RandomBot extends ABot {
     public static class RandomBotFactory extends BaseBotFactory {
         @Override
         public RandomBot createBot(final Player player) {
-            final String name = "RandomBot-" + botIdx++;
-            return new RandomBot(player, name);
+            return new RandomBot();
         }
     }
 
@@ -28,8 +27,7 @@ public class RandomBot extends ABot {
     private final PlayerService playerService = PlayerService.GetInstance();
     private HashSet<Cell> possibleCellsCapture = new HashSet<>();
 
-    protected RandomBot(final Player player, final String name) {
-        super(player, name);
+    protected RandomBot() {
     }
 
     private CellAnswer getCellAnswer(final Board board, final Player player) {
@@ -74,17 +72,19 @@ public class RandomBot extends ABot {
 
     @Override
     public Answer getAnswer(final Board board) {
+        Player playerClone = new Player(board.getCurrentPlayer());
+        Board boardClone = new Board(board);
         switch (board.getPhase()) {
             case RACE_CHOICE:
                 return getRaceAnswer();
             case CAPTURE_OF_REGIONS:
-                return getCellAnswer(board, player);
+                return getCellAnswer(boardClone, playerClone);
             case GO_INTO_DECLINE:
-                return getDeclineAnswer(board, player);
+                return getDeclineAnswer(boardClone, playerClone);
             case SHUFFLING_TOKENS:
-                return getShufflingAnswer(player);
+                return getShufflingAnswer(playerClone);
             default:
-                throw new IllegalStateException("Unexpected value: " + board);
+                throw new IllegalStateException("Unexpected value: " + boardClone);
         }
     }
 }

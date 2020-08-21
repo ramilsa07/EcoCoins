@@ -18,15 +18,15 @@ public class SimpleBot implements IBot {
         return null;
     }
 
-    @Override
-    public Player getBotPlayer() {
-        return null;
-    }
-
-    @Override
-    public String getName() {
-        return null;
-    }
+//    @Override
+//    public Player getBotPlayer() {
+//        return null;
+//    }
+//
+//    @Override
+//    public String getName() {
+//        return null;
+//    }
 
 //    @Override
 //    public Answer getAnswer(Board board) {
