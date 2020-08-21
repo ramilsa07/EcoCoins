@@ -6,8 +6,9 @@ import ru.omsk.neoLab.board.Board;
 
 public class BoardDeserializer {
 
+    final static ObjectMapper mapper = new ObjectMapper();
+
     public static Board deserialize(String jsonString) throws JsonProcessingException {
-        final ObjectMapper mapper = new ObjectMapper();
         return mapper.readValue(jsonString, Board.class);
     }
 }

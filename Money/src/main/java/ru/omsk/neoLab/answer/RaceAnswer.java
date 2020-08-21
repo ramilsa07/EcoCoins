@@ -12,12 +12,10 @@ public class RaceAnswer extends Answer {
 
     @JsonCreator
     public RaceAnswer(@JsonProperty("race") final ARace race) {
-        super(race);
         this.race = race;
     }
 
-    @Override
-    public String toString() {
-        return "[race=" + race + ']';
+    public ARace getRace() {
+        return race;
     }
 }

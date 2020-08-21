@@ -3,7 +3,6 @@ package ru.omsk.neoLab.answer;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import ru.omsk.neoLab.board.Сell.Cell;
-import ru.omsk.neoLab.race.ARace;
 
 import java.awt.*;
 import java.util.List;
@@ -15,8 +14,8 @@ public abstract class Answer {
     private Cell cell;
     @JsonProperty("cells")
     private List<Point> cells;
-    @JsonProperty("race")
-    private ARace race;
+    // @JsonProperty("race")
+    //private ARace race;
     @JsonProperty("decline")
     private boolean decline;
 
@@ -28,20 +27,19 @@ public abstract class Answer {
         this.cell = cell;
     }
 
-    public Answer(@JsonProperty("race") final ARace race) {
+    /*public Answer(@JsonProperty("race") final ARace race) {
         this.race = race;
-    }
+    }*/
 
     public Answer(boolean decline) {
         this.decline = decline;
     }
 
-    public Cell getCell() {
-        return cell;
+    public Answer() {
     }
 
-    public ARace getRace() {
-        return race;
+    public Cell getCell() {
+        return cell;
     }
 
     public List<Point> getCells() {

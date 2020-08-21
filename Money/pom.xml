@@ -56,7 +56,6 @@
                 </configuration>
             </plugin>
         </plugins>
-
     </build>
 
 
