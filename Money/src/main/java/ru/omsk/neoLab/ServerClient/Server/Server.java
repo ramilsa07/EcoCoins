@@ -1,4 +1,4 @@
-package ru.omsk.neoLab.ServerClient;
+package ru.omsk.neoLab.ServerClient.Server;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +28,7 @@ public class Server {
     private static final Logger log = LoggerFactory.getLogger(Server.class);
     private static final int MAX_CLIENTS = 2;
 
-    static final int PORT = 8081;
+    public static final int PORT = 8081;
     private final ConcurrentLinkedQueue<ServerLobby> serverClient = new ConcurrentLinkedQueue<>();
     private Board board;
     private ArrayList<String> arrayList = new ArrayList<>();

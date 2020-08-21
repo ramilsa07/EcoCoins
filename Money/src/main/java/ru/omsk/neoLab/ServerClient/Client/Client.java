@@ -1,7 +1,7 @@
-package ru.omsk.neoLab.ServerClient;
+package ru.omsk.neoLab.ServerClient.Client;
 
-
-import ru.omsk.neoLab.ServerClient.aibot.SimpleBot;
+import ru.omsk.neoLab.ServerClient.Client.aibot.SimpleBot;
+import ru.omsk.neoLab.ServerClient.Server.Server;
 import ru.omsk.neoLab.answer.Serialize.AnswerSerialize;
 import ru.omsk.neoLab.board.Board;
 import ru.omsk.neoLab.board.Serializer.BoardDeserializer;
