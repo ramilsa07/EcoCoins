@@ -1,7 +1,6 @@
-package ru.omsk.neoLab.ServerClient.Client;
+package ru.omsk.neoLab.Client;
 
-import ru.omsk.neoLab.ServerClient.Client.aibot.SimpleBot;
-import ru.omsk.neoLab.ServerClient.Server.Server;
+import ru.omsk.neoLab.Client.Bot.SimpleBot;
 import ru.omsk.neoLab.answer.Serialize.AnswerSerialize;
 import ru.omsk.neoLab.board.Board;
 import ru.omsk.neoLab.board.Serializer.BoardDeserializer;
@@ -13,8 +12,8 @@ import java.net.Socket;
 
 public class Client {
 
-    private static final String IP = "127.0.0.1";//"localhost";
-    private static final int PORT = Server.PORT;
+    private static final String IP = "127.0.0.1";//"localhost";//135.181.85.225
+    private static final int PORT = 25;
 
     private final String ip; // ip адрес клиента
     private final int port; // порт соединения

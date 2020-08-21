@@ -1,4 +1,4 @@
-package ru.omsk.neoLab.ServerClient.Server;
+package ru.omsk.neoLab.ServerClient.server;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +28,7 @@ public class Server {
     private static final Logger log = LoggerFactory.getLogger(Server.class);
     private static final int MAX_CLIENTS = 2;
 
-    public static final int PORT = 8081;
+    public static final int PORT = 25;
     private final ConcurrentLinkedQueue<ServerLobby> serverClient = new ConcurrentLinkedQueue<>();
     private Board board;
     private ArrayList<String> arrayList = new ArrayList<>();
@@ -39,13 +39,15 @@ public class Server {
         arrayList.add("SimpleBot2");
         System.out.println(String.format("Server started, port: %d", PORT));
         try (final ServerSocket serverSocket = new ServerSocket(PORT)) {
-            while (true) {
+            int endGame = 0;
+            while (endGame == 0) {
                 Socket socket = serverSocket.accept();
                 addServerLobby(socket, arrayList.get(i));
                 System.out.println("Connected host: " + socket);
                 i++;
                 if (serverClient.size() == MAX_CLIENTS) {
                     new Game(this, serverClient.element().getSocketClient()).start();
+                    endGame = 1;
                 }
             }
         } catch (final BindException e) {
@@ -157,7 +159,6 @@ public class Server {
                 DeclineAnswer decline = (DeclineAnswer) AnswerDeserialize.deserialize(in.readUTF());
                 if (decline.isDecline()) {
                     player.goIntoDecline();
-                    log.info("{} turned the race {} into decline", player.getNickName(), player.getRaceDecline().getNameRace());
                     changeCourse(serverClient.element());
                     if (currentPlayer.equals(firstPlayer)) {
                         board.changePhase(Phases.GETTING_COINS);
@@ -242,9 +243,11 @@ public class Server {
 
         private void downService() {
             try {
-                if (!socket.isClosed()) {
-                    socket.close();
-                    server.serverClient.remove(this);
+                for (ServerLobby serverLobby : serverClient) {
+                    if (!socket.isClosed()) {
+                        serverLobby.getSocketClient().close();
+                        server.serverClient.remove(this);
+                    }
                 }
             } catch (final IOException ignored) {
             }

@@ -1,4 +1,4 @@
-package ru.omsk.neoLab.ServerClient.Server;
+package ru.omsk.neoLab.ServerClient.server;
 
 
 import ru.omsk.neoLab.player.Player;

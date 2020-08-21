@@ -1,9 +1,6 @@
 package ru.omsk.neoLab.board.Сell;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import ru.omsk.neoLab.player.Player;
 import ru.omsk.neoLab.player.PlayerNeutral;
 import ru.omsk.neoLab.race.Undead;
@@ -19,7 +16,7 @@ public class Cell {
     private int coin = 1;
     @JsonIgnore
     private boolean abilityCapture = true;
-    @JsonProperty("belongs")
+    @JsonIgnoreProperties("locationCell")
     private Player belongs = new PlayerNeutral("Neutral", new Undead());
     @JsonProperty("countTokens")
     private int countTokens = 0;

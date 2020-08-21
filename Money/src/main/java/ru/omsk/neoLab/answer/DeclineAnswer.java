@@ -4,11 +4,12 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class DeclineAnswer extends Answer {
+
     @JsonProperty("decline")
     private boolean decline;
 
     @JsonCreator
-    public DeclineAnswer(boolean decline) {
+    public DeclineAnswer(@JsonProperty("decline") boolean decline) {
         super(decline);
         this.decline = decline;
     }
