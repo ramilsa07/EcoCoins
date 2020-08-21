@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import ru.omsk.neoLab.board.Сell.Cell;
 import ru.omsk.neoLab.board.Сell.Terrain;
 import ru.omsk.neoLab.race.ARace;
+import ru.omsk.neoLab.race.Undead;
 
 import java.util.ArrayList;
 
@@ -98,7 +99,7 @@ public class Player {
         raceDecline = race;
         if (locationDeclineCell.size() != 0) {
             for (Cell cell : locationDeclineCell) {
-                cell.setBelongs(new Player("Garen"));
+                cell.setBelongs(new PlayerNeutral("Neutral", new Undead()));
                 cell.setCountTokens(0);
             }
             locationDeclineCell.clear();
