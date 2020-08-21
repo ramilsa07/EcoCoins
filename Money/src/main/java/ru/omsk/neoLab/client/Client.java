@@ -1,9 +1,9 @@
-package ru.omsk.neoLab.Client;
+package ru.omsk.neoLab.client;
 
-import ru.omsk.neoLab.Client.Bot.SimpleBot;
 import ru.omsk.neoLab.answer.Serialize.AnswerSerialize;
 import ru.omsk.neoLab.board.Board;
 import ru.omsk.neoLab.board.Serializer.BoardDeserializer;
+import ru.omsk.neoLab.client.Bot.SimpleBot;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -12,7 +12,7 @@ import java.net.Socket;
 
 public class Client {
 
-    private static final String IP = "127.0.0.1";//"localhost";//135.181.85.225
+    private static final String IP = "127.0.0.1";//"127.0.0.1";//135.181.85.225
     private static final int PORT = 25;
 
     private final String ip; // ip адрес клиента
@@ -47,6 +47,10 @@ public class Client {
             try {
                 out.flush();
                 Board board = BoardDeserializer.deserialize(in.readUTF());
+                System.out.println(board.getBoard()[0].length);
+                System.out.println(board.getPhase());
+                System.out.println(board.getRacesPool().size());
+                System.out.println(board.getCurrentPlayer().getNickName());
                 out.writeUTF(AnswerSerialize.serialize(simpleBot.getAnswer(board)));
             } catch (Exception e) {
                 downService();
