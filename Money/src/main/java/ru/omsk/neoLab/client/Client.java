@@ -4,6 +4,7 @@ import ru.omsk.neoLab.answer.Serialize.AnswerSerialize;
 import ru.omsk.neoLab.board.Board;
 import ru.omsk.neoLab.board.Serializer.BoardDeserializer;
 import ru.omsk.neoLab.client.Bot.SimpleBot;
+import ru.omsk.neoLab.client.botRamil.BotWithOpponentMove;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -13,7 +14,7 @@ import java.net.Socket;
 public class Client {
 
     private static final String IP = "127.0.0.1";//"127.0.0.1";//135.181.85.225
-    private static final int PORT = 25;
+    private static final int PORT = 8080;
 
     private final String ip; // ip адрес клиента
     private final int port; // порт соединения
@@ -42,7 +43,8 @@ public class Client {
             e.printStackTrace();
         }
         System.out.println(String.format("Client started, ip: %s, port: %d", ip, port));
-        SimpleBot simpleBot = new SimpleBot();
+        //SimpleBot simpleBot = new SimpleBot();
+        BotWithOpponentMove simpleBot = new BotWithOpponentMove();
         while (isDisconnect()) {
             try {
                 out.flush();

@@ -22,6 +22,8 @@ public final class Board implements IBoard {
     private Phases phase;
     @JsonProperty("currentPlayer")
     private Player currentPlayer;
+    @JsonProperty("opponentPlayer")
+    private Player opponentPlayer;
     @JsonProperty("racesPool")
     private ArrayList<ARace> racesPool = new ArrayList<>();
 
@@ -35,13 +37,14 @@ public final class Board implements IBoard {
     }
 
     public Board(final Board board) {
-        this(board.getBoard(), board.getPhase(), board.getCurrentPlayer(), board.getRacesPool(), board.getHeight(), board.getWidth());
+        this(board.getBoard(), board.getPhase(), board.getCurrentPlayer(), board.getOpponentPlayer(), board.getRacesPool(), board.getHeight(), board.getWidth());
     }
 
-    public Board(Cell[][] board, Phases phase, Player currentPlayer, ArrayList<ARace> racesPool, int height, int width) {
+    public Board(Cell[][] board, Phases phase, Player currentPlayer, Player opponentPlayer, ArrayList<ARace> racesPool, int height, int width) {
         this.board = board;
         this.phase = phase;
         this.currentPlayer = currentPlayer;
+        this.opponentPlayer = opponentPlayer;
         this.racesPool = racesPool;
         this.height = height;
         this.width = width;
@@ -96,7 +99,12 @@ public final class Board implements IBoard {
     }
 
     public void setCurrentPlayer(Player currentPlayer) {
+        opponentPlayer = this.getCurrentPlayer();
         this.currentPlayer = currentPlayer;
+    }
+
+    public Player getOpponentPlayer() {
+        return opponentPlayer;
     }
 
     public ArrayList<ARace> getRacesPool() {
