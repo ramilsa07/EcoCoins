@@ -80,6 +80,7 @@ public class BotWithOpponentMove extends ABot {
         for (Point point : opponentAnswer.getCells()) {
             playerService.regionCapture(board.getCell(point.x, point.y), opponent);
         }
+        winList.clear();
         return findBestMove(board, player);
     }
 

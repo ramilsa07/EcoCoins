@@ -5,6 +5,8 @@ import ru.omsk.neoLab.board.Board;
 import ru.omsk.neoLab.board.Serializer.BoardDeserializer;
 import ru.omsk.neoLab.client.Bot.SimpleBot;
 import ru.omsk.neoLab.client.botRamil.BotWithOpponentMove;
+import ru.omsk.neoLab.client.botRamil.RandomBot;
+import ru.omsk.neoLab.client.botRamil.SimpleBotRam;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -45,6 +47,8 @@ public class Client {
         System.out.println(String.format("Client started, ip: %s, port: %d", ip, port));
         //SimpleBot simpleBot = new SimpleBot();
         BotWithOpponentMove simpleBot = new BotWithOpponentMove();
+        //SimpleBotRam simpleBot = new SimpleBotRam();
+        //RandomBot simpleBot = new RandomBot();
         while (isDisconnect()) {
             try {
                 out.flush();

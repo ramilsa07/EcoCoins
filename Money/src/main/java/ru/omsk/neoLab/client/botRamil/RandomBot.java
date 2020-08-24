@@ -13,6 +13,7 @@ import ru.omsk.neoLab.player.PlayerService;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
 
 public class RandomBot extends ABot {
@@ -27,8 +28,9 @@ public class RandomBot extends ABot {
     private final Random random = new Random();
     private final PlayerService playerService = PlayerService.GetInstance();
     private HashSet<Cell> possibleCellsCapture = new HashSet<>();
+    List<Point> winList = new ArrayList<>();
 
-    protected RandomBot() {
+    public RandomBot() {
     }
 
     private CellAnswer getCellAnswer(final Board board, final Player player) {
@@ -39,13 +41,22 @@ public class RandomBot extends ABot {
         }
         Object[] cells = possibleCellsCapture.toArray();
 
-        if (!possibleCellsCapture.isEmpty()) {
-            ArrayList<Point> points = new ArrayList<Point>();
-            points.add((Point) cells[random.nextInt(cells.length)]);
-            return new CellAnswer(points);
-        } else {
-            return null;
+//        if (!possibleCellsCapture.isEmpty()) {
+//            ArrayList<Point> points = new ArrayList<Point>();
+//            points.add((Point) cells[random.nextInt(cells.length)]);
+//            return new CellAnswer(points);
+//        } else {
+//            return null;
+//        }
+        if (cells.length != 0) {
+            Cell move = (Cell) cells[random.nextInt(cells.length)];
+            player.regionCapture(move);
+            winList.add(winList.size(), new Point(move.getX(), move.getY()));
+            Player testPlayer = new Player(player);
+            Board testBoard = new Board(board);
+            getCellAnswer(testBoard, testPlayer);
         }
+        return new CellAnswer(winList);
     }
 
     private DeclineAnswer getDeclineAnswer(final Board board, final Player player) {
@@ -77,6 +88,7 @@ public class RandomBot extends ABot {
             case RACE_CHOICE:
                 return getRaceAnswer(board);
             case CAPTURE_OF_REGIONS:
+                winList.clear();
                 return getCellAnswer(boardClone, playerClone);
             case GO_INTO_DECLINE:
                 return getDeclineAnswer(boardClone, playerClone);
