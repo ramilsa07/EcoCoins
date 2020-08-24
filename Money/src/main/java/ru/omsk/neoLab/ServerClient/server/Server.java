@@ -199,7 +199,6 @@ public class Server {
                 CellAnswer answer = (CellAnswer) AnswerDeserialize.deserialize(in.readUTF());
                 for (Point point : answer.getCells()) {
                     playerService.regionCapture(board.getCell(point.x, point.y), currentPlayer);
-//                    LoggerGame.logCaptureBot(board.getCell(point.x, point.y), currentPlayer);
                 }
                 board.changePhase(Phases.SHUFFLING_TOKENS);
             } catch (IOException e) {

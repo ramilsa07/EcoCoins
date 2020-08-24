@@ -56,7 +56,7 @@ public class SimpleBot implements IBot {
         cells.clear();
         for (Cell cell : player.getLocationCell()) {
             if (cell.getCountTokens() >= 1) {
-                player.collectTokens();
+                //player.collectTokens();
             }
         }
         toDetermineCell(player, board);
