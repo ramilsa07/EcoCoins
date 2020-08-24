@@ -159,13 +159,18 @@ public class Server {
                 DeclineAnswer decline = (DeclineAnswer) AnswerDeserialize.deserialize(in.readUTF());
                 if (decline.isDecline()) {
                     player.goIntoDecline();
+                    log.info("{} уходит в упадок", player.getNickName());
                     changeCourse(serverClient.element());
+                    board.setCurrentPlayer(currentPlayer);
                     if (currentPlayer.equals(firstPlayer)) {
                         board.changePhase(Phases.GETTING_COINS);
+                        log.info("Переход в сбор монет");
                     } else if (currentPlayer.isDecline()) {
                         board.changePhase(Phases.RACE_CHOICE);
+                        log.info("Переход в смену расы, так как я ушел в упадок");
                     } else {
                         board.changePhase(Phases.GO_INTO_DECLINE);
+                        log.info("Ушел в упадок передаю ход игроку {}", currentPlayer);
                     }
                 } else {
                     board.changePhase(Phases.PICK_UP_TOKENS);
@@ -217,7 +222,7 @@ public class Server {
                 } else if (player.isDecline()) {
                     board.changePhase(Phases.RACE_CHOICE);
                 } else {
-                    board.changePhase(Phases.PICK_UP_TOKENS);
+                    board.changePhase(Phases.GO_INTO_DECLINE);
                 }
             } catch (IOException e) {
                 e.printStackTrace();

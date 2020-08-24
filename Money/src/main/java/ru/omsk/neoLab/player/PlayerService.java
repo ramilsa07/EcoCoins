@@ -39,6 +39,7 @@ public class PlayerService {
 
     public final HashSet<Cell> findOutWherePlayerCanGoFirst(final Board board, final Player player) {
         log.info("{} ищет возможные захваты", player.getNickName());
+        log.info("Запускаем поиск захвата внешней границы");
         possibleCellsCapture.clear();
         for (int i = 0; i < board.getBoard()[0].length; i++) {
             if (Validator.isCheckingOutputOverBoard(0, i, board.getHeight(), board.getWidth())) {
@@ -65,6 +66,7 @@ public class PlayerService {
 
     public final HashSet<Cell> findOutWherePlayerCanGo(final Board board, final Player player) {
         possibleCellsCapture.clear();
+        log.info("Продолжение поиска захвата уже внутри");
         for (Cell cell : player.getLocationCell()) {
             for (int i = 0; i < 8; i++) {
                 int x = cell.getX() + motionAreaX[i];
@@ -73,7 +75,6 @@ public class PlayerService {
                     if (!Validator.isCheckingBelongsCell(player, board.getBoard()[x][y])) {
                         if (Validator.isCheckingCapture(board.getBoard()[x][y], player)) {
                             possibleCellsCapture.add(board.getBoard()[x][y]);
-                            //LoggerGame.logAttackCell(player, board.getBoard()[x][y]);
                         }
                     }
                 }

@@ -99,6 +99,7 @@ public class Player {
         cell.getBelongs().locationCell.remove(cell);
         cell.getBelongs().locationDeclineCell.remove(cell);
         if (cell.getCountTokens() == 0) {
+
             this.countTokens -= this.race.getAdvantageCaptureCell(cell);
             cell.setCountTokens(this.race.getAdvantageCaptureCell(cell));
         } else {
