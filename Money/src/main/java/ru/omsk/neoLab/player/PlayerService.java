@@ -1,6 +1,8 @@
 package ru.omsk.neoLab.player;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.omsk.neoLab.Validator;
 import ru.omsk.neoLab.board.Board;
 import ru.omsk.neoLab.board.Сell.Cell;
@@ -12,6 +14,9 @@ import java.util.HashSet;
 import java.util.Objects;
 
 public class PlayerService {
+
+    Logger log = LoggerFactory.getLogger(PlayerService.class);
+
     private static PlayerService instance;
 
     // Массивы, для вычисления допустимых ходов
@@ -33,22 +38,27 @@ public class PlayerService {
     }
 
     public final HashSet<Cell> findOutWherePlayerCanGoFirst(final Board board, final Player player) {
+        log.info("{} ищет возможные захваты", player.getNickName());
         possibleCellsCapture.clear();
         for (int i = 0; i < board.getBoard()[0].length; i++) {
-            if (Validator.isCheckingOutputOverBoard(0, i, board.getHeight(), board.getWidth()))
+            if (Validator.isCheckingOutputOverBoard(0, i, board.getHeight(), board.getWidth())) {
                 if (Validator.isCheckingCapture(board.getBoard()[0][i], player)) {
                     possibleCellsCapture.add(board.getBoard()[0][i]);
-                    possibleCellsCapture.add(board.getBoard()[board.getBoard().length - 1][i]);
-                    //LoggerGame.logAttackCell(player,board.getBoard()[0][i]);
                 }
+                if (Validator.isCheckingCapture(board.getBoard()[board.getBoard().length - 1][i], player)) {
+                    possibleCellsCapture.add(board.getBoard()[board.getBoard().length - 1][i]);
+                }
+            }
         }
         for (int i = 1; i < board.getBoard().length - 1; i++) {
-            if (Validator.isCheckingOutputOverBoard(i, 0, board.getHeight(), board.getWidth()))
+            if (Validator.isCheckingOutputOverBoard(i, 0, board.getHeight(), board.getWidth())) {
                 if (Validator.isCheckingCapture(board.getBoard()[i][0], player)) {
                     possibleCellsCapture.add(board.getBoard()[i][0]);
-                    possibleCellsCapture.add(board.getBoard()[i][board.getBoard()[0].length - 1]);
-                    //LoggerGame.logAttackCell(player, board.getBoard()[i][0]);
                 }
+                if (Validator.isCheckingCapture(board.getBoard()[i][board.getBoard()[0].length - 1], player)) {
+                    possibleCellsCapture.add(board.getBoard()[i][board.getBoard()[0].length - 1]);
+                }
+            }
         }
         return possibleCellsCapture;
     }

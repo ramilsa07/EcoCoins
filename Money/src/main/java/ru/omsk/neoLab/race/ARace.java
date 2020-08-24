@@ -6,7 +6,6 @@ import ru.omsk.neoLab.board.Сell.Cell;
 
 import java.util.Objects;
 
-
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 public abstract class ARace {
 

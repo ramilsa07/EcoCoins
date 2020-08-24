@@ -104,13 +104,12 @@ public class Player {
         } else {
             this.countTokens -= this.race.getAdvantageCaptureCell(cell) +
                     cell.getBelongs().getRace().getAdvantageDefendCell(cell) + 1;
-            cell.setCountTokens(this.race.getAdvantageCaptureCell(cell) +
-                    cell.getBelongs().getRace().getAdvantageDefendCell(cell) + 1);
+            cell.setCountTokens(this.race.getAdvantageCaptureCell(cell));
         }
         this.locationCell.add(cell);
         cell.regionCapture(this);
-        log.info("Осталось жетонов у игрока {}  {} от территории {}  и потратили жетонов {}", this.nickName,
-                this.countTokens, cell.getType(), cell.getCountTokens());
+        log.info("Осталось жетонов у игрока {}  {} от территории {}[{},{}]", this.nickName,
+                this.countTokens, cell.getType(), cell.getX(), cell.getY());
     }
 
     public void shufflingTokens(Cell cell) {
@@ -121,11 +120,9 @@ public class Player {
         log.info("After shuffling tokens, player {} has {} tokens", this.nickName, this.countTokens);
     }
 
-    public void collectTokens() {
-        for (Cell cell : locationCell) {
-            while (cell.getCountTokens() > 1) {
-                this.countTokens += cell.getToken(cell.getCountTokens() - 1);
-            }
+    public void collectTokens(Cell cell) {
+        while (cell.getCountTokens() > 1) {
+            this.countTokens += cell.getToken(1);
         }
     }
 

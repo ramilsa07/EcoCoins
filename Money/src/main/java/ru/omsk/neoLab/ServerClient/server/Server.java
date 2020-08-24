@@ -28,7 +28,7 @@ public class Server {
     private static final Logger log = LoggerFactory.getLogger(Server.class);
     private static final int MAX_CLIENTS = 2;
 
-    public static final int PORT = 25;
+    public static final int PORT = 8080;
     private final ConcurrentLinkedQueue<ServerLobby> serverClient = new ConcurrentLinkedQueue<>();
     private Board board;
     private ArrayList<String> arrayList = new ArrayList<>();
@@ -162,6 +162,8 @@ public class Server {
                     changeCourse(serverClient.element());
                     if (currentPlayer.equals(firstPlayer)) {
                         board.changePhase(Phases.GETTING_COINS);
+                    } else if (currentPlayer.isDecline()) {
+                        board.changePhase(Phases.RACE_CHOICE);
                     } else {
                         board.changePhase(Phases.GO_INTO_DECLINE);
                     }
@@ -177,7 +179,7 @@ public class Server {
             log.info("The phase of picking up tokens has begun");
             for (Cell cell : currentPlayer.getLocationCell()) {
                 if (cell.getCountTokens() >= 1) {
-                    currentPlayer.collectTokens();
+                    currentPlayer.collectTokens(cell);
                 }
             }
             log.info("{} has {} tokens", currentPlayer.getNickName(), currentPlayer.getCountTokens());
