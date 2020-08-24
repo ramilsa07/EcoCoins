@@ -1,5 +1,7 @@
-package ru.omsk.neoLab.client.Bot;
+package ru.omsk.neoLab.client.botevgekii;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.omsk.neoLab.answer.Answer;
 import ru.omsk.neoLab.answer.CellAnswer;
 import ru.omsk.neoLab.answer.DeclineAnswer;
@@ -16,7 +18,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 
-public class SimpleBot implements IBot {
+public class SimpleBotGreat implements IBot {
+
+    Logger log = LoggerFactory.getLogger(SimpleBotGreat.class);
 
     private Random random = new Random();
 
@@ -42,7 +46,6 @@ public class SimpleBot implements IBot {
 
     private ARace findingBestRace(final Board board) {
         Board boardClone = new Board(board);
-        System.out.println(boardClone.getRacesPool().get(random.nextInt(boardClone.getRacesPool().size())));
         return boardClone.getRacesPool().get(random.nextInt(boardClone.getRacesPool().size()));
     }
 
@@ -54,9 +57,12 @@ public class SimpleBot implements IBot {
 
     private boolean isDecline(final Board board, final Player player) {
         cells.clear();
+        log.info("Определяем можем ли мы пойти в упадок?");
         for (Cell cell : player.getLocationCell()) {
-            if (cell.getCountTokens() >= 1) {
-                //player.collectTokens();
+            if (cell.getCountTokens() > 1) {
+                log.info("У {} было {} ", player.getNickName(), player.getCountTokens());
+                player.collectTokens(cell);
+                log.info("Стало {}", player.getCountTokens());
             }
         }
         toDetermineCell(player, board);
@@ -67,6 +73,7 @@ public class SimpleBot implements IBot {
         cells.clear();
         Board boardClone = new Board(board);
         Player playerClone = new Player(boardClone.getCurrentPlayer());
+        log.info("Ищем лучший путь захвата?");
         return toDetermineCell(playerClone, boardClone);
     }
 
@@ -83,7 +90,7 @@ public class SimpleBot implements IBot {
         Object[] posCells = possibleCellsCapture.toArray();
         for (Object cell : posCells) {
             maxCellCurrent = calculatingValueCell(player, (Cell) cell);
-            if (maxCellBefore < maxCellCurrent) {
+            if (maxCellBefore <= maxCellCurrent) {
                 maxCellBefore = maxCellCurrent;
                 maxCell.x = ((Cell) cell).getX();
                 maxCell.y = ((Cell) cell).getY();
@@ -104,20 +111,19 @@ public class SimpleBot implements IBot {
 
     private List<Point> findingBestShufflingTokens(final Board board) {
         cells.clear();
-        Player playerClone = new Player(board.getCurrentPlayer());
+
         Board boardClone = new Board(board);
-        Point minCell = null;
-        int minCellBefore = 0;
+        Player playerClone = board.getCurrentPlayer();
+        Point minCell = new Point();
+        int minCellBefore = Integer.MAX_VALUE;
         int minCellCurrent = 0;
-        int currentj = 0;
         for (int i = 0; i < playerClone.getCountTokens(); i++) {
             for (int j = 0; j < playerClone.getLocationCell().size(); j++) {
                 minCellCurrent = calculatingDefendValueCell(playerClone.getLocationCell().get(j));
                 if (minCellBefore > minCellCurrent) {
                     minCellBefore = minCellCurrent;
-                    currentj = j;
-                    minCell.x = playerClone.getLocationCell().get(currentj).getX();
-                    minCell.y = playerClone.getLocationCell().get(currentj).getY();
+                    minCell.x = playerClone.getLocationCell().get(j).getX();
+                    minCell.y = playerClone.getLocationCell().get(j).getY();
                 }
             }
             if (minCell != null) {

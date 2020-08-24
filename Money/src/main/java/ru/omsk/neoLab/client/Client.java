@@ -3,7 +3,7 @@ package ru.omsk.neoLab.client;
 import ru.omsk.neoLab.answer.Serialize.AnswerSerialize;
 import ru.omsk.neoLab.board.Board;
 import ru.omsk.neoLab.board.Serializer.BoardDeserializer;
-import ru.omsk.neoLab.client.Bot.SimpleBotGreat;
+import ru.omsk.neoLab.client.botevgekii.SimpleBotGreat;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

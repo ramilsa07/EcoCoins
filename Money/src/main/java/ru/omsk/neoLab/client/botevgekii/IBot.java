@@ -1,4 +1,4 @@
-package ru.omsk.neoLab.client.Bot;
+package ru.omsk.neoLab.client.botevgekii;
 
 import ru.omsk.neoLab.answer.Answer;
 import ru.omsk.neoLab.board.Board;
