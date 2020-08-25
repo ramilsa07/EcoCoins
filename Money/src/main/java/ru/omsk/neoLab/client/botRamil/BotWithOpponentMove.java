@@ -4,7 +4,6 @@ import ru.omsk.neoLab.answer.Answer;
 import ru.omsk.neoLab.answer.CellAnswer;
 import ru.omsk.neoLab.answer.DeclineAnswer;
 import ru.omsk.neoLab.answer.RaceAnswer;
-import ru.omsk.neoLab.answer.Serialize.AnswerDeserialize;
 import ru.omsk.neoLab.board.Board;
 import ru.omsk.neoLab.board.Сell.Cell;
 import ru.omsk.neoLab.player.Player;
@@ -24,9 +23,9 @@ public class BotWithOpponentMove extends ABot {
         }
     }
 
-    public static final IBot.IBotFactory factory = new SimpleBotRam.MinMaxBotFactory();
+    public static final IBot.IBotFactory factory = new BotWithOpponentMoveFactory();
     private final Random random = new Random();
-    private HashSet<Cell> possibleCellsCapture = new HashSet<Cell>();
+    private HashSet<Cell> possibleCellsCapture = new HashSet<>();
     private final PlayerService playerService = PlayerService.GetInstance();
     List<Point> winList = new ArrayList<>();
 
@@ -75,7 +74,6 @@ public class BotWithOpponentMove extends ABot {
     }
 
     private CellAnswer getCellAnswer(Board board, Player player, Player opponent){
-        winList.clear();
         CellAnswer opponentAnswer = findBestMove(board, opponent);
         for (Point point : opponentAnswer.getCells()) {
             playerService.regionCapture(board.getCell(point.x, point.y), opponent);

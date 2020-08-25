@@ -3,7 +3,10 @@ package ru.omsk.neoLab.client;
 import ru.omsk.neoLab.answer.Serialize.AnswerSerialize;
 import ru.omsk.neoLab.board.Board;
 import ru.omsk.neoLab.board.Serializer.BoardDeserializer;
-import ru.omsk.neoLab.client.Bot.SimpleBotGreat;
+import ru.omsk.neoLab.client.botRamil.ABot;
+import ru.omsk.neoLab.client.botRamil.BotWithOpponentMove;
+import ru.omsk.neoLab.client.botRamil.RandomBot;
+import ru.omsk.neoLab.client.botRamil.SimpleBotRam;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -42,7 +45,9 @@ public class Client {
             e.printStackTrace();
         }
         System.out.println(String.format("Client started, ip: %s, port: %d", ip, port));
-        SimpleBotGreat simpleBotGreat = new SimpleBotGreat();
+//        SimpleBotRam simpleBotGreat = new SimpleBotRam();
+        ABot simpleBotGreat = new BotWithOpponentMove();
+        //ABot simpleBotGreat = new RandomBot();
         while (isDisconnect()) {
             try {
                 out.flush();
