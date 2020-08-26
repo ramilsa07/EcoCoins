@@ -27,9 +27,10 @@ public class SimpleBotGreat implements IBot {
     private PlayerService playerService = PlayerService.GetInstance();
 
     private List<Point> cells = new ArrayList<>();
+    private List<Point> cellsOpponent = new ArrayList<>();
 
     @Override
-    public Answer getAnswer(final Board board) {
+    public synchronized Answer getAnswer(final Board board) {
         switch (board.getPhase()) {
             case RACE_CHOICE:
                 return new RaceAnswer(findingBestRace(board));
@@ -44,18 +45,18 @@ public class SimpleBotGreat implements IBot {
         }
     }
 
-    private ARace findingBestRace(final Board board) {
+    private synchronized ARace findingBestRace(final Board board) {
         Board boardClone = new Board(board);
         return boardClone.getRacesPool().get(random.nextInt(boardClone.getRacesPool().size()));
     }
 
-    private boolean isFindDecline(final Board board) {
+    private synchronized boolean isFindDecline(final Board board) {
         Board boardClone = new Board(board);
         Player playerClone = boardClone.getCurrentPlayer();
         return isDecline(boardClone, playerClone);
     }
 
-    private boolean isDecline(final Board board, final Player player) {
+    private synchronized boolean isDecline(final Board board, final Player player) {
         cells.clear();
         log.info("Определяем можем ли мы пойти в упадок?");
         for (Cell cell : player.getLocationCell()) {
@@ -66,22 +67,24 @@ public class SimpleBotGreat implements IBot {
             }
         }
         toDetermineCell(player, board);
-        return cells.size() == 0; //cells.size() == 0;
+        return cells.size() == 0;
     }
 
-    private List<Point> findingBestPath(final Board board) {
+    private synchronized List<Point> findingBestPath(final Board board) {
         cells.clear();
         Board boardClone = new Board(board);
         Player playerClone = new Player(boardClone.getCurrentPlayer());
         log.info("Ищем лучший путь захвата?");
+        findingBestPathOpponent(board);
         return toDetermineCell(playerClone, boardClone);
     }
 
-    private List<Point> toDetermineCell(final Player player, final Board board) {
+    private synchronized List<Point> toDetermineCell(final Player player, final Board board) {
         int maxCellBefore = 0;
         int maxCellCurrent = 0;
         Point maxCell = new Point();
         HashSet<Cell> possibleCellsCapture;
+        boolean isOpponentCell = false;
         if (player.getLocationCell().isEmpty()) {
             possibleCellsCapture = playerService.findOutWherePlayerCanGoFirst(board, player);
         } else {
@@ -90,7 +93,13 @@ public class SimpleBotGreat implements IBot {
         Object[] posCells = possibleCellsCapture.toArray();
         for (Object cell : posCells) {
             maxCellCurrent = calculatingValueCell(player, (Cell) cell);
-            if (maxCellBefore <= maxCellCurrent) {
+            for (Point point : cellsOpponent) {
+                if (((Cell) cell).getX() == point.x && ((Cell) cell).getY() == point.y) {
+                    isOpponentCell = true;
+                    break;
+                }
+            }
+            if ((maxCellBefore <= maxCellCurrent) || isOpponentCell) {
                 maxCellBefore = maxCellCurrent;
                 maxCell.x = ((Cell) cell).getX();
                 maxCell.y = ((Cell) cell).getY();
@@ -105,13 +114,39 @@ public class SimpleBotGreat implements IBot {
         return toDetermineCell(player, board);
     }
 
-    private int calculatingValueCell(final Player player, final Cell cell) {
+    private synchronized void findingBestPathOpponent(final Board board) {
+        Board boardClone = new Board(board);
+        toDetermineOpponent(boardClone, boardClone.getOpponentPlayer());
+    }
+
+    private synchronized void toDetermineOpponent(final Board board, final Player opponent) {
+        cellsOpponent.clear();
+        if (opponent.getRace() == null) {
+            List<Point> cellsCurrent = new ArrayList<>();
+            int maxCoinsBefore = 0;
+            int maxCoinsCurrent = 0;
+            for (int i = 0; i < board.getRacesPool().size(); i++) {
+                opponent.changeRace(board.getRacesPool().get(i), board);
+                cellsCurrent.addAll(toDetermineCell(opponent, board));
+                for (Point point : cellsCurrent) {
+                    maxCoinsCurrent += opponent.getRace().getAdvantageCoin(board.getCell(point.x, point.y));
+                }
+                if (maxCoinsBefore <= maxCoinsCurrent) {
+                    cellsOpponent.clear();
+                    cellsOpponent.addAll(cellsCurrent);
+                }
+                board.getRacesPool().add(opponent.getRace());
+                cells.clear();
+            }
+        }
+    }
+
+    private synchronized int calculatingValueCell(final Player player, final Cell cell) {
         return (player.getRace().getAdvantageCaptureCell(cell) - cell.getBelongs().getRace().getAdvantageDefendCell(cell)) * player.getRace().getAdvantageCoin(cell);
     }
 
-    private List<Point> findingBestShufflingTokens(final Board board) {
+    private synchronized List<Point> findingBestShufflingTokens(final Board board) {
         cells.clear();
-
         Board boardClone = new Board(board);
         Player playerClone = board.getCurrentPlayer();
         Point minCell = new Point();
@@ -126,15 +161,13 @@ public class SimpleBotGreat implements IBot {
                     minCell.y = playerClone.getLocationCell().get(j).getY();
                 }
             }
-            if (minCell != null) {
-                cells.add(minCell);
-                playerClone.shufflingTokens(boardClone.getCell(minCell.x, minCell.y));
-            }
+            cells.add(minCell);
+            playerClone.shufflingTokens(boardClone.getCell(minCell.x, minCell.y));
         }
         return cells;
     }
 
-    private int calculatingDefendValueCell(final Cell cell) {
+    private synchronized int calculatingDefendValueCell(final Cell cell) {
         return cell.getBelongs().getRace().getAdvantageDefendCell(cell);
     }
 }

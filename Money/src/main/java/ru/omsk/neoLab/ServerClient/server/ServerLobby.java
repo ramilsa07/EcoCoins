@@ -10,7 +10,7 @@ import java.net.Socket;
 
 public class ServerLobby {
 
-    private final Socket socketClient;
+    private Socket socketClient;
     private Player player;
 
     private DataInputStream in;
@@ -23,6 +23,18 @@ public class ServerLobby {
         in = new DataInputStream(this.socketClient.getInputStream());
         out = new DataOutputStream(this.socketClient.getOutputStream());
     }
+
+    public ServerLobby(ServerLobby serverLobby) {
+        this(serverLobby.getSocketClient(), serverLobby.getPlayer(), serverLobby.getIn(), serverLobby.getOut());
+    }
+
+    public ServerLobby(Socket socketClient, Player player, DataInputStream in, DataOutputStream out) {
+        this.socketClient = socketClient;
+        this.player = player;
+        this.in = in;
+        this.out = out;
+    }
+
 
     public Socket getSocketClient() {
         return socketClient;

@@ -30,24 +30,33 @@ public class Server {
 
     public static final int PORT = 8080;
     private final ConcurrentLinkedQueue<ServerLobby> serverClient = new ConcurrentLinkedQueue<>();
-    private Board board;
     private ArrayList<String> arrayList = new ArrayList<>();
 
     private void startServer() throws IOException {
         int i = 0;
-        arrayList.add("SimpleBot1");
-        arrayList.add("SimpleBot2");
+        arrayList.add("SimpleBotRamil");
+        arrayList.add("SimpleBotEvgekii");
         System.out.println(String.format("Server started, port: %d", PORT));
         try (final ServerSocket serverSocket = new ServerSocket(PORT)) {
             int endGame = 0;
             while (endGame == 0) {
-                Socket socket = serverSocket.accept();
-                addServerLobby(socket, arrayList.get(i));
-                System.out.println("Connected host: " + socket);
-                i++;
-                if (serverClient.size() == MAX_CLIENTS) {
-                    new Game(this, serverClient.element().getSocketClient()).start();
+                if (!(serverClient.size() == MAX_CLIENTS)) {
+                    Socket socket = serverSocket.accept();
+                    addServerLobby(socket, arrayList.get(i));
+                    System.out.println("Connected host: " + socket);
+                    i++;
+                } else {
+                    //for (int j = 0; j < 2; j++) {
+                    Game game = new Game(this, serverClient.element().getSocketClient(), serverClient);
+                    game.start();
+                    try {
+                        game.join();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    //}
                     endGame = 1;
+                    downService();
                 }
             }
         } catch (final BindException e) {
@@ -62,6 +71,18 @@ public class Server {
         log.info("{} joined the game", serverLobby.getPlayer().getNickName());
     }
 
+    private void downService() {
+        try {
+            for (ServerLobby serverLobby : this.serverClient) {
+                if (!serverLobby.getSocketClient().isClosed()) {
+                    serverLobby.getSocketClient().close();
+                    serverClient.remove(this);
+                }
+            }
+        } catch (final IOException ignored) {
+        }
+    }
+
     private class Game extends Thread {
 
         private Server server;
@@ -74,13 +95,16 @@ public class Server {
 
         private Player firstPlayer;
         private Player currentPlayer;
+        private Board board;
 
+        private ConcurrentLinkedQueue<ServerLobby> serverClientGame = new ConcurrentLinkedQueue<>();
         private int round = 1;
 
 
-        private Game(final Server server, final Socket socket) {
+        private Game(final Server server, final Socket socket, final ConcurrentLinkedQueue<ServerLobby> serverClient) {
             this.server = server;
             this.socket = socket;
+            this.serverClientGame = serverClient;
 
             in = serverClient.element().getIn();
             out = serverClient.element().getOut();
@@ -89,12 +113,14 @@ public class Server {
         @Override
         public void run() {
             generateBoard();
-            firstPlayer = serverClient.element().getPlayer();
-            currentPlayer = serverClient.element().getPlayer();
+            firstPlayer = this.serverClientGame.element().getPlayer();
+            currentPlayer = this.serverClientGame.element().getPlayer();
             board.changePhase(Phases.RACE_CHOICE);
+            System.out.println("Текущий раунд - " + round);
+            board.setCurrentPlayer(currentPlayer);
+            changeCourse(serverClientGame.element());
+            changeCourse(serverClientGame.element());
             while (round < 11) {
-                System.out.println("Текущий раунд - " + round);
-                board.setCurrentPlayer(currentPlayer);
                 log.info("Player {} starts {} round", currentPlayer.getNickName(), round);
                 if (round == 1 || currentPlayer.isDecline()) {
                     board.changePhase(Phases.RACE_CHOICE);
@@ -118,27 +144,26 @@ public class Server {
                     collectCoins(currentPlayer);
                 }
             }
-            if (isEndGame()) {
-                System.out.println("Конец игры");
-                downService();
-            }
+            System.out.println("Конец игры");
+            serverClientGame.clear();
         }
 
-        public void generateBoard() {
+        public synchronized void generateBoard() {
             board = new Board(4, 3);
             board.generate();
         }
 
-        private void changeCourse(final ServerLobby serverLobby) {
-            serverClient.poll();
-            socket = serverClient.element().getSocketClient();
-            in = serverClient.element().getIn();
-            out = serverClient.element().getOut();
-            currentPlayer = serverClient.element().getPlayer();
-            serverClient.add(serverLobby);
+        private synchronized void changeCourse(final ServerLobby serverLobby) {
+            this.serverClientGame.poll();
+            socket = this.serverClientGame.element().getSocketClient();
+            in = this.serverClientGame.element().getIn();
+            out = this.serverClientGame.element().getOut();
+            currentPlayer = this.serverClientGame.element().getPlayer();
+            board.setCurrentPlayer(currentPlayer);
+            this.serverClientGame.add(serverLobby);
         }
 
-        private void choiceRace(final Player player) {
+        private synchronized void choiceRace(final Player player) {
             log.info("Race selection phase has begun");
             LoggerGame.logWhatRacesCanIChoose(board.getRacesPool());
             try {
@@ -152,7 +177,7 @@ public class Server {
             }
         }
 
-        private void goIntoDecline(final Player player) {
+        private synchronized void goIntoDecline(final Player player) {
             try {
                 out.flush();
                 out.writeUTF(BoardSerializer.serialize(board));
@@ -160,8 +185,7 @@ public class Server {
                 if (decline.isDecline()) {
                     player.goIntoDecline();
                     log.info("{} уходит в упадок", player.getNickName());
-                    changeCourse(serverClient.element());
-                    board.setCurrentPlayer(currentPlayer);
+                    changeCourse(this.serverClientGame.element());
                     if (currentPlayer.equals(firstPlayer)) {
                         board.changePhase(Phases.GETTING_COINS);
                         log.info("Переход в сбор монет");
@@ -180,7 +204,7 @@ public class Server {
             }
         }
 
-        private void pickUpTokensPhase(final Player currentPlayer) {
+        private synchronized void pickUpTokensPhase(final Player currentPlayer) {
             log.info("The phase of picking up tokens has begun");
             for (Cell cell : currentPlayer.getLocationCell()) {
                 if (cell.getCountTokens() >= 1) {
@@ -195,8 +219,8 @@ public class Server {
             try {
                 out.flush();
                 out.writeUTF(BoardSerializer.serialize(board));
-                log.info("Territory capture phase has begun");
                 CellAnswer answer = (CellAnswer) AnswerDeserialize.deserialize(in.readUTF());
+                log.info("Territory capture phase has begun");
                 for (Point point : answer.getCells()) {
                     playerService.regionCapture(board.getCell(point.x, point.y), currentPlayer);
                 }
@@ -206,7 +230,7 @@ public class Server {
             }
         }
 
-        private void shufflingTokensPhase(final Player player) {
+        private synchronized void shufflingTokensPhase(final Player player) {
             try {
                 out.flush();
                 out.writeUTF(BoardSerializer.serialize(board));
@@ -215,8 +239,8 @@ public class Server {
                     player.shufflingTokens(board.getCell(point.x, point.y));
                 }
                 log.info("{} begins the redistribution of tokens", player.getNickName());
-                serverClient.element().setPlayer(player);
-                changeCourse(serverClient.element());
+                this.serverClientGame.element().setPlayer(player);
+                changeCourse(this.serverClientGame.element());
                 if (currentPlayer.equals(firstPlayer)) {
                     board.changePhase(Phases.GETTING_COINS);
                 } else if (player.isDecline()) {
@@ -229,13 +253,14 @@ public class Server {
             }
         }
 
-        private void collectCoins(final Player player) {
+        private synchronized void collectCoins(final Player player) {
             log.info("The phase of collecting Coins has begun");
-            for (ServerLobby server : serverClient) {
+            for (ServerLobby server : this.serverClientGame) {
                 server.getPlayer().collectAllCoins();
                 log.info("{} has {} coins", server.getPlayer().getNickName(), server.getPlayer().getCountCoin());
             }
             round++;
+            System.out.println("Текущий раунд - " + round);
             if (player.isDecline()) {
                 board.changePhase(Phases.RACE_CHOICE);
             } else {
@@ -243,20 +268,8 @@ public class Server {
             }
         }
 
-        public boolean isEndGame() {
-            return round == 10;
-        }
-
-        private void downService() {
-            try {
-                for (ServerLobby serverLobby : serverClient) {
-                    if (!socket.isClosed()) {
-                        serverLobby.getSocketClient().close();
-                        server.serverClient.remove(this);
-                    }
-                }
-            } catch (final IOException ignored) {
-            }
+        public synchronized boolean isEndGame() {
+            return round == 11;
         }
     }
 
