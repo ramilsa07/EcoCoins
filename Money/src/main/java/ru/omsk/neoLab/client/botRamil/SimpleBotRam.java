@@ -23,7 +23,7 @@ public class SimpleBotRam extends ABot {
         }
     }
 
-    public static final IBotFactory factory = new MinMaxBotFactory();
+    public static final IBot.IBotFactory factory = new MinMaxBotFactory();
     private final Random random = new Random();
     private HashSet<Cell> possibleCellsCapture = new HashSet<Cell>();
     private final PlayerService playerService = PlayerService.GetInstance();

@@ -60,7 +60,11 @@ public class RandomBot extends ABot {
     }
 
     private DeclineAnswer getDeclineAnswer(final Board board, final Player player) {
-        possibleCellsCapture = playerService.findOutWherePlayerCanGo(board, player);
+        if (player.getLocationCell().isEmpty()) {
+            possibleCellsCapture = playerService.findOutWherePlayerCanGoFirst(board, player);
+        } else {
+            possibleCellsCapture = playerService.findOutWherePlayerCanGo(board, player);
+        }
         if (possibleCellsCapture.isEmpty()) {
             return new DeclineAnswer(true);
         } else {
@@ -76,7 +80,6 @@ public class RandomBot extends ABot {
         ArrayList<Point> points = new ArrayList<>();
         Cell cell = player.getLocationCell().get(random.nextInt(player.getLocationCell().size()));
         points.add(new Point(cell.getX(), cell.getY()));
-//        return new CellAnswer(player.getLocationCell().get(random.nextInt(player.getLocationCell().size())));
         return new CellAnswer(points);
     }
 
