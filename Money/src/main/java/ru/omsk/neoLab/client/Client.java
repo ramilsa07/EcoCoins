@@ -45,7 +45,7 @@ public class Client {
             e.printStackTrace();
         }
         System.out.println(String.format("Client started, ip: %s, port: %d", ip, port));
-//        SimpleBotRam simpleBotGreat = new SimpleBotRam();
+        //SimpleBotRam simpleBotGreat = new SimpleBotRam();
         ABot simpleBotGreat = new BotWithOpponentMove();
         //ABot simpleBotGreat = new RandomBot();
         while (isDisconnect()) {

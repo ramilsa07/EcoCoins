@@ -36,7 +36,10 @@ public class BotWithOpponentMove extends ABot {
     @Override
     public Answer getAnswer(final Board board) {
         Player playerClone = new Player(board.getCurrentPlayer());
-        Player opponentClone = new Player(board.getOpponentPlayer());
+        Player opponentClone = null;
+        if (board.getOpponentPlayer() != null) {
+            opponentClone = new Player(board.getOpponentPlayer());
+        }
         Board boardClone = new Board(board);
         switch (board.getPhase()) {
             case RACE_CHOICE:
@@ -73,12 +76,14 @@ public class BotWithOpponentMove extends ABot {
         }
     }
 
-    private CellAnswer getCellAnswer(Board board, Player player, Player opponent){
-        CellAnswer opponentAnswer = findBestMove(board, opponent);
-        for (Point point : opponentAnswer.getCells()) {
-            playerService.regionCapture(board.getCell(point.x, point.y), opponent);
+    private CellAnswer getCellAnswer(Board board, Player player, Player opponent) {
+        if (opponent != null) {
+            CellAnswer opponentAnswer = findBestMove(board, opponent);
+            for (Point point : opponentAnswer.getCells()) {
+                playerService.regionCapture(board.getCell(point.x, point.y), opponent);
+            }
+            winList.clear();
         }
-        winList.clear();
         return findBestMove(board, player);
     }
 
