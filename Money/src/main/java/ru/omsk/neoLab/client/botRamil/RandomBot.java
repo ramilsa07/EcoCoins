@@ -28,7 +28,7 @@ public class RandomBot extends ABot {
     private final Random random = new Random();
     private final PlayerService playerService = PlayerService.GetInstance();
     private HashSet<Cell> possibleCellsCapture = new HashSet<>();
-    List<Point> winList = new ArrayList<>();
+    List<Point> responseCells = new ArrayList<>();
 
     public RandomBot() {
     }
@@ -51,12 +51,12 @@ public class RandomBot extends ABot {
         if (cells.length != 0) {
             Cell move = (Cell) cells[random.nextInt(cells.length)];
             player.regionCapture(move);
-            winList.add(winList.size(), new Point(move.getX(), move.getY()));
+            responseCells.add(responseCells.size(), new Point(move.getX(), move.getY()));
             Player testPlayer = new Player(player);
             Board testBoard = new Board(board);
             getCellAnswer(testBoard, testPlayer);
         }
-        return new CellAnswer(winList);
+        return new CellAnswer(responseCells);
     }
 
     private DeclineAnswer getDeclineAnswer(final Board board, final Player player) {
@@ -77,10 +77,15 @@ public class RandomBot extends ABot {
     }
 
     private CellAnswer getShufflingAnswer(Player player) {
-        ArrayList<Point> points = new ArrayList<>();
-        Cell cell = player.getLocationCell().get(random.nextInt(player.getLocationCell().size()));
-        points.add(new Point(cell.getX(), cell.getY()));
-        return new CellAnswer(points);
+//        ArrayList<Point> points = new ArrayList<>();
+//        Cell cell = player.getLocationCell().get(random.nextInt(player.getLocationCell().size()));
+//        points.add(new Point(cell.getX(), cell.getY()));
+//        return new CellAnswer(points);
+        for (int i = 0; i < player.getCountTokens(); i++){
+            Cell cell = player.getLocationCell().get(random.nextInt(player.getLocationCell().size()));
+            responseCells.add(new Point(cell.getX(), cell.getY()));
+        }
+        return new CellAnswer(responseCells);
     }
 
     @Override
@@ -91,11 +96,12 @@ public class RandomBot extends ABot {
             case RACE_CHOICE:
                 return getRaceAnswer(board);
             case CAPTURE_OF_REGIONS:
-                winList.clear();
+                responseCells.clear();
                 return getCellAnswer(boardClone, playerClone);
             case GO_INTO_DECLINE:
                 return getDeclineAnswer(boardClone, playerClone);
             case SHUFFLING_TOKENS:
+                responseCells.clear();
                 return getShufflingAnswer(playerClone);
             default:
                 throw new IllegalStateException("Unexpected value: " + boardClone);

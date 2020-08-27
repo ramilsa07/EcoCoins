@@ -27,7 +27,8 @@ public class BotWithOpponentMove extends ABot {
     private final Random random = new Random();
     private HashSet<Cell> possibleCellsCapture = new HashSet<>();
     private final PlayerService playerService = PlayerService.GetInstance();
-    List<Point> winList = new ArrayList<>();
+    List<Point> responseCells = new ArrayList<>();
+
 
     public BotWithOpponentMove() {
 
@@ -36,31 +37,44 @@ public class BotWithOpponentMove extends ABot {
     @Override
     public Answer getAnswer(final Board board) {
         Player playerClone = new Player(board.getCurrentPlayer());
-        Player opponentClone = null;
-        if (board.getOpponentPlayer() != null) {
-            opponentClone = new Player(board.getOpponentPlayer());
-        }
+        Player opponentClone = new Player(board.getOpponentPlayer());
         Board boardClone = new Board(board);
         switch (board.getPhase()) {
             case RACE_CHOICE:
                 return getRaceAnswer(boardClone);
             case CAPTURE_OF_REGIONS:
-                winList.clear();
+                responseCells.clear();
                 return getCellAnswer(boardClone, playerClone, opponentClone);
             case GO_INTO_DECLINE:
                 return getDeclineAnswer(boardClone, playerClone);
             case SHUFFLING_TOKENS:
-                return getShufflingAnswer(playerClone);
+                return getShufflingAnswer(boardClone, playerClone);
             default:
                 throw new IllegalStateException("Unexpected value: " + boardClone);
         }
     }
 
-    private CellAnswer getShufflingAnswer(Player player) {
-        ArrayList<Point> points = new ArrayList<>();
-        Cell cell = player.getLocationCell().get(random.nextInt(player.getLocationCell().size()));
-        points.add(new Point(cell.getX(), cell.getY()));
-        return new CellAnswer(points);
+    private CellAnswer getShufflingAnswer(Board board, Player player) {
+        Point bestCell = new Point();
+        int bestAssessment = Integer.MAX_VALUE;
+        int nodeAssessment;
+        for (int i = 0; i < player.getCountTokens(); i++) {
+            for (int j = 0; j < player.getLocationCell().size(); j++) {
+                nodeAssessment = assessmentForShuffling(player.getLocationCell().get(j));
+                if (bestAssessment > nodeAssessment) {
+                    bestAssessment = nodeAssessment;
+                    bestCell.x = player.getLocationCell().get(j).getX();
+                    bestCell.y = player.getLocationCell().get(j).getY();
+                }
+            }
+            responseCells.add(bestCell);
+            player.shufflingTokens(board.getCell(bestCell.x, bestCell.y));
+        }
+        return new CellAnswer(responseCells);
+    }
+
+    private int assessmentForShuffling(Cell cell) {
+        return cell.getBelongs().getRace().getAdvantageDefendCell(cell);
     }
 
     private DeclineAnswer getDeclineAnswer(Board board, Player player) {
@@ -77,17 +91,18 @@ public class BotWithOpponentMove extends ABot {
     }
 
     private CellAnswer getCellAnswer(Board board, Player player, Player opponent) {
-        if (opponent != null) {
-            CellAnswer opponentAnswer = findBestMove(board, opponent);
+        if (opponent.getCountTokens() != 0) {
+            CellAnswer opponentAnswer = findBestMove(board, opponent, null);
             for (Point point : opponentAnswer.getCells()) {
                 playerService.regionCapture(board.getCell(point.x, point.y), opponent);
             }
-            winList.clear();
+            responseCells.clear();
+            return findBestMove(board, player, opponentAnswer.getCells());
         }
-        return findBestMove(board, player);
+        return findBestMove(board, player, null);
     }
 
-    private CellAnswer findBestMove(Board board, Player player) {
+    private CellAnswer findBestMove(Board board, Player player, List<Point> opponentCell) {
         int bestAssessment = Integer.MIN_VALUE;
         Cell bestCell = null;
         int nodeAssessment;
@@ -106,17 +121,12 @@ public class BotWithOpponentMove extends ABot {
         }
         if (cells.length != 0) {
             player.regionCapture(bestCell);
-            winList.add(winList.size(), new Point(bestCell.getX(), bestCell.getY()));
+            responseCells.add(responseCells.size(), new Point(bestCell.getX(), bestCell.getY()));
             Player testPlayer = new Player(player);
             Board testBoard = new Board(board);
-            findBestMove(testBoard, testPlayer);
+            findBestMove(testBoard, testPlayer, opponentCell);
         }
-        return new CellAnswer(winList);
-    }
-
-
-    private RaceAnswer getRaceAnswer(Board board) { // Просто рандомная хрень
-        return new RaceAnswer(board.getRacesPool().get(random.nextInt(board.getRacesPool().size())));
+        return new CellAnswer(responseCells);
     }
 
     /**
@@ -144,5 +154,9 @@ public class BotWithOpponentMove extends ABot {
             player.getRace().clearCells();
         }
         return count;
+    }
+
+    private RaceAnswer getRaceAnswer(Board board) { // Просто рандом
+        return new RaceAnswer(board.getRacesPool().get(random.nextInt(board.getRacesPool().size())));
     }
 }
