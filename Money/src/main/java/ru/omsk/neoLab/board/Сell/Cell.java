@@ -1,41 +1,51 @@
 package ru.omsk.neoLab.board.Сell;
 
+import com.fasterxml.jackson.annotation.*;
 import ru.omsk.neoLab.player.Player;
+import ru.omsk.neoLab.player.PlayerNeutral;
+import ru.omsk.neoLab.race.Undead;
 
-
-public final class Cell {
+@JsonAutoDetect
+public class Cell {
 
     private int x;
     private int y;
-
-    private TypeCell type;
-    private final int coin = 1;
+    @JsonProperty("type")
+    private Terrain type;
+    @JsonIgnore
+    private int coin = 1;
+    @JsonIgnore
     private boolean abilityCapture = true;
-
-    //Информация по принадлежности к игроку
-    private Player belongs = new Player("Gore");
-
+    @JsonIgnoreProperties("locationCell")
+    private Player belongs = new PlayerNeutral("Neutral", new Undead());
+    @JsonProperty("countTokens")
     private int countTokens = 0;
 
-    public final void regionCapture(final Player player) {
+    @JsonCreator
+    public Cell(@JsonProperty("x") int x, @JsonProperty("y") int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    @JsonIgnore
+    public Cell() {
+
+    }
+
+    public void regionCapture(final Player player) {
         this.belongs = player;
     }
 
-    /**
-     * Метод возвращает количество токенов требуемых для захвата ячейки определенного типа
-     * Горы - 3 токена, вода - 1 токен, земля и грибы - 2 токена
-     * @return
-     */
-    public final int getTokensForCapture() {
-        if (type.equals(TypeCell.Mounted)) {
-            return 3;
-        } else if (type.equals(TypeCell.Water)) {
-            return 1;
-        } else
-            return 2;
+    @JsonIgnore
+    public int getTokensForCapture() {
+        return Terrain.toType(type);
     }
 
-    public final int getToken(final int countTokens) {
+    public void putToken(final int countTokens) {
+        this.countTokens += countTokens;
+    }
+
+    public int getToken(final int countTokens) {
         this.countTokens -= countTokens;
         return countTokens;
     }
@@ -49,51 +59,59 @@ public final class Cell {
                 '}';
     }
 
-    public final int getX() {
+    public int getX() {
         return x;
     }
 
-    public final void setX(final int x) {
+    public void setX(int x) {
         this.x = x;
     }
 
-    public final int getY() {
+    public int getY() {
         return y;
     }
 
-    public final void setY(final int y) {
+    public void setY(int y) {
         this.y = y;
     }
 
-    public final TypeCell getType() {
+    public Terrain getType() {
         return type;
     }
 
-    public final void setType(final TypeCell type) {
+    public void setType(Terrain type) {
         this.type = type;
     }
 
-    public final int getCoin() {
+    public int getCoin() {
         return coin;
     }
 
-    public final boolean isAbilityCapture() {
+    public void setCoin(int coin) {
+        this.coin = coin;
+    }
+
+    public boolean isAbilityCapture() {
         return abilityCapture;
     }
 
-    public final void setAbilityCapture(final boolean abilityCapture) {
+    public void setAbilityCapture(boolean abilityCapture) {
         this.abilityCapture = abilityCapture;
     }
 
-    public final Player getBelongs() {
+    public Player getBelongs() {
         return belongs;
     }
 
-    public final int getCountTokens() {
+    public void setBelongs(Player belongs) {
+        this.belongs = belongs;
+    }
+
+    public int getCountTokens() {
         return countTokens;
     }
 
-    public final void setCountTokens(final int countTokens) {
+    public void setCountTokens(int countTokens) {
         this.countTokens = countTokens;
     }
 }

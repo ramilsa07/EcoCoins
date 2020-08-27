@@ -1,59 +1,113 @@
 package ru.omsk.neoLab.board;
 
-
-/*
- * Класс, хранящий доску, на которой будет проходить игра.
- * */
-
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import ru.omsk.neoLab.board.Generators.Generator;
+import ru.omsk.neoLab.board.Generators.IGenerator;
+import ru.omsk.neoLab.board.phases.Phases;
 import ru.omsk.neoLab.board.Сell.Cell;
+import ru.omsk.neoLab.player.Player;
+import ru.omsk.neoLab.race.*;
 
+import java.util.ArrayList;
 
-public final class Board {
+public final class Board implements IBoard {
+    private static final Logger log = LoggerFactory.getLogger(Board.class);
 
-    private static Board instance;
-
-    @JsonProperty
+    @JsonProperty("board")
     private Cell[][] board;
+    @JsonProperty("phase")
+    private Phases phase;
+    @JsonProperty("currentPlayer")
+    private Player currentPlayer;
+    @JsonProperty("opponentPlayer")
+    private Player opponentPlayer;
+    @JsonProperty("racesPool")
+    private ArrayList<ARace> racesPool = new ArrayList<>();
 
-    private int height;
-    private int width;
+    private final int height;
+    private final int width;
 
-    private Board() {
+    @JsonCreator
+    public Board(@JsonProperty("height") final int height, @JsonProperty("width") final int width) {
+        this.height = height;
+        this.width = width;
     }
 
-    public static Board GetInstance() {
-        if (instance == null) {
-            instance = new Board();
-        }
-        return instance;
+    public Board(final Board board) {
+        this(board.getBoard(), board.getPhase(), board.getCurrentPlayer(), board.getOpponentPlayer(), board.getRacesPool(), board.getHeight(), board.getWidth());
     }
 
-    public final Cell[][] getBoard() {
+    public Board(Cell[][] board, Phases phase, Player currentPlayer, Player opponentPlayer, ArrayList<ARace> racesPool, int height, int width) {
+        this.board = board;
+        this.phase = phase;
+        this.currentPlayer = currentPlayer;
+        this.opponentPlayer = opponentPlayer;
+        this.racesPool = racesPool;
+        this.height = height;
+        this.width = width;
+    }
+
+    @Override
+    public Cell[][] generate() {
+        IGenerator generator = new Generator();
+        board = generator.generate(height, width);
+        racesPool = collectRacePool(racesPool);
         return board;
     }
 
-    public final Cell getBoardElements(int i, int j){
-        return board[i][j];
+    @Override
+    public Cell getCell(final int x, final int y) {
+        return board[x][y];
     }
 
-    public final void setBoard(Cell[][] board) {
-        this.board = board;
+    @Override
+    public void changePhase(final Phases phase) {
+        this.phase = phase;
+    }
+
+    private ArrayList<ARace> collectRacePool(ArrayList<ARace> racesPool) {
+        racesPool.add(new Amphibia());
+        racesPool.add(new Dwarfs());
+        racesPool.add(new Elfs());
+        racesPool.add(new Mushrooms());
+        racesPool.add(new Orcs());
+        racesPool.add(new Undead());
+        return racesPool;
+    }
+
+    public Cell[][] getBoard() {
+        return board;
     }
 
     public final int getHeight() {
         return height;
     }
 
-    public final void setHeight(int height) {
-        this.height = height;
-    }
-
     public final int getWidth() {
         return width;
     }
 
-    public final void setWidth(int width) {
-        this.width = width;
+    public Phases getPhase() {
+        return phase;
+    }
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public void setCurrentPlayer(Player currentPlayer) {
+        opponentPlayer = this.getCurrentPlayer();
+        this.currentPlayer = currentPlayer;
+    }
+
+    public Player getOpponentPlayer() {
+        return opponentPlayer;
+    }
+
+    public ArrayList<ARace> getRacesPool() {
+        return racesPool;
     }
 }

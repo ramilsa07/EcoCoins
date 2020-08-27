@@ -1,14 +1,16 @@
 package ru.omsk.neoLab.race;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import ru.omsk.neoLab.board.Сell.Cell;
-import ru.omsk.neoLab.board.Сell.TypeCell;
+import ru.omsk.neoLab.board.Сell.Terrain;
 
 import java.util.ArrayList;
 
 public final class Elfs extends ARace {
 
-    private final ArrayList<TypeCell> cells = new ArrayList<TypeCell>();
+    private final ArrayList<Terrain> cells = new ArrayList<Terrain>();
 
+    @JsonCreator
     public Elfs() {
         nameRace = "Elfs";
         countTokens = 6;
@@ -21,5 +23,10 @@ public final class Elfs extends ARace {
             return cell.getCoin() + 1;
         }
         return cell.getCoin();
+    }
+
+    @Override
+    public void clearCells(){
+        cells.clear();
     }
 }
