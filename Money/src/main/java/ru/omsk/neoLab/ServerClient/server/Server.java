@@ -260,16 +260,14 @@ public class Server {
                 log.info("{} has {} coins", server.getPlayer().getNickName(), server.getPlayer().getCountCoin());
             }
             round++;
-            System.out.println("Текущий раунд - " + round);
+            if (round != 11) {
+                System.out.println("Текущий раунд - " + round);
+            }
             if (player.isDecline()) {
                 board.changePhase(Phases.RACE_CHOICE);
             } else {
                 board.changePhase(Phases.GO_INTO_DECLINE);
             }
-        }
-
-        public synchronized boolean isEndGame() {
-            return round == 11;
         }
     }
 
