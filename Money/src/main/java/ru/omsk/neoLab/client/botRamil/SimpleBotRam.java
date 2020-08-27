@@ -73,7 +73,8 @@ public class SimpleBotRam extends ABot {
     }
 
     private int assessmentForShuffling(Cell cell) {
-        return cell.getBelongs().getRace().getAdvantageDefendCell(cell);
+        return cell.getBelongs().getRace().getAdvantageCaptureCell(cell) +
+                cell.getBelongs().getRace().getAdvantageDefendCell(cell) + 1;
     }
 
     private DeclineAnswer getDeclineAnswer(Board board, Player player) {
@@ -117,7 +118,7 @@ public class SimpleBotRam extends ABot {
     }
 
 
-    private RaceAnswer getRaceAnswer(Board board) { // Просто рандом
+    private RaceAnswer getRaceAnswer(Board board) {
         return new RaceAnswer(board.getRacesPool().get(random.nextInt(board.getRacesPool().size())));
     }
 

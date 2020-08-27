@@ -74,7 +74,8 @@ public class BotWithOpponentMove extends ABot {
     }
 
     private int assessmentForShuffling(Cell cell) {
-        return cell.getBelongs().getRace().getAdvantageDefendCell(cell);
+        return cell.getBelongs().getRace().getAdvantageCaptureCell(cell) +
+                cell.getBelongs().getRace().getAdvantageDefendCell(cell) + 1;
     }
 
     private DeclineAnswer getDeclineAnswer(Board board, Player player) {
@@ -91,18 +92,25 @@ public class BotWithOpponentMove extends ABot {
     }
 
     private CellAnswer getCellAnswer(Board board, Player player, Player opponent) {
-        if (opponent.getCountTokens() != 0) {
-            CellAnswer opponentAnswer = findBestMove(board, opponent, null);
-            for (Point point : opponentAnswer.getCells()) {
-                playerService.regionCapture(board.getCell(point.x, point.y), opponent);
+        if (opponent.getCountTokens() != 0 || opponent.getLocationCell().size() != 0) {
+            for (Cell cell : opponent.getLocationCell()) {
+                if (cell.getCountTokens() >= 1) {
+                    opponent.collectTokens(cell);
+                }
             }
-            responseCells.clear();
-            return findBestMove(board, player, opponentAnswer.getCells());
+            if (opponent.getCountTokens() != 0) {
+                CellAnswer opponentAnswer = findBestMove(board, opponent);
+                for (Point point : opponentAnswer.getCells()) {
+                    playerService.regionCapture(board.getCell(point.x, point.y), opponent);
+                }
+                responseCells.clear();
+                return findBestMove(board, player);
+            }
         }
-        return findBestMove(board, player, null);
+        return findBestMove(board, player);
     }
 
-    private CellAnswer findBestMove(Board board, Player player, List<Point> opponentCell) {
+    private CellAnswer findBestMove(Board board, Player player) {
         int bestAssessment = Integer.MIN_VALUE;
         Cell bestCell = null;
         int nodeAssessment;
@@ -124,7 +132,7 @@ public class BotWithOpponentMove extends ABot {
             responseCells.add(responseCells.size(), new Point(bestCell.getX(), bestCell.getY()));
             Player testPlayer = new Player(player);
             Board testBoard = new Board(board);
-            findBestMove(testBoard, testPlayer, opponentCell);
+            findBestMove(testBoard, testPlayer);
         }
         return new CellAnswer(responseCells);
     }

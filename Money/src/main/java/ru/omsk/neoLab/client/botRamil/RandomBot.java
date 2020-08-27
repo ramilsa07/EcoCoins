@@ -41,13 +41,6 @@ public class RandomBot extends ABot {
         }
         Object[] cells = possibleCellsCapture.toArray();
 
-//        if (!possibleCellsCapture.isEmpty()) {
-//            ArrayList<Point> points = new ArrayList<Point>();
-//            points.add((Point) cells[random.nextInt(cells.length)]);
-//            return new CellAnswer(points);
-//        } else {
-//            return null;
-//        }
         if (cells.length != 0) {
             Cell move = (Cell) cells[random.nextInt(cells.length)];
             player.regionCapture(move);
@@ -72,16 +65,12 @@ public class RandomBot extends ABot {
         }
     }
 
-    private RaceAnswer getRaceAnswer(Board board) { // Просто рандомная хрень
+    private RaceAnswer getRaceAnswer(Board board) {
         return new RaceAnswer(board.getRacesPool().get(random.nextInt(board.getRacesPool().size())));
     }
 
     private CellAnswer getShufflingAnswer(Player player) {
-//        ArrayList<Point> points = new ArrayList<>();
-//        Cell cell = player.getLocationCell().get(random.nextInt(player.getLocationCell().size()));
-//        points.add(new Point(cell.getX(), cell.getY()));
-//        return new CellAnswer(points);
-        for (int i = 0; i < player.getCountTokens(); i++){
+        for (int i = 0; i < player.getCountTokens(); i++) {
             Cell cell = player.getLocationCell().get(random.nextInt(player.getLocationCell().size()));
             responseCells.add(new Point(cell.getX(), cell.getY()));
         }

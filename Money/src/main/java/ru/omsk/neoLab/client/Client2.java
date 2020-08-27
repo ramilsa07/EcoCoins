@@ -14,7 +14,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
-public class Client {
+public class Client2 {
 
     private static final String IP = "127.0.0.1";//"127.0.0.1";//135.181.85.225
     private static final int PORT = 8080;
@@ -27,7 +27,7 @@ public class Client {
 
     private Socket socket = null;
 
-    public Client(String ip, int port) {
+    public Client2(String ip, int port) {
         this.ip = ip;
         this.port = port;
     }
@@ -46,8 +46,8 @@ public class Client {
             e.printStackTrace();
         }
         System.out.println(String.format("Client started, ip: %s, port: %d", ip, port));
-        //SimpleBotGreat simpleBotGreat = new SimpleBotGreat();
-        ABot simpleBotGreat = new SimpleBotRam();
+        SimpleBotGreat simpleBotGreat = new SimpleBotGreat();
+        //ABot simpleBotGreat = new SimpleBotRam();
         //ABot simpleBotGreat = new BotWithOpponentMove();
         //ABot simpleBotGreat = new RandomBot();
         while (isDisconnect()) {
@@ -76,7 +76,7 @@ public class Client {
 
 
     public static void main(final String[] args) {
-        final Client client = new Client(IP, PORT);
+        final Client2 client = new Client2(IP, PORT);
         client.startClient();
     }
 }
